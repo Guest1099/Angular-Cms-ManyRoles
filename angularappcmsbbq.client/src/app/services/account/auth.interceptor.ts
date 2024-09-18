@@ -14,6 +14,7 @@ import { GuidGenerator } from '../guid-generator';
 import { LoginViewModel } from '../../models/loginViewModel';
 import { Router } from '@angular/router';
 import { LocalStorageSessionService } from '../local-storage-session.service';
+import { ApplicationUser } from '../../models/applicationUser';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

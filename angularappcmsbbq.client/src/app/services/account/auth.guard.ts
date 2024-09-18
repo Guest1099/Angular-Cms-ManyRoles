@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let result = false;
-    //alert('guard 1');
     let expectedRoles = route.data['expectedRoles'] as Array<string>;
 
     let sessionModel = localStorage.getItem('sessionModel');
@@ -37,13 +36,10 @@ export class AuthGuard implements CanActivate {
 
           let dateToMiliseconds !: number;
           dateToMiliseconds = this.accountServiceHandler.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-
-
+           
 
           // Sprawdź, czy użytkownik jest zalogowany i ma odpowiednią rolę 
           if (this.accountServiceHandler.isLoggedInGuard() && expectedRoles.includes(role)) {
-            //alert('guard 2');
-
 
             if (Date.now() >= dateToMiliseconds) {
               this.accountServiceHandler.wyloguj();
@@ -56,26 +52,11 @@ export class AuthGuard implements CanActivate {
         }
       }
     }
-    //alert('guard 4');
 
     // Przekieruj użytkownika do strony głównej, jeśli nie ma uprawnień 
     this.accountServiceHandler.wyloguj();
     return result;
   }
-
-
-
-
-  // Przekształca datę np. taką "12.12.2024 10:10:10" na milisekundy
-  private changeDateToMiliseconds(dateString: string): number {
-    let [datePart, timePart] = dateString.split(' ');
-    let [day, month, year] = datePart.split('.');
-    let [hour, minute, second] = timePart.split(':');
-
-    let date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute), parseInt(second));
-    return date.getTime(); // data w milisekundach
-  }
-
 
 
 }

@@ -49,7 +49,8 @@ export class DashboardComponent implements OnInit {
 
     // formularz logowania
     this.formGroupLogin = this.fb.group({
-      emailLogin: ['admin@admin.pl', [Validators.required]],
+      //emailLogin: ['admin@admin.pl', [Validators.required]],
+      emailLogin: ['user@user.pl', [Validators.required]],
       passwordLogin: ['SDG%$@5423sdgagSDert', [Validators.required]]
     });
 
@@ -134,8 +135,7 @@ export class DashboardComponent implements OnInit {
           this.zalogowanyUserEmail = result.model.email;
           this.isLoggedIn = true;
           this.logowanie = false;
-          this.role = result.model.role ? result.model.role : "";
-
+          this.role = result.model.role == null ? '' : result.model.role;
 
           
           form.reset();
@@ -144,7 +144,7 @@ export class DashboardComponent implements OnInit {
 
           this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${result.model.email}`);
         } else {
-          this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
+          this.snackBarService.setSnackBar(`${result.message}`);
           localStorage.removeItem('sessionModel');
           //this.localStorageSessionService.removeItem('sessionModel');
           this.isLoggedIn = false;

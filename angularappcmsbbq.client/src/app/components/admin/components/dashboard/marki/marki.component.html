@@ -1,12 +1,15 @@
 <!-- dane wyświetlana tylko i wyłącznie dla administratora -->
-<ng-container *ngIf="accountService.role == 'Administrator'">
+<ng-container *ngIf="accountService.role == 'Administrator' || 'User'">
 
     <div class="df-sb mt-20">
-        <!-- button dodawania -->
-        <button mat-raised-button color="primary" [routerLink]="['markaCreate']">
-            <mat-icon>add</mat-icon>
-            Create new
-        </button>
+
+        <div>
+            <!-- button dodawania -->
+            <button mat-raised-button color="primary" [routerLink]="['markaCreate']">
+                <mat-icon>add</mat-icon>
+                Create new
+            </button>
+        </div>
 
 
         <div>

@@ -24,35 +24,35 @@
                     </button>
 
 
-                    <button *ngIf="role == 'Administrator'" mat-list-item [routerLink]="['marki']" (click)="sidenav.toggle(); getLinkName('marki')">
+                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-list-item [routerLink]="['marki']" (click)="sidenav.toggle(); getLinkName('marki')">
                         <div class="df">
                             <mat-icon class="menu-icon">table</mat-icon>
                             <span class="menu-item">marki</span>
                         </div>
                     </button>
 
-                    <button *ngIf="role == 'Administrator'" mat-list-item [routerLink]="['products']" (click)="sidenav.toggle(); getLinkName('products')">
+                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-list-item [routerLink]="['products']" (click)="sidenav.toggle(); getLinkName('products')">
                         <div class="df">
                             <mat-icon class="menu-icon">table</mat-icon>
                             <span class="menu-item">products</span>
                         </div>
                     </button>
 
-                    <button *ngIf="role == 'Administrator'" mat-list-item [routerLink]="['categories']" (click)="sidenav.toggle(); getLinkName('categories')">
+                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-list-item [routerLink]="['categories']" (click)="sidenav.toggle(); getLinkName('categories')">
                         <div class="df">
                             <mat-icon class="menu-icon">table</mat-icon>
                             <span class="menu-item">categories</span>
                         </div>
                     </button>
 
-                    <button *ngIf="role == 'Administrator'" mat-list-item [routerLink]="['subcategories']" (click)="sidenav.toggle(); getLinkName('subcategories')">
+                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-list-item [routerLink]="['subcategories']" (click)="sidenav.toggle(); getLinkName('subcategories')">
                         <div class="df">
                             <mat-icon class="menu-icon">table</mat-icon>
                             <span class="menu-item">subcategories</span>
                         </div>
                     </button>
 
-                    <button *ngIf="role == 'Administrator'" mat-list-item [routerLink]="['subsubcategories']" (click)="sidenav.toggle(); getLinkName('subsubcategories')">
+                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-list-item [routerLink]="['subsubcategories']" (click)="sidenav.toggle(); getLinkName('subsubcategories')">
                         <div class="df">
                             <mat-icon class="menu-icon">table</mat-icon>
                             <span class="menu-item">subsubcategories</span>
@@ -106,12 +106,12 @@
 
                                 <mat-menu #account="matMenu" class="menuButtons">
 
-                                    <button *ngIf="role == 'Administrator'" mat-menu-item routerLink="update">
+                                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-menu-item routerLink="update">
                                         <mat-icon>update</mat-icon>
                                         Aktualizuj dane
                                     </button>
 
-                                    <button *ngIf="role == 'Administrator'" mat-menu-item routerLink="changePassword">
+                                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-menu-item routerLink="changePassword">
                                         <mat-icon>update</mat-icon>
                                         Zmień hasło
                                     </button>
@@ -141,6 +141,7 @@
 
 
                 <div style="margin: auto 120px;">
+                    sssssssss
                     <router-outlet></router-outlet>
                 </div>
             </div>

@@ -29,17 +29,19 @@ import { RejestratorLogowaniaComponent } from './components/dashboard/rejestrato
 import { RejestratorLogowaniaEditComponent } from './components/dashboard/rejestrator-logowania/rejestrator-logowania-edit/rejestrator-logowania-edit.component';
 
 
+
+
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
     children: [
-      
+
       {
         path: 'roles',
         component: RolesComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'roles/roleCreate',
@@ -53,13 +55,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Administrator'] }
       },
-        
+
 
       {
         path: 'users',
         component: UsersComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'users/userCreate',
@@ -74,32 +76,32 @@ const routes: Routes = [
         data: { expectedRoles: ['Administrator'] }
       },
 
-        
+
       {
         path: 'marki',
         component: MarkiComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'marki/markaCreate',
         component: MarkaCreateComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'marki/markaEdit/:id',
         component: MarkaEditComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
 
-      
+
       {
         path: 'products',
         component: ProductsComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'products/productCreate',
@@ -113,14 +115,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Administrator'] }
       },
-      
+
 
 
       {
         path: 'categories',
         component: CategoriesComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'categories/categoryCreate',
@@ -140,7 +142,7 @@ const routes: Routes = [
         path: 'subcategories',
         component: SubcategoriesComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'subcategories/subcategoryCreate',
@@ -160,7 +162,7 @@ const routes: Routes = [
         path: 'subsubcategories',
         component: SubsubcategoriesComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'subsubcategories/subsubcategoryCreate',
@@ -174,18 +176,18 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Administrator'] }
       },
-        
+
       {
         path: 'update',
         component: UpdateComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'changePassword',
         component: ChangePasswordComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
 
 
@@ -193,7 +195,7 @@ const routes: Routes = [
         path: 'rejestratorLogowania',
         component: RejestratorLogowaniaComponent,
         canActivate: [AuthGuard],
-        data: { expectedRoles: ['Administrator'] }
+        data: { expectedRoles: ['Administrator', 'User'] }
       },
       {
         path: 'rejestratorLogowania/rejestratorLogowaniaEdit/:id',
@@ -212,6 +214,12 @@ const routes: Routes = [
     ]
   }
 ];
+
+
+
+
+
+
 
 
 @NgModule({

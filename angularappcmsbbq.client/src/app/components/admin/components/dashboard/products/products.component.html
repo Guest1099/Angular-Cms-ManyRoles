@@ -1,13 +1,16 @@
 <!-- dane wyświetlana tylko i wyłącznie dla administratora -->
-<ng-container *ngIf="accountService.role == 'Administrator'">
+<ng-container *ngIf="accountService.role == 'Administrator' || 'User'">
 
 
     <div class="df-sb mt-20">
-        <!-- button dodawania -->
-        <button mat-raised-button color="primary" [routerLink]="['productCreate']">
-            <mat-icon>add</mat-icon>
-            Create new
-        </button>
+
+        <div>
+            <!-- button dodawania -->
+            <button *ngIf="accountService.role == 'Administrator'" mat-raised-button color="primary" [routerLink]="['productCreate']">
+                <mat-icon>add</mat-icon>
+                Create new
+            </button>
+        </div>
 
 
         <div>
@@ -29,7 +32,7 @@
     <div [ngStyle]="productsService.preloaderStyle">
         <mat-spinner diameter="32" class="spinner"></mat-spinner>
     </div>
-     
+
     <!-- tabela wyświetlające elementy -->
     <div [ngClass]="productsService.products.length > 0 && productsService.dataSource.filteredData.length > 0  ? 'showTable' : 'hideTable'">
         <table mat-table [dataSource]="productsService.dataSource" matSort class="mat-elevation-z1 table">
