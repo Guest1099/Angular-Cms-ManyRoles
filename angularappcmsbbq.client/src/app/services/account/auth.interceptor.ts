@@ -17,48 +17,14 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-
-  // pole ustawione po to aby metoda w interceptorze nie była wywoływana wielokrotnie
-  private isLoggedOut = false;
-  
+  // tu nie mogą być wywoływane metody api, jedynie sesje, więc do wylogowania należy użyć wyczyszczenia sesji
 
   constructor(
-    private accountService: AccountHandlerService,
-    private router: Router
+    private accountHandlerService: AccountHandlerService
   ) {
     //alert('interceptor 1');
 
 
-
-    // pobranie czasu zalogowania z sesji
-    let sessionModel = localStorage.getItem('sessionModel');
-    if (sessionModel) {
-      let sm = JSON.parse(sessionModel);
-      if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
-        if (loginViewModel) {
-          let token = loginViewModel.token;
-          let newToken = loginViewModel.newToken;
-
-          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
-          let expirationTimeNewToken = loginViewModel.expirationTimeNewToken == null ? '' : loginViewModel.expirationTimeNewToken; // drugi token
-
-          let dateToMiliseconds !: number;
-          dateToMiliseconds = this.accountService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-
-
-          if (Date.now() >= dateToMiliseconds) {
-            //localStorage.removeItem('sessionModel');
-            this.accountService.wyloguj();
-          }
-
-
-        }
-      } else {
-        //alert('koniecznosc wylogowania');
-        //this.accountService.wyloguj();
-      }
-    }
   }
 
 
@@ -72,6 +38,8 @@ export class AuthInterceptor implements HttpInterceptor {
       let sm = JSON.parse(sessionModel);
       if (sm) {
         let loginViewModel = sm.model as LoginViewModel;
+        let role = sm.role;
+        let isLoggedIn = sm.isLoggedIn;
         if (loginViewModel) {
           let token = loginViewModel.token;
           let newToken = loginViewModel.newToken;
@@ -80,13 +48,13 @@ export class AuthInterceptor implements HttpInterceptor {
           let expirationTimeNewToken = loginViewModel.expirationTimeNewToken == null ? '' : loginViewModel.expirationTimeNewToken; // drugi token
 
           let dateToMiliseconds !: number;
-          dateToMiliseconds = this.accountService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+          dateToMiliseconds = this.accountHandlerService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
 
 
-          // jeżeli wygaśnie stary token przypisywany jest nowy
           if (Date.now() >= dateToMiliseconds) {
-            //localStorage.removeItem('sessionModel');
-            this.accountService.wyloguj();
+            localStorage.removeItem('sessionModel');
+            //this.accountHandlerService.wyloguj();
+            //........................................ tutaj można odświeżyć lub przekierować na stronę
           } else {
 
             if (token) {
@@ -99,25 +67,27 @@ export class AuthInterceptor implements HttpInterceptor {
           }
 
         }
-      } else {
-        //this.accountService.wyloguj();
-      }
+      } 
     }
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
 
         if (error.status === 401) {
-          this.isLoggedOut = true;
+          //this.isLoggedOut = true;
           // usunięcie użytkownika z sessji
-          localStorage.removeItem('sessionModel');
-          this.accountService.wyloguj();
+          //localStorage.removeItem('sessionModel');
+          //this.accountHandlerService.wyloguj();
+          alert('401');
         }
 
         return throwError(error);
       })
     );
   }
+
+
+
 
 
 

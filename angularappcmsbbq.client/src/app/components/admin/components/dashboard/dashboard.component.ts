@@ -32,13 +32,15 @@ export class DashboardComponent implements OnInit {
   isLoggedIn: boolean = false;
 
 
+
+
   constructor(
     private fb: FormBuilder,
+    public accountService: AccountService,
     public accountHandlerService: AccountHandlerService,
     public roleService: RolesHandlerService,
     private router: Router,
     private snackBarService: SnackBarService,
-    public accountService: AccountService,
   ) { }
 
 
@@ -87,6 +89,7 @@ export class DashboardComponent implements OnInit {
 
 
   linkName: string = '';
+  subLinkName: string = '';
   getLinkName(linkName: string): void {
     this.linkName = `${linkName}`;
   }
@@ -156,6 +159,32 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+
+
+  private once: boolean = true;
+  // Metoda odpowiedzialna za wylogowanie
+  wyloguj(): void {
+    if (this.once) {
+      this.once = false;
+      localStorage.removeItem('sessionModel');
+      this.accountService.logout().subscribe({
+        next: () => {
+          // Wyczyszczenie danych z pamięci podręcznej
+          //localStorage.removeItem('sessionModel');
+          //this.isLoggedIn = false;
+          //this.router.navigate(['/']);
+          //this.router.navigate(['admin']);
+          //this.router.navigate(['/subcategories']);
+          this.router.navigate(['admin']).then(() => location.reload());
+        },
+        error: (error: Error) => {
+          alert('Wyloguj from dashboard');
+        }
+      });
+    }
+  }
+
    
 
 }

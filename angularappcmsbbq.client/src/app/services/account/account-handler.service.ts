@@ -290,6 +290,7 @@ export class AccountHandlerService {
 */
 
 
+
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
   public wyloguj(): void {
@@ -307,7 +308,7 @@ export class AccountHandlerService {
           this.router.navigate(['admin']).then(() => location.reload());
         },
         error: (error: Error) => {
-          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
+          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. FROM INTERCEPTOR ${InfoService.info('AccountHandlerService', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
         }
       });
     }

@@ -87,7 +87,7 @@
                                         menu
                                     </mat-icon>
                                 </button>
-                                <div class="centery fs-15 ml-50">localHost: <span class="b">{{ linkName }}</span></div>
+                                <div class="centery fs-15 ml-50"><span class="b">{{ linkName }}</span></div>
                             </div>
 
 
@@ -115,18 +115,17 @@
                                         <mat-icon>update</mat-icon>
                                         Zmień hasło
                                     </button>
+                                    <!--
+                                        <button mat-menu-item (click)="accountHandlerService.wyloguj ()">
+                                            <mat-icon>logout</mat-icon>
+                                            wyloguj
+                                        </button>
+     -->
 
-                                    <button mat-menu-item (click)="accountHandlerService.wyloguj ()">
+                                    <button mat-menu-item (click)="wyloguj ()">
                                         <mat-icon>logout</mat-icon>
                                         wyloguj
                                     </button>
-
-                                    <!--
-                                                                        <button mat-menu-item (click)="wyloguj ()">
-                                                                            <mat-icon>logout</mat-icon>
-                                                                            wyloguj
-                                                                        </button>
-                                     -->
 
                                 </mat-menu>
 
@@ -141,7 +140,7 @@
 
 
                 <div style="margin: auto 120px;">
-                    sssssssss
+                    jesteś tutaj
                     <router-outlet></router-outlet>
                 </div>
             </div>
