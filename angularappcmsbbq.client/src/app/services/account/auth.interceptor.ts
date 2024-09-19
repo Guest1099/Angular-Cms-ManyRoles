@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HTTP_INTERCEPTORS, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AccountHandlerService } from './account-handler.service';
@@ -13,41 +13,94 @@ import { Marka } from '../../models/marka';
 import { GuidGenerator } from '../guid-generator';
 import { LoginViewModel } from '../../models/loginViewModel';
 import { Router } from '@angular/router';
-import { LocalStorageSessionService } from '../local-storage-session.service';
-import { ApplicationUser } from '../../models/applicationUser';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+
+
+  // pole ustawione po to aby metoda w interceptorze nie była wywoływana wielokrotnie
+  private isLoggedOut = false;
+  
+
   constructor(
     private accountService: AccountHandlerService,
-    //private localStorageSessionService: LocalStorageSessionService,
-    private router: Router,
+    private router: Router
   ) {
+    //alert('interceptor 1');
 
-    if (this.tokenTimeExpired()) {
-      this.accountService.wyloguj();
-    } else {
-      //alert('koniecznosc wylogowania');
-      //this.accountService.wyloguj();
+
+
+    // pobranie czasu zalogowania z sesji
+    let sessionModel = localStorage.getItem('sessionModel');
+    if (sessionModel) {
+      let sm = JSON.parse(sessionModel);
+      if (sm) {
+        let loginViewModel = sm.model as LoginViewModel;
+        if (loginViewModel) {
+          let token = loginViewModel.token;
+          let newToken = loginViewModel.newToken;
+
+          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
+          let expirationTimeNewToken = loginViewModel.expirationTimeNewToken == null ? '' : loginViewModel.expirationTimeNewToken; // drugi token
+
+          let dateToMiliseconds !: number;
+          dateToMiliseconds = this.accountService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+
+
+          if (Date.now() >= dateToMiliseconds) {
+            //localStorage.removeItem('sessionModel');
+            this.accountService.wyloguj();
+          }
+
+
+        }
+      } else {
+        //alert('koniecznosc wylogowania');
+        //this.accountService.wyloguj();
+      }
     }
-
   }
 
 
 
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    //alert('interceptor 2');
+    // Dodaj token JWT do nagłówka żądania, jeśli użytkownik jest zalogowany
+    let sessionModel = localStorage.getItem('sessionModel');
+    if (sessionModel) {
+      let sm = JSON.parse(sessionModel);
+      if (sm) {
+        let loginViewModel = sm.model as LoginViewModel;
+        if (loginViewModel) {
+          let token = loginViewModel.token;
+          let newToken = loginViewModel.newToken;
 
-    if (this.tokenTimeExpired()) {
-      this.accountService.wyloguj();
-    } else {
+          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
+          let expirationTimeNewToken = loginViewModel.expirationTimeNewToken == null ? '' : loginViewModel.expirationTimeNewToken; // drugi token
 
-      // Dodaj token JWT do nagłówka żądania, jeśli użytkownik jest zalogowany
-      if (this.token.length > 0) {
-        request = request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${this.token}`
+          let dateToMiliseconds !: number;
+          dateToMiliseconds = this.accountService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+
+
+          // jeżeli wygaśnie stary token przypisywany jest nowy
+          if (Date.now() >= dateToMiliseconds) {
+            //localStorage.removeItem('sessionModel');
+            this.accountService.wyloguj();
+          } else {
+
+            if (token) {
+              request = request.clone({
+                setHeaders: {
+                  Authorization: `Bearer ${token}`
+                }
+              });
+            }
           }
-        });
+
+        }
+      } else {
+        //this.accountService.wyloguj();
       }
     }
 
@@ -55,8 +108,9 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
 
         if (error.status === 401) {
-
+          this.isLoggedOut = true;
           // usunięcie użytkownika z sessji
+          localStorage.removeItem('sessionModel');
           this.accountService.wyloguj();
         }
 
@@ -67,41 +121,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
 
-  private token: string = '';
-  private tokenTimeExpired(): boolean {
-    let result = false;
-
-    let sessionModel = localStorage.getItem('sessionModel');
-    if (sessionModel) {
-      let sm = JSON.parse(sessionModel);
-      if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
-        if (loginViewModel) {
-          this.token = loginViewModel.token == null ? '' : loginViewModel.token;
-
-          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
-
-          let dateToMiliseconds !: number;
-          dateToMiliseconds = this.accountService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-
-
-          if (Date.now() >= dateToMiliseconds) {
-            result = true;
-          }
-        }
-      }
-    }
-
-    return result;
-  }
-
-
-
-
   tryLogout() {
 
   }
-
+   
+   
 
 }
 

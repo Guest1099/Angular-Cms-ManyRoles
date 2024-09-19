@@ -12,6 +12,7 @@ import { ChangePasswordViewModel } from '../../models/changePasswordViewModel';
 import { RejestratorLogowaniaHandlerService } from '../rejestratorLogowania/rejestrator-logowania-handler.service';
 import { RejestratorLogowaniaService } from '../rejestratorLogowania/rejestrator-logowania.service';
 import { RejestratorLogowania } from '../../models/rejestratorLogowania';
+import { LoginViewModel } from '../../models/loginViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class AccountHandlerService {
     private router: Router,
     private snackBarService: SnackBarService,
   ) {
-  }
+  } 
 
   private user!: ApplicationUser;
   public formGroup!: FormGroup;
@@ -46,7 +47,7 @@ export class AccountHandlerService {
       next: ((result: TaskResult<ApplicationUser>) => {
         if (result.success) {
 
-          this.user = result.model as ApplicationUser;
+          this.user = result.model as ApplicationUser;            
 
         } else {
           this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
@@ -55,14 +56,14 @@ export class AccountHandlerService {
         return result;
       }),
       error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
 
     return this.user;
   }
 
-
+   
 
 
   // rejestrowanie nowego użytkownika
@@ -81,8 +82,8 @@ export class AccountHandlerService {
     let dataUrodzenia = form.controls['dataUrodzenia'].value;
     let telefon = form.controls['telefon'].value;
     let roleName = form.controls['roleName'].value;
-
-
+     
+     
     let registerViewModel: RegisterViewModel = {
       userId: GuidGenerator.newGuid().toString(),
 
@@ -116,13 +117,13 @@ export class AccountHandlerService {
         return result;
       }),
       error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
         this.rejestrowanie = false;
       }
     });
   }
 
-
+   
 
 
   // Aktualizowanie konta zalogowanego użytkownika, który jest administratorem
@@ -172,7 +173,7 @@ export class AccountHandlerService {
         return result;
       }),
       error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('AccountHandlerService', 'updateAccount')}. Name: ${error.name}. Message: ${error.message}`);
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'updateAccount')}. Name: ${error.name}. Message: ${error.message}`);
         this.zapisywanie = false;
       }
     });
@@ -180,7 +181,7 @@ export class AccountHandlerService {
 
 
 
-   
+
   public changePassword(form: FormGroup): void {
 
     // pobranie danych użytkownika z sesji
@@ -211,7 +212,7 @@ export class AccountHandlerService {
             return result;
           }),
           error: (error: Error) => {
-            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('AccountHandlerService', 'changePassword')}. Name: ${error.name}. Message: ${error.message}`);
+            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'changePassword')}. Name: ${error.name}. Message: ${error.message}`);
             this.zapisywanie = false;
           }
         });
@@ -221,32 +222,97 @@ export class AccountHandlerService {
 
 
 
+/*
+  public login(form: FormGroup): void {
+
+    // Pobranie wartości z kontrolek
+    let email = form.controls['emailLogin'].value;
+    let password = form.controls['passwordLogin'].value;
+
+
+    // Przekazanie obiektu logowania do metody 
+    let loginViewModel: LoginViewModel = {
+      email: email,
+      password: password,
+      token: '',
+      newToken: '',
+      expirationTimeToken: '',
+      expirationTimeNewToken: '',
+      role: '',
+      //dataZalogowania: '',
+      //dataWylogowania: ''
+    };
+
+    this.logowanie = true;
+    this.accountService.login(loginViewModel).subscribe({
+      next: ((result: TaskResult<LoginViewModel>) => {
+
+        if (result.success) {
+
+          // zapisanie w sesji zalogowanego użytkownika
+          let sessionModel = {
+            model: result.model as LoginViewModel,
+            isLoggedIn: true,
+            role: result.model.role,
+            //dataZalogowania: result.model.dataZalogowania,
+            //dataWylogowania: result.model.dataWylogowania
+          };
+          localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
+
+          this.zalogowanyUserEmail = result.model.email;
+          this.isLoggedIn = true;
+          this.logowanie = false;
+          this.role = result.model.role ? result.model.role : "";
+
+
+
+          form.reset();
+          this.router.navigate(['admin/users']);
+          //this.router.navigate(['admin/users']).then(() => location.reload());
+
+          this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${result.model.email}`);
+        } else {
+          this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
+          localStorage.removeItem('sessionModel');
+          this.isLoggedIn = false;
+          this.logowanie = false;
+          form.reset();
+        }
+        return result;
+      }),
+      error: (error: Error) => {
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('Dashboard', 'login')}. Name: ${error.name}. Message: ${error.message}`);
+        localStorage.removeItem('sessionModel');
+        this.logowanie = false;
+      }
+    });
+  }
+*/
+
+
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
   public wyloguj(): void {
     if (this.once) {
-      //alert('wyloguj');
       this.once = false;
       localStorage.removeItem('sessionModel');
-      this.isLoggedIn = false;
-
       this.accountService.logout().subscribe({
         next: () => {
           // Wyczyszczenie danych z pamięci podręcznej
           //localStorage.removeItem('sessionModel');
           //this.isLoggedIn = false;
-          //this.router.navigate(['admin']);
           //this.router.navigate(['/']);
+          //this.router.navigate(['admin']);
+          //this.router.navigate(['/subcategories']);
           this.router.navigate(['admin']).then(() => location.reload());
         },
         error: (error: Error) => {
-          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('AccountHandlerService', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
+          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
         }
       });
     }
+
   }
-
-
 
 
 
@@ -269,6 +335,32 @@ export class AccountHandlerService {
 
 
 
+  // Sprawdza czy czas tokenu upłynął
+  public isTimeExpiredToken (): boolean {
+    let result = false;
+     
+    let sessionModel = localStorage.getItem('sessionModel');
+    if (sessionModel) {
+      let sm = JSON.parse(sessionModel);
+      if (sm) {
+        let loginViewModel = sm.model as LoginViewModel;
+        if (loginViewModel) {
+          let token = loginViewModel.token;  
+          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
+ 
+          let dateToMiliseconds = this.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+           
+          if (Date.now() >= dateToMiliseconds) {
+            result = true;
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+   
+
   // Przekształca datę np. taką "12.12.2024 10:10:10" na milisekundy
   public changeDateToMiliseconds(dateString: string): number {
     let [datePart, timePart] = dateString.split(' ');
@@ -280,41 +372,43 @@ export class AccountHandlerService {
   }
 
 
-  /*
-    // Przekształca datę np. taką "12.12.2024 10:10:10" na milisekundy
-    public changeDateToMiliseconds(dateString: string): number {
-      let result : number = 0;
-      let dateStringSplit = dateString.split(' ');
-      if (dateStringSplit.length > 0) {
-        let date = dateStringSplit[0].split('.');
-        let time = dateStringSplit[1].split(':');
-  
-        let day = '';
-        let month = '';
-        let year = '';
-  
-        let second = '';
-        let minute = '';
-        let hour = '';
-  
-        if (date.length > 2) {
-          day = date[0];
-          month = date[1];
-          year = date[2];
-        }
-  
-        if (time.length > 2) {
-          second = time[0];
-          minute = time[1];
-          hour = time[2];
-        }
-  
-        let newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute), parseInt(second));
-        result = newDate.getTime(); // data w milisekundach
+/*
+  // Przekształca datę np. taką "12.12.2024 10:10:10" na milisekundy
+  public changeDateToMiliseconds(dateString: string): number {
+    let result : number = 0;
+    let dateStringSplit = dateString.split(' ');
+    if (dateStringSplit.length > 0) {
+      let date = dateStringSplit[0].split('.');
+      let time = dateStringSplit[1].split(':');
+
+      let day = '';
+      let month = '';
+      let year = '';
+
+      let second = '';
+      let minute = '';
+      let hour = '';
+
+      if (date.length > 2) {
+        day = date[0];
+        month = date[1];
+        year = date[2];
       }
-      return result;
+
+      if (time.length > 2) {
+        second = time[0];
+        minute = time[1];
+        hour = time[2];
+      }
+
+      let newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute), parseInt(second));
+      result = newDate.getTime(); // data w milisekundach
     }
-  */
+    return result;
+  }
+*/
+
+ 
 
 
 
@@ -424,7 +518,7 @@ export class AccountHandlerService {
       form.controls['kodPocztowy'].valid &&
       form.controls['kraj'].valid &&
       form.controls['dataUrodzenia'].valid &&
-      form.controls['roleId'].valid
+      form.controls['roleId'].valid 
     ) {
       return false;
     }
