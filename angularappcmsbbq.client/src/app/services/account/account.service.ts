@@ -44,14 +44,14 @@ export class AccountService {
     return this.http.post<any>(`${this.api}/updateAccount`, user);
   }
 
-  deleteAccountByUserId(userId: string): Observable<any> {
-    return this.http.delete<any>(`${this.api}/deleteAccountByUserId/${userId}`);
-  }
-
   changePassword(user: ChangePasswordViewModel): Observable<any> {
     return this.http.post<any>(`${this.api}/changePassword`, user);
   }
 
+  deleteAccountByUserId(userId: string): Observable<any> {
+    return this.http.delete<any>(`${this.api}/deleteAccountByUserId/${userId}`);
+  }
+  
   getUserRoles(email: string): Observable<any> {
     return this.http.get<any>(`${this.api}/getUserRoles/${email}`);
   }

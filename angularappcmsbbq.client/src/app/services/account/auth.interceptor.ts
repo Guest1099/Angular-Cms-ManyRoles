@@ -23,62 +23,53 @@ export class AuthInterceptor implements HttpInterceptor {
     private accountHandlerService: AccountHandlerService
   ) {
     //alert('interceptor 1');
-
-
   }
-
-
 
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     //alert('interceptor 2');
-    // Dodaj token JWT do nagłówka żądania, jeśli użytkownik jest zalogowany
+    // Dodaj token JWT do nagłówka żądania, jeśli użytkownik jest
+
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
       if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
-        let role = sm.role;
         let isLoggedIn = sm.isLoggedIn;
-        if (loginViewModel) {
-          let token = loginViewModel.token;
-          let newToken = loginViewModel.newToken;
+        let role = sm.role;
+        let token = sm.token;
+        //let newToken = loginViewModel.newToken;
 
-          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
-          let expirationTimeNewToken = loginViewModel.expirationTimeNewToken == null ? '' : loginViewModel.expirationTimeNewToken; // drugi token
+        let expirationTimeToken = sm.expirationTimeToken == null ? '' : sm.expirationTimeToken; //pierwszy token
+        //let expirationTimeNewToken = sm.expirationTimeNewToken == null ? '' : sm.expirationTimeNewToken; // drugi token
 
-          let dateToMiliseconds !: number;
-          dateToMiliseconds = this.accountHandlerService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+        let dateToMiliseconds !: number;
+        dateToMiliseconds = this.accountHandlerService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
 
+        if (Date.now() >= dateToMiliseconds) {
+          localStorage.removeItem('sessionModel');
+          alert('token time expired')
+          this.accountHandlerService.wyloguj();
+          //........................................ tutaj można odświeżyć lub przekierować na stronę
+        } else {
 
-          if (Date.now() >= dateToMiliseconds) {
-            localStorage.removeItem('sessionModel');
-            //this.accountHandlerService.wyloguj();
-            //........................................ tutaj można odświeżyć lub przekierować na stronę
-          } else {
-
-            if (token) {
-              request = request.clone({
-                setHeaders: {
-                  Authorization: `Bearer ${token}`
-                }
-              });
-            }
+          if (token) {
+            request = request.clone({
+              setHeaders: {
+                Authorization: `Bearer ${token}`
+              }
+            });
           }
-
         }
-      } 
+      }
     }
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
 
         if (error.status === 401) {
-          //this.isLoggedOut = true;
-          // usunięcie użytkownika z sessji
           //localStorage.removeItem('sessionModel');
           //this.accountHandlerService.wyloguj();
-          alert('401');
+          //alert('401');
         }
 
         return throwError(error);
@@ -94,8 +85,8 @@ export class AuthInterceptor implements HttpInterceptor {
   tryLogout() {
 
   }
-   
-   
+
+
 
 }
 

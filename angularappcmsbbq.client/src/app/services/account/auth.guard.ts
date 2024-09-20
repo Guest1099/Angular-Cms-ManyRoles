@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     private accountHandlerService: AccountHandlerService,
     private router: Router
   ) { }
-   
+
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let result = false;
@@ -29,39 +29,34 @@ export class AuthGuard implements CanActivate {
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
       if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
         let role = sm.role;
-        let isLoggedIn = sm.isLoggedIn;
+        let token = sm.token;
+        //let newToken = loginViewModel.newToken;
 
-        if (loginViewModel) {
-          let token = loginViewModel.token;
-          let newToken = loginViewModel.newToken;
+        let expirationTimeToken = sm.expirationTimeToken == null ? '' : sm.expirationTimeToken; //pierwszy token
+        //let expirationTimeNewToken = sm.expirationTimeNewToken == null ? '' : sm.expirationTimeNewToken; // drugi token
 
-          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
-          let expirationTimeNewToken = loginViewModel.expirationTimeNewToken == null ? '' : loginViewModel.expirationTimeNewToken; // drugi token
-
-          let dateToMiliseconds !: number;
-          dateToMiliseconds = this.accountHandlerService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+        let dateToMiliseconds !: number;
+        dateToMiliseconds = this.accountHandlerService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
 
 
+        // Sprawdź, czy użytkownik jest zalogowany i ma odpowiednią rolę 
+        if (this.accountHandlerService.isLoggedInGuard() && expectedRoles.includes(role)) {
+          //alert('guard 2');
 
-          // Sprawdź, czy użytkownik jest zalogowany i ma odpowiednią rolę 
-          if (this.accountHandlerService.isLoggedInGuard() && expectedRoles.includes(role)) {
-            //alert('guard 2');
 
-
-            if (Date.now() >= dateToMiliseconds) {
-              //localStorage.removeItem('sessionModel');
-              //this.accountServiceHandler.wyloguj();
-              this.wyloguj();
-            } else {
-              result = true;
-            }
-
-            //result = true;
-            return result;
+          if (Date.now() >= dateToMiliseconds) {
+            //localStorage.removeItem('sessionModel');
+            //this.accountServiceHandler.wyloguj();
+            this.wyloguj();
+          } else {
+            result = true;
           }
+
+          //result = true;
+          return result;
         }
+
       }
     }
     //alert('guard 4');
@@ -98,6 +93,6 @@ export class AuthGuard implements CanActivate {
       });
     }
   }
-   
+
 
 }

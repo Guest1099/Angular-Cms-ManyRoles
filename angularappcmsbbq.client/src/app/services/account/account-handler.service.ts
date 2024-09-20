@@ -223,6 +223,7 @@ export class AccountHandlerService {
 
 
 /*
+  
   public login(form: FormGroup): void {
 
     // Pobranie wartości z kontrolek
@@ -235,9 +236,9 @@ export class AccountHandlerService {
       email: email,
       password: password,
       token: '',
-      newToken: '',
+      //newToken: '',
       expirationTimeToken: '',
-      expirationTimeNewToken: '',
+      //expirationTimeNewToken: '',
       role: '',
       //dataZalogowania: '',
       //dataWylogowania: ''
@@ -249,28 +250,35 @@ export class AccountHandlerService {
 
         if (result.success) {
 
-          // zapisanie w sesji zalogowanego użytkownika
-          let sessionModel = {
-            model: result.model as LoginViewModel,
-            isLoggedIn: true,
-            role: result.model.role,
-            //dataZalogowania: result.model.dataZalogowania,
-            //dataWylogowania: result.model.dataWylogowania
-          };
-          localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
+          let loginViewModel = result.model as LoginViewModel;
+          if (loginViewModel) {
 
-          this.zalogowanyUserEmail = result.model.email;
-          this.isLoggedIn = true;
-          this.logowanie = false;
-          this.role = result.model.role ? result.model.role : "";
+            // zapisanie w sesji zalogowanego użytkownika
+            let sessionModel = {
+              isLoggedIn: true,
+              email: loginViewModel.email,
+              role: loginViewModel.role,
+              token: loginViewModel.token,
+              expirationTimeToken: loginViewModel.expirationTimeToken
+              //dataZalogowania: result.model.dataZalogowania,
+              //dataWylogowania: result.model.dataWylogowania
+            };
+            localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
+
+            this.zalogowanyUserEmail = loginViewModel.email;
+            this.role = loginViewModel.role == null ? '' : loginViewModel.role;
+            this.isLoggedIn = true;
+            this.logowanie = false;
 
 
 
-          form.reset();
-          this.router.navigate(['admin/users']);
-          //this.router.navigate(['admin/users']).then(() => location.reload());
+            form.reset();
+            this.router.navigate(['admin/users']);
+            //this.router.navigate(['admin/users']).then(() => location.reload());
 
-          this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${result.model.email}`);
+            this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${result.model.email}`);
+          }
+          
         } else {
           this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
           localStorage.removeItem('sessionModel');
@@ -287,13 +295,15 @@ export class AccountHandlerService {
       }
     });
   }
+
 */
 
 
 
+  // Zmienna once oznacza, że metodę można jeden raz wywołać
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
-  public wyloguj(): void {
+  wyloguj(): void {
     if (this.once) {
       this.once = false;
       localStorage.removeItem('sessionModel');
@@ -308,11 +318,10 @@ export class AccountHandlerService {
           this.router.navigate(['admin']).then(() => location.reload());
         },
         error: (error: Error) => {
-          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. FROM INTERCEPTOR ${InfoService.info('AccountHandlerService', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
+          alert('Wyloguj from dashboard');
         }
       });
     }
-
   }
 
 
@@ -336,25 +345,27 @@ export class AccountHandlerService {
 
 
 
-  // Sprawdza czy czas tokenu upłynął
-  public isTimeExpiredToken (): boolean {
+  // Sprawdza czy czas tokena upłynął
+  public isTimeExpiredToken(): boolean {
     let result = false;
-     
+
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
       if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
-        if (loginViewModel) {
-          let token = loginViewModel.token;  
-          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
- 
-          let dateToMiliseconds = this.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-           
-          if (Date.now() >= dateToMiliseconds) {
-            result = true;
-          }
+        let token = sm.token;
+        //let newToken = loginViewModel.newToken;
+
+        let expirationTimeToken = sm.expirationTimeToken == null ? '' : sm.expirationTimeToken; //pierwszy token
+        //let expirationTimeNewToken = sm.expirationTimeNewToken == null ? '' : sm.expirationTimeNewToken; // drugi token
+
+        let dateToMiliseconds !: number;
+        dateToMiliseconds = this.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+
+        if (Date.now() >= dateToMiliseconds) {
+          result = true;
         }
+
       }
     }
     return result;
