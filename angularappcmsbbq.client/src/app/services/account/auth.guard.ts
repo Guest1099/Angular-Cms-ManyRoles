@@ -106,7 +106,7 @@ export class AuthGuard implements CanActivate {
 
 /*
           let x = Date.now() > sm.expirationTimeToken;
-           
+            
           if (x) { 
             //localStorage.removeItem('sessionModel');
             //this.accountServiceHandler.wyloguj();
