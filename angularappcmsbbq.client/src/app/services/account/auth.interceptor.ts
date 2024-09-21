@@ -55,7 +55,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
         if (checkDate) {
-          localStorage.removeItem('sessionModel');
+          //localStorage.removeItem('sessionModel');
           //alert('token time expired')
           //this.accountHandlerService.wyloguj();
           this.wyloguj();
@@ -76,11 +76,18 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-
-        if (error.status === 401) {
+        if (error.ok) {
+          alert('ok');
+        }
+        else if (error.error) {
+          //alert('error');
+          this.wyloguj();
+        }
+        else if (error.status === 401) {
           //localStorage.removeItem('sessionModel');
           //this.accountHandlerService.wyloguj();
           //alert('401');
+          this.wyloguj();
         }
 
         return throwError(error);
