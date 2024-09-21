@@ -11,6 +11,7 @@ export class LocalStorageSessionService {
     //private accountHandlerService: AccountHandlerService
   ) { }
 
+/*
 
   public sessionStorageIsNotEmpty(): boolean {
     let sessionModel = localStorage.getItem('sessionModel');
@@ -46,21 +47,14 @@ export class LocalStorageSessionService {
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
       if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
-        if (loginViewModel) {
-          let token = loginViewModel.token;
-          let newToken = loginViewModel.newToken;
+        let token = sm.token == null ? '' : sm.token;
+        let expirationTimeToken = sm.expirationTimeToken == null ? '' : sm.expirationTimeToken; //pierwszy token
 
-          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
-          let expirationTimeNewToken = loginViewModel.expirationTimeNewToken == null ? '' : loginViewModel.expirationTimeNewToken; // drugi token
+        let dateToMiliseconds !: number;
+        dateToMiliseconds = this.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
 
-          let dateToMiliseconds !: number;
-          dateToMiliseconds = this.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-
-
-          if (Date.now() >= dateToMiliseconds) {
-            result = true;
-          }
+        if (Date.now() >= dateToMiliseconds) {
+          result = true;
         }
       }
     }
@@ -77,10 +71,7 @@ export class LocalStorageSessionService {
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
       if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
-        if (loginViewModel) {
-          token = loginViewModel.token == null ? '' : loginViewModel.token;
-        }
+        token = sm.token == null ? '' : sm.token;
       }
     }
     return token;
@@ -123,6 +114,6 @@ export class LocalStorageSessionService {
     let date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute), parseInt(second));
     return date.getTime(); // data w milisekundach
   }
-
+*/
 
 }

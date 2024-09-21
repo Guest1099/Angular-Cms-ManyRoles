@@ -33,7 +33,6 @@ export class DashboardComponent implements OnInit {
 
 
 
-
   constructor(
     private fb: FormBuilder,
     public accountService: AccountService,
@@ -76,10 +75,13 @@ export class DashboardComponent implements OnInit {
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
-      this.zalogowanyUserEmail = sm.model.email;
-      this.isLoggedIn = sm.isLoggedIn;
-      this.role = sm.role;
+      if (sm) {
+        this.zalogowanyUserEmail = sm.email;
+        this.isLoggedIn = sm.isLoggedIn;
+        this.role = sm.role;
+      }
     }
+
 
   }
 
@@ -107,12 +109,8 @@ export class DashboardComponent implements OnInit {
       email: email,
       password: password,
       token: '',
-      newToken: '',
       expirationTimeToken: '',
-      expirationTimeNewToken: '',
       role: '',
-      //dataZalogowania: '',
-      //dataWylogowania: ''
     };
 
     this.logowanie = true;
@@ -120,29 +118,34 @@ export class DashboardComponent implements OnInit {
       next: ((result: TaskResult<LoginViewModel>) => {
 
         if (result.success) {
-           
-          // zapisanie w sesji zalogowanego użytkownika
-          let sessionModel = {
-            model: result.model as LoginViewModel,
-            isLoggedIn: true,
-            role: result.model.role,
-            //dataZalogowania: result.model.dataZalogowania,
-            //dataWylogowania: result.model.dataWylogowania
-          };             
-          localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
 
-          this.zalogowanyUserEmail = result.model.email;
-          this.isLoggedIn = true;
-          this.logowanie = false;
-          this.role = result.model.role ? result.model.role : "";
+          let loginViewModel = result.model as LoginViewModel;
+          if (loginViewModel) {
+
+            // zapisanie w sesji zalogowanego użytkownika
+            let sessionModel = {
+              isLoggedIn: true,
+              email: loginViewModel.email,
+              role: loginViewModel.role,
+              token: loginViewModel.token,
+              expirationTimeToken: loginViewModel.expirationTimeToken
+              //expirationTimeToken: new Date().setSeconds (60)
+            };
+            localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
+
+            this.zalogowanyUserEmail = loginViewModel.email;
+            this.role = loginViewModel.role == null ? '' : loginViewModel.role;
+            this.isLoggedIn = true;
+            this.logowanie = false;
 
 
+            form.reset();
+            this.router.navigate(['admin/users']);
+            //this.router.navigate(['admin/users']).then(() => location.reload());
+
+            this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${loginViewModel.email}`);
+          }
           
-          form.reset();
-          this.router.navigate(['admin/users']);
-          //this.router.navigate(['admin/users']).then(() => location.reload());
-
-          this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${result.model.email}`);
         } else {
           this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
           localStorage.removeItem('sessionModel');
@@ -162,6 +165,7 @@ export class DashboardComponent implements OnInit {
 
 
 
+  // Zmienna once oznacza, że metodę można jeden raz wywołać
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
   wyloguj(): void {

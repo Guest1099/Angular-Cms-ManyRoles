@@ -32,15 +32,17 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let sessionModel = localStorage.getItem('sessionModel') || '';
+    let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
-      let email = sm.model.email;
+      if (sm) {
+        let email = sm.email;
 
-      this.getUserByEmail(email);
+        this.getUserByEmail(email);
 
 
-      this.getAllRoles();
+        this.getAllRoles();
+      }
     }
   }
   
@@ -76,7 +78,7 @@ export class UpdateComponent implements OnInit {
         return result;
       }),
       error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
   }
@@ -93,7 +95,7 @@ export class UpdateComponent implements OnInit {
         return result;
       }),
       error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
   }

@@ -3996,6 +3996,10 @@ ul {
   width: 140px;
 }
 
+.administratorColumn {
+    display: none;
+}
+
 
 /* Top navigation ----------------------------------------------------------------------------------- */
 .toolBarRow {
@@ -4107,6 +4111,3 @@ ul {
 .hidePreloader {
   display: none;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

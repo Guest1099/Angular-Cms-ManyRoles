@@ -27,7 +27,7 @@ import { UpdateComponent } from './components/dashboard/account/update/update.co
 import { ChangePasswordComponent } from './components/dashboard/account/change-password/change-password.component';
 import { RejestratorLogowaniaComponent } from './components/dashboard/rejestrator-logowania/rejestrator-logowania.component';
 import { RejestratorLogowaniaEditComponent } from './components/dashboard/rejestrator-logowania/rejestrator-logowania-edit/rejestrator-logowania-edit.component';
-
+import { ChangeEmailComponent } from './components/dashboard/account/change-email/change-email.component';
 
 
 
@@ -177,9 +177,17 @@ const routes: Routes = [
         data: { expectedRoles: ['Administrator'] }
       },
 
+
+
       {
         path: 'update',
         component: UpdateComponent,
+        canActivate: [AuthGuard],
+        data: { expectedRoles: ['Administrator', 'User'] }
+      },
+      {
+        path: 'changeEmail',
+        component: ChangeEmailComponent,
         canActivate: [AuthGuard],
         data: { expectedRoles: ['Administrator', 'User'] }
       },
@@ -214,10 +222,6 @@ const routes: Routes = [
     ]
   }
 ];
-
-
-
-
 
 
 

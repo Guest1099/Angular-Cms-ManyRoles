@@ -5,15 +5,17 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "angularappcmsbbq.client", "angularappcmsbbq.client\angularappcmsbbq.client.esproj", "{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Application\Application.csproj", "{FD40345C-482C-41AF-A113-6FA882270AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Application\Application.csproj", "{CCD4AAED-096D-4CC6-812B-813F450A3FD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Data\Data.csproj", "{F39A8218-D8A9-4B44-B259-061937D4A10F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Data\Data.csproj", "{230141E3-E4E1-48DF-AF77-256DFC70271B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\WebApplication1\WebApplication1.csproj", "{4F972F6A-A60C-487C-9337-8A81695B6205}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\WebApplication1\WebApplication1.csproj", "{D1ADE428-C358-4876-BE22-29A723DCA949}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks", "..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Frameworks\Frameworks.csproj", "{064E5488-72CD-4AD1-8976-BCC8FF957BD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Frameworks\Frameworks.csproj", "{9A09AA35-E0DB-4D91-8575-D1D9598E8842}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Domain\Domain.csproj", "{318CA7F4-466D-4562-9819-9F0AAA12C00A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Domain\Domain.csproj", "{8B71351D-6B73-4438-92FF-5A32BE670BDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{13C533F3-BEDB-4EFA-B3C9-29E72F17EE24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,26 +29,30 @@ Global
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{FD40345C-482C-41AF-A113-6FA882270AA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD40345C-482C-41AF-A113-6FA882270AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD40345C-482C-41AF-A113-6FA882270AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD40345C-482C-41AF-A113-6FA882270AA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F39A8218-D8A9-4B44-B259-061937D4A10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F39A8218-D8A9-4B44-B259-061937D4A10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F39A8218-D8A9-4B44-B259-061937D4A10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F39A8218-D8A9-4B44-B259-061937D4A10F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F972F6A-A60C-487C-9337-8A81695B6205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F972F6A-A60C-487C-9337-8A81695B6205}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F972F6A-A60C-487C-9337-8A81695B6205}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F972F6A-A60C-487C-9337-8A81695B6205}.Release|Any CPU.Build.0 = Release|Any CPU
-		{064E5488-72CD-4AD1-8976-BCC8FF957BD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{064E5488-72CD-4AD1-8976-BCC8FF957BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{064E5488-72CD-4AD1-8976-BCC8FF957BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{064E5488-72CD-4AD1-8976-BCC8FF957BD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{318CA7F4-466D-4562-9819-9F0AAA12C00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{318CA7F4-466D-4562-9819-9F0AAA12C00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{318CA7F4-466D-4562-9819-9F0AAA12C00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{318CA7F4-466D-4562-9819-9F0AAA12C00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCD4AAED-096D-4CC6-812B-813F450A3FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCD4AAED-096D-4CC6-812B-813F450A3FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCD4AAED-096D-4CC6-812B-813F450A3FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCD4AAED-096D-4CC6-812B-813F450A3FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{230141E3-E4E1-48DF-AF77-256DFC70271B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{230141E3-E4E1-48DF-AF77-256DFC70271B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{230141E3-E4E1-48DF-AF77-256DFC70271B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{230141E3-E4E1-48DF-AF77-256DFC70271B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1ADE428-C358-4876-BE22-29A723DCA949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1ADE428-C358-4876-BE22-29A723DCA949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1ADE428-C358-4876-BE22-29A723DCA949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1ADE428-C358-4876-BE22-29A723DCA949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A09AA35-E0DB-4D91-8575-D1D9598E8842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A09AA35-E0DB-4D91-8575-D1D9598E8842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A09AA35-E0DB-4D91-8575-D1D9598E8842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A09AA35-E0DB-4D91-8575-D1D9598E8842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B71351D-6B73-4438-92FF-5A32BE670BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B71351D-6B73-4438-92FF-5A32BE670BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B71351D-6B73-4438-92FF-5A32BE670BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B71351D-6B73-4438-92FF-5A32BE670BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13C533F3-BEDB-4EFA-B3C9-29E72F17EE24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13C533F3-BEDB-4EFA-B3C9-29E72F17EE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13C533F3-BEDB-4EFA-B3C9-29E72F17EE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13C533F3-BEDB-4EFA-B3C9-29E72F17EE24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

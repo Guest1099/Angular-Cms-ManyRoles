@@ -73,6 +73,7 @@ export class CategoriesHandlerService {
 
 
   public getAll(): void {
+    //alert('1');
     this.categoriesService.getAll().subscribe({
       next: ((result: TaskResult<Category[]>) => {
         if (result.success) {
@@ -80,6 +81,7 @@ export class CategoriesHandlerService {
           this.categories = result.model as Category[];
           this.dataSource.data = result.model as Category[];
 
+          //alert('2');
 
           if (this.categories.length > 0) {
             this.firstPositionStyle.display = 'none';
@@ -89,9 +91,11 @@ export class CategoriesHandlerService {
 
           this.preloaderStyle.display = 'none';
 
+          //alert('3');
         } else {
           this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
         }
+        //alert('4');
         return result;
       }),
       error: (error: Error) => {

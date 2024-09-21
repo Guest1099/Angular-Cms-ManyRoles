@@ -77,6 +77,7 @@ import { UserDeleteComponent } from './components/dashboard/users/user-delete/us
 import { UserEditComponent } from './components/dashboard/users/user-edit/user-edit.component';
 import { AccountService } from '../../services/account/account.service';
 import { AuthInterceptor } from '../../services/account/auth.interceptor';
+import { ChangeEmailComponent } from './components/dashboard/account/change-email/change-email.component';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { AuthInterceptor } from '../../services/account/auth.interceptor';
     UpdateComponent,
     RejestratorLogowaniaComponent,
     RejestratorLogowaniaDeleteComponent,
-    RejestratorLogowaniaEditComponent, 
+    RejestratorLogowaniaEditComponent,
+    ChangeEmailComponent, 
   ],
   imports: [
     CommonModule,
@@ -162,12 +164,6 @@ import { AuthInterceptor } from '../../services/account/auth.interceptor';
     CdkStepperModule
   ],
   providers: [
-    /*AccountService, {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
-    provideAnimationsAsync(),*/
   ]
 })
 export class AdminModule { }

@@ -13,7 +13,7 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public accountService: AccountHandlerService
+    public accountHandlerService: AccountHandlerService
   ) { }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApplicationUser } from '../../models/applicationUser';
 import { ChangePasswordViewModel } from '../../models/changePasswordViewModel';
+import { ChangeEmailViewModel } from '../../models/changeEmailViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -44,20 +45,28 @@ export class AccountService {
     return this.http.post<any>(`${this.api}/updateAccount`, user);
   }
 
+  changeEmail(changeEmailViewModel: ChangeEmailViewModel): Observable<any> {
+    return this.http.post<any>(`${this.api}/changeEmail`, changeEmailViewModel);
+  }
+
+  changePassword(changePasswordViewModel: ChangePasswordViewModel): Observable<any> {
+    return this.http.post<any>(`${this.api}/changePassword`, changePasswordViewModel);
+  }
+
   deleteAccountByUserId(userId: string): Observable<any> {
     return this.http.delete<any>(`${this.api}/deleteAccountByUserId/${userId}`);
   }
-
-  changePassword(user: ChangePasswordViewModel): Observable<any> {
-    return this.http.post<any>(`${this.api}/changePassword`, user);
-  }
-
+  
   getUserRoles(email: string): Observable<any> {
     return this.http.get<any>(`${this.api}/getUserRoles/${email}`);
   }
 
   userInRole(email: string, roleName: string): Observable<any> {
     return this.http.get<any>(`${this.api}/userInRole/${email}/${roleName}`);
+  }
+
+  tokenTimeExpired(): Observable<any> {
+    return this.http.post<any>(`${this.api}/tokenTimeExpired`, null);
   }
 
 }

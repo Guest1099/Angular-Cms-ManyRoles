@@ -111,16 +111,22 @@
                                         Aktualizuj dane
                                     </button>
 
+                                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-menu-item routerLink="changeEmail">
+                                        <mat-icon>update</mat-icon>
+                                        Zmień email
+                                    </button>
+
                                     <button *ngIf="role == 'Administrator' || role == 'User'" mat-menu-item routerLink="changePassword">
                                         <mat-icon>update</mat-icon>
                                         Zmień hasło
                                     </button>
+
                                     <!--
-                                        <button mat-menu-item (click)="accountHandlerService.wyloguj ()">
-                                            <mat-icon>logout</mat-icon>
-                                            wyloguj
-                                        </button>
-     -->
+                                       <button mat-menu-item (click)="accountHandlerService.wyloguj ()">
+                                           <mat-icon>logout</mat-icon>
+                                           wyloguj
+                                       </button>
+    -->
 
                                     <button mat-menu-item (click)="wyloguj ()">
                                         <mat-icon>logout</mat-icon>

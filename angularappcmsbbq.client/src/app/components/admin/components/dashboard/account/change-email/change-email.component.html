@@ -3,25 +3,25 @@
 <div class="db m-10 w-500px" style="margin-bottom: 100px;">
 
     <p class="header">
-        Aktualizacja hasła
+        Aktualizacja adresu email
     </p>
     <p class="subHeader">
-        Wypełnij wszystkie pola aby móc zmienić swoje hasło
+        Wypełnij wszystkie pola aby móc zmienić email
     </p>
 
     <div mat-dialog-content>
         <form [formGroup]="formGroup" class="w-500px db">
 
             <mat-form-field appearance="outline">
-                <mat-label>Poprzednie hasło</mat-label>
-                <input matInput type="password" formControlName="oldPassword" />
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" />
                 <mat-icon matSuffix>login</mat-icon>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="mb-20">
-                <mat-label>Nowe hasło</mat-label>
-                <input matInput type="password" formControlName="newPassword" />
-                <mat-icon matSuffix>password</mat-icon>
+                <mat-label>Nowy email</mat-label>
+                <input matInput formControlName="newEmail" />
+                <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
 
         </form>
@@ -40,8 +40,8 @@
             </button>
             <button mat-raised-button
                     color="primary"
-                    (click)="accountHandlerService.changePassword(formGroup)"
-                    [disabled]="accountHandlerService.isValidChangePassword(formGroup)"
+                    (click)="accountHandlerService.changeEmail(formGroup)"
+                    [disabled]="accountHandlerService.isValidChangeEmail(formGroup)"
                     mat-dialog-close>
                 <mat-icon>
                     timer

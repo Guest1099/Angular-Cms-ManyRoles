@@ -13,6 +13,7 @@ import { RejestratorLogowaniaHandlerService } from '../rejestratorLogowania/reje
 import { RejestratorLogowaniaService } from '../rejestratorLogowania/rejestrator-logowania.service';
 import { RejestratorLogowania } from '../../models/rejestratorLogowania';
 import { LoginViewModel } from '../../models/loginViewModel';
+import { ChangeEmailViewModel } from '../../models/changeEmailViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -182,13 +183,49 @@ export class AccountHandlerService {
 
 
 
+
+
+
+  public changeEmail(form: FormGroup): void {
+
+    let changeEmailViewModel: ChangeEmailViewModel = {
+      email: form.controls['email'].value,
+      newEmail: form.controls['newEmail'].value
+    };
+
+    this.zapisywanie = true;
+    this.accountService.changeEmail(changeEmailViewModel).subscribe({
+      next: ((result: TaskResult<ChangeEmailViewModel>) => {
+        if (result.success) {
+          this.snackBarService.setSnackBar(`Email został poprawnie zmieniony`);
+          form.reset();
+          this.zapisywanie = false;
+        } else {
+          this.snackBarService.setSnackBar(`Email nie został zmieniony. ${result.message}`);
+          form.reset();
+          this.zapisywanie = false;
+        }
+        return result;
+      }),
+      error: (error: Error) => {
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'changePassword')}. Name: ${error.name}. Message: ${error.message}`);
+        this.zapisywanie = false;
+      }
+    });
+  }
+
+
+
+
+
+
   public changePassword(form: FormGroup): void {
 
     // pobranie danych użytkownika z sesji
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
-      let email = sm.model.email;
+      let email = sm.email;
 
       if (email.length > 0) {
         let changePasswordViewModel: ChangePasswordViewModel = {
@@ -223,6 +260,7 @@ export class AccountHandlerService {
 
 
 /*
+  
   public login(form: FormGroup): void {
 
     // Pobranie wartości z kontrolek
@@ -235,9 +273,9 @@ export class AccountHandlerService {
       email: email,
       password: password,
       token: '',
-      newToken: '',
+      //newToken: '',
       expirationTimeToken: '',
-      expirationTimeNewToken: '',
+      //expirationTimeNewToken: '',
       role: '',
       //dataZalogowania: '',
       //dataWylogowania: ''
@@ -249,28 +287,35 @@ export class AccountHandlerService {
 
         if (result.success) {
 
-          // zapisanie w sesji zalogowanego użytkownika
-          let sessionModel = {
-            model: result.model as LoginViewModel,
-            isLoggedIn: true,
-            role: result.model.role,
-            //dataZalogowania: result.model.dataZalogowania,
-            //dataWylogowania: result.model.dataWylogowania
-          };
-          localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
+          let loginViewModel = result.model as LoginViewModel;
+          if (loginViewModel) {
 
-          this.zalogowanyUserEmail = result.model.email;
-          this.isLoggedIn = true;
-          this.logowanie = false;
-          this.role = result.model.role ? result.model.role : "";
+            // zapisanie w sesji zalogowanego użytkownika
+            let sessionModel = {
+              isLoggedIn: true,
+              email: loginViewModel.email,
+              role: loginViewModel.role,
+              token: loginViewModel.token,
+              expirationTimeToken: loginViewModel.expirationTimeToken
+              //dataZalogowania: result.model.dataZalogowania,
+              //dataWylogowania: result.model.dataWylogowania
+            };
+            localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
+
+            this.zalogowanyUserEmail = loginViewModel.email;
+            this.role = loginViewModel.role == null ? '' : loginViewModel.role;
+            this.isLoggedIn = true;
+            this.logowanie = false;
 
 
 
-          form.reset();
-          this.router.navigate(['admin/users']);
-          //this.router.navigate(['admin/users']).then(() => location.reload());
+            form.reset();
+            this.router.navigate(['admin/users']);
+            //this.router.navigate(['admin/users']).then(() => location.reload());
 
-          this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${result.model.email}`);
+            this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${result.model.email}`);
+          }
+          
         } else {
           this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
           localStorage.removeItem('sessionModel');
@@ -287,10 +332,12 @@ export class AccountHandlerService {
       }
     });
   }
+
 */
 
 
 
+  // Zmienna once oznacza, że metodę można jeden raz wywołać
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
   public wyloguj(): void {
@@ -308,11 +355,10 @@ export class AccountHandlerService {
           this.router.navigate(['admin']).then(() => location.reload());
         },
         error: (error: Error) => {
-          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. FROM INTERCEPTOR ${InfoService.info('AccountHandlerService', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
+          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandler', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
         }
       });
     }
-
   }
 
 
@@ -335,33 +381,63 @@ export class AccountHandlerService {
 
 
 
-
-  // Sprawdza czy czas tokenu upłynął
-  public isTimeExpiredToken (): boolean {
+  public isTimeExpiredToken(): boolean {
     let result = false;
-     
+
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
       if (sm) {
-        let loginViewModel = sm.model as LoginViewModel;
-        if (loginViewModel) {
-          let token = loginViewModel.token;  
-          let expirationTimeToken = loginViewModel.expirationTimeToken == null ? '' : loginViewModel.expirationTimeToken; //pierwszy token
- 
-          let dateToMiliseconds = this.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-           
-          if (Date.now() >= dateToMiliseconds) {
-            result = true;
-          }
+        let token = sm.token;
+        //let newToken = loginViewModel.newToken;
+
+        let expirationTimeToken = sm.expirationTimeToken == null ? '' : sm.expirationTimeToken; //pierwszy token
+        //let expirationTimeNewToken = sm.expirationTimeNewToken == null ? '' : sm.expirationTimeNewToken; // drugi token
+
+        let dateToMiliseconds !: number;
+        dateToMiliseconds = this.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
+
+        if (Date.now() >= dateToMiliseconds) {
+          result = true;
         }
+
       }
     }
     return result;
   }
 
-   
 
+
+  private res: boolean = false;
+  public tokenTimeExpired(): boolean {
+    //alert('1');
+    // let res = false;
+
+    localStorage.removeItem('userToken');
+    this.accountService.tokenTimeExpired().subscribe({
+      next: ((result: TaskResult<boolean>) => {
+        //alert('2');
+        if (result.success) {
+          this.res = true;
+          //alert('success');
+        } else {
+          this.res = false;
+          //alert('czas tokenu jeszcze nie upłynął');
+        }
+
+        return result;
+      }),
+      error: (error: Error) => {
+        this.res = false;
+        alert('error');
+      }
+    });
+
+    return this.res;
+  }
+
+   
+/*
   // Przekształca datę np. taką "12.12.2024 10:10:10" na milisekundy
   public changeDateToMiliseconds(dateString: string): number {
     let [datePart, timePart] = dateString.split(' ');
@@ -371,9 +447,11 @@ export class AccountHandlerService {
     let date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute), parseInt(second));
     return date.getTime(); // data w milisekundach
   }
+  */
 
 
-/*
+
+
   // Przekształca datę np. taką "12.12.2024 10:10:10" na milisekundy
   public changeDateToMiliseconds(dateString: string): number {
     let result : number = 0;
@@ -407,7 +485,19 @@ export class AccountHandlerService {
     }
     return result;
   }
-*/
+
+
+
+  public convertMilisecondToDate(miliseconds: number): string {
+    let result = '';
+    let date = new Date(miliseconds);
+    let formattedDate = date.toLocaleString();
+    let formattedDateSplit = formattedDate.split(',');
+    if (formattedDateSplit.length > 0) {
+      result = formattedDateSplit[0] + "" + formattedDateSplit[1];
+    }
+    return result;
+  }
 
  
 
@@ -527,6 +617,24 @@ export class AccountHandlerService {
       return true;
     }
   }
+
+
+
+
+
+  public isValidChangeEmail(form: FormGroup): boolean {
+    if (
+      form.controls['email'].touched && form.controls['email'].dirty && form.controls['email'].valid &&
+      form.controls['newEmail'].touched && form.controls['newEmail'].dirty && form.controls['newEmail'].valid
+    ) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+
 
 
   public isValidChangePassword(form: FormGroup): boolean {
