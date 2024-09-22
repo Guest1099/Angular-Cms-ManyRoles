@@ -79,8 +79,8 @@
 
 
             <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef class="tableColumnAction">Actions</th>
-                <td mat-cell *matCellDef="let element" class="w-200px">
+                <th mat-header-cell *matHeaderCellDef class="tableColumnAction administratorColumn">Actions</th>
+                <td mat-cell *matCellDef="let element" class="administratorColumn">
 
                     <div *ngIf="accountService.role == 'Administrator'">
                         <button mat-button [routerLink]="['productEdit', element.productId]">

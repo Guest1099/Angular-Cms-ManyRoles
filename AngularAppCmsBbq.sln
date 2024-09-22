@@ -5,6 +5,16 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "angularappcmsbbq.client", "angularappcmsbbq.client\angularappcmsbbq.client.esproj", "{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\WebApplication1\WebApplication1.csproj", "{165C879D-7FE1-473B-9C18-44C11A4A0B7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Frameworks\Frameworks.csproj", "{989FC601-F2AA-4795-B50D-CB426875B7DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Data\Data.csproj", "{94EE5911-DFE6-4360-93C9-7EC6E277CC88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Application\Application.csproj", "{9E6E1703-9615-41B2-9CC7-995AB3061A39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Domain\Domain.csproj", "{8B837FB5-75A2-4603-93EF-44866A28E8EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +27,26 @@ Global
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{165C879D-7FE1-473B-9C18-44C11A4A0B7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{165C879D-7FE1-473B-9C18-44C11A4A0B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{165C879D-7FE1-473B-9C18-44C11A4A0B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{165C879D-7FE1-473B-9C18-44C11A4A0B7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{989FC601-F2AA-4795-B50D-CB426875B7DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{989FC601-F2AA-4795-B50D-CB426875B7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{989FC601-F2AA-4795-B50D-CB426875B7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{989FC601-F2AA-4795-B50D-CB426875B7DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94EE5911-DFE6-4360-93C9-7EC6E277CC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94EE5911-DFE6-4360-93C9-7EC6E277CC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94EE5911-DFE6-4360-93C9-7EC6E277CC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94EE5911-DFE6-4360-93C9-7EC6E277CC88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E6E1703-9615-41B2-9CC7-995AB3061A39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E6E1703-9615-41B2-9CC7-995AB3061A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E6E1703-9615-41B2-9CC7-995AB3061A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E6E1703-9615-41B2-9CC7-995AB3061A39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B837FB5-75A2-4603-93EF-44866A28E8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B837FB5-75A2-4603-93EF-44866A28E8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B837FB5-75A2-4603-93EF-44866A28E8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B837FB5-75A2-4603-93EF-44866A28E8EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
