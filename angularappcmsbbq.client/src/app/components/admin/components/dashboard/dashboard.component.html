@@ -202,7 +202,9 @@
                     <button mat-raised-button
                             color="primary"
                             (click)="login(formGroupLogin)"
-                            [disabled]="accountHandlerService.asTouchedDirtyLogin (formGroupLogin)">
+                            [disabled]="asTouchedDirtyLogin (formGroupLogin)"
+                            [ngStyle]="logowanieStyle">
+                            Login
                         <mat-icon>login</mat-icon>
                     </button>
                     <mat-spinner diameter="32" *ngIf="logowanie" class="p"></mat-spinner>

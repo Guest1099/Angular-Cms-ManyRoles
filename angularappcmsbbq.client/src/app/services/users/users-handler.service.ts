@@ -128,9 +128,9 @@ export class UsersHandlerService {
 
 
 
-  public getUserByIdViaUsersMap(userId: string): string {
+  public getUserByIdViaUsersMap(userId: any): string {
     let result = '';
-    if (userId.length > 0) {
+    if (!userId) {
       let userEmail = this.usersMap.get(userId);
       if (userEmail) {
         result = userEmail;

@@ -40,11 +40,6 @@ export class AuthInterceptor implements HttpInterceptor {
         let role = sm.role;
         let token = sm.token;
         let expirationTimeToken = sm.expirationTimeToken;
-/*
-        let expirationTimeToken = sm.expirationTimeToken == null ? '' : sm.expirationTimeToken; // pierwszy token
-        let dateToMiliseconds !: number;
-        dateToMiliseconds = this.accountHandlerService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-*/
 
 
         // zamiana daty na format 2024-12-12T12:12:00
@@ -56,7 +51,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         if (checkDate) {
           //localStorage.removeItem('sessionModel');
-          //alert('token time expired')
+          alert('token time expired')
           //this.accountHandlerService.wyloguj();
           this.wyloguj();
         //........................................ tutaj można odświeżyć lub przekierować na stronę
@@ -77,16 +72,13 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.ok) {
-          alert('ok');
         }
         else if (error.error) {
-          //alert('error');
-          this.wyloguj();
+          this.wyloguj2();
         }
         else if (error.status === 401) {
           //localStorage.removeItem('sessionModel');
           //this.accountHandlerService.wyloguj();
-          //alert('401');
           this.wyloguj();
         }
 
@@ -121,6 +113,23 @@ export class AuthInterceptor implements HttpInterceptor {
     }
   }
 
+
+
+  // Metoda odpowiedzialna za wylogowanie
+  private wyloguj2(): void {
+    if (this.once) {
+      this.once = false;
+      localStorage.removeItem('sessionModel');
+      this.accountService.logout().subscribe({
+        next: () => {
+          this.router.navigate(['admin']).then(() => location.reload());
+        },
+        error: (error: Error) => {
+          alert('Wyloguj from interceptor');
+        }
+      });
+    }
+  }
 
 
 

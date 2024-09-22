@@ -31,20 +31,31 @@ export class DashboardComponent implements OnInit {
   logowanie: boolean = false;
   isLoggedIn: boolean = false;
 
-
-
+/*
+  logowanieStyle: any = {
+    'backgroundColor': 'rgb(250,250,250)',
+    'cursor': 'pointer',
+    'pointerEvents': 'auto'
+  }
+*/
   constructor(
     private fb: FormBuilder,
     public accountService: AccountService,
     public accountHandlerService: AccountHandlerService,
     public roleService: RolesHandlerService,
+    private rejestratorLogowaniaService: RejestratorLogowaniaHandlerService,
     private router: Router,
     private snackBarService: SnackBarService,
   ) { }
 
 
   ngOnInit(): void { 
-
+/*
+    // ustawienie stylu dla przycisku
+    this.logowanieStyle.backgroundColor = "rgb(250,250,250)";
+    this.logowanieStyle.cursor = "pointer";
+    this.logowanieStyle.pointerEvents = "auto";
+*/
 
     // formularz logowania
     this.formGroupLogin = this.fb.group({
@@ -72,6 +83,8 @@ export class DashboardComponent implements OnInit {
     this.formGroupRegister.markAllAsTouched();
 
 
+
+
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
@@ -81,7 +94,6 @@ export class DashboardComponent implements OnInit {
         this.role = sm.role;
       }
     }
-
 
   }
 
@@ -106,12 +118,19 @@ export class DashboardComponent implements OnInit {
 
     // Przekazanie obiektu logowania do metody 
     let loginViewModel: LoginViewModel = {
+      userId: '',
       email: email,
       password: password,
       token: '',
       expirationTimeToken: '',
       role: '',
     };
+
+/*
+    this.logowanieStyle.backgroundColor = "rgb(200,200,200)";
+    this.logowanieStyle.cursor = "pointer";
+    this.logowanieStyle.pointerEvents = "none";
+*/
 
     this.logowanie = true;
     this.accountService.login(loginViewModel).subscribe({
@@ -125,24 +144,30 @@ export class DashboardComponent implements OnInit {
             // zapisanie w sesji zalogowanego użytkownika
             let sessionModel = {
               isLoggedIn: true,
+              userId: loginViewModel.userId,
               email: loginViewModel.email,
               role: loginViewModel.role,
               token: loginViewModel.token,
               expirationTimeToken: loginViewModel.expirationTimeToken
-              //expirationTimeToken: new Date().setSeconds (60)
             };
             localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
 
             this.zalogowanyUserEmail = loginViewModel.email;
             this.role = loginViewModel.role == null ? '' : loginViewModel.role;
             this.isLoggedIn = true;
-            this.logowanie = false;
 
 
             form.reset();
             this.router.navigate(['admin/users']);
             //this.router.navigate(['admin/users']).then(() => location.reload());
 
+
+            // rejestrator logowania, tworzy wpis w bazie danych kiedy użytkownik był zalogowany
+            //let userId = loginViewModel.userId == null ? '' : loginViewModel.userId;
+            //this.rejestratorLogowaniaService.create(userId);
+
+            
+            this.logowanie = false;
             this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${loginViewModel.email}`);
           }
           
@@ -157,10 +182,13 @@ export class DashboardComponent implements OnInit {
       }),
       error: (error: Error) => {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('Dashboard', 'login')}. Name: ${error.name}. Message: ${error.message}`);
-        localStorage.removeItem('sessionModel');
+        //localStorage.removeItem('sessionModel');
         this.logowanie = false;
       }
     });
+
+
+
   }
 
 
@@ -190,5 +218,21 @@ export class DashboardComponent implements OnInit {
   }
 
    
+  
+  public asTouchedDirtyLogin(form: FormGroup): boolean {
+    let result = false;
+    if (
+      form.controls['emailLogin'].valid &&
+      form.controls['passwordLogin'].valid
+    ) {
+      result = false;
+    }
+    else {
+      result = true;
+    }
+
+    return result && !this.logowanie;
+  }
+
 
 }
