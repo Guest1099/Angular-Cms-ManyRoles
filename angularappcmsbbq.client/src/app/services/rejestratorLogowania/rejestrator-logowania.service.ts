@@ -28,6 +28,7 @@ export class RejestratorLogowaniaService {
     return this.http.post<any>(`${this.api}`, object);
   }
 
+
   edit(id: string, object: RejestratorLogowania): Observable<any> {
     return this.http.put<any>(`${this.api}/${id}`, object);
   }

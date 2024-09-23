@@ -31,12 +31,12 @@ export class DashboardComponent implements OnInit {
   logowanie: boolean = false;
   isLoggedIn: boolean = false;
 
-
+/*
   logowanieStyle: any = {
     'backgroundColor': 'rgb(250,250,250)',
     'cursor': 'pointer',
     'pointerEvents': 'auto'
-  }
+  }*/
 
   constructor(
     private fb: FormBuilder,
@@ -50,12 +50,12 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void { 
-
+/*
     // ustawienie stylu dla przycisku
     this.logowanieStyle.backgroundColor = "rgb(250,250,250)";
     this.logowanieStyle.cursor = "pointer";
     this.logowanieStyle.pointerEvents = "auto";
-
+*/
 
     // formularz logowania
     this.formGroupLogin = this.fb.group({
@@ -111,6 +111,13 @@ export class DashboardComponent implements OnInit {
 
   public login(form: FormGroup): void {
 
+/*
+    this.logowanieStyle.backgroundColor = "rgb(200,200,200)";
+    this.logowanieStyle.cursor = "pointer";
+    this.logowanieStyle.pointerEvents = "none";
+*/
+
+
     // Pobranie wartości z kontrolek
     let email = form.controls['emailLogin'].value;
     let password = form.controls['passwordLogin'].value;
@@ -127,11 +134,6 @@ export class DashboardComponent implements OnInit {
     };
 
 
-    this.logowanieStyle.backgroundColor = "rgb(200,200,200)";
-    this.logowanieStyle.cursor = "pointer";
-    this.logowanieStyle.pointerEvents = "none";
-
-
     this.logowanie = true;
     this.accountService.login(loginViewModel).subscribe({
       next: ((result: TaskResult<LoginViewModel>) => {
@@ -141,6 +143,13 @@ export class DashboardComponent implements OnInit {
           let loginViewModel = result.model as LoginViewModel;
           if (loginViewModel) {
 
+
+
+            // zamiana daty na format "2024-12-12 12:12:00"
+            let d = new Date();
+            let dataZalogowania = d.toLocaleDateString() + " " + d.toLocaleTimeString();
+
+
             // zapisanie w sesji zalogowanego użytkownika
             let sessionModel = {
               isLoggedIn: true,
@@ -148,7 +157,8 @@ export class DashboardComponent implements OnInit {
               email: loginViewModel.email,
               role: loginViewModel.role,
               token: loginViewModel.token,
-              expirationTimeToken: loginViewModel.expirationTimeToken
+              expirationTimeToken: loginViewModel.expirationTimeToken,
+              dataZalogowania: dataZalogowania
             };
             localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
 
@@ -182,7 +192,7 @@ export class DashboardComponent implements OnInit {
       }),
       error: (error: Error) => {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('Dashboard', 'login')}. Name: ${error.name}. Message: ${error.message}`);
-        //localStorage.removeItem('sessionModel');
+        localStorage.removeItem('sessionModel');
         this.logowanie = false;
       }
     });
@@ -215,23 +225,6 @@ export class DashboardComponent implements OnInit {
         }
       });
     }
-  }
-
-   
-  
-  public asTouchedDirtyLogin(form: FormGroup): boolean {
-    let result = false;
-    if (
-      form.controls['emailLogin'].valid &&
-      form.controls['passwordLogin'].valid
-    ) {
-      result = false;
-    }
-    else {
-      result = true;
-    }
-
-    return result && !this.logowanie;
   }
 
 

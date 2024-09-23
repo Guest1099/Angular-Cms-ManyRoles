@@ -7,6 +7,10 @@ import { Category } from '../../models/category';
 import { TaskResult } from '../../models/taskResult';
 import { CategoriesHandlerService } from '../categories/categories-handler.service';
 import { LoginViewModel } from '../../models/loginViewModel';
+import { RejestratorLogowaniaHandlerService } from '../rejestratorLogowania/rejestrator-logowania-handler.service';
+import { RejestratorLogowania } from '../../models/rejestratorLogowania';
+import { GuidGenerator } from '../guid-generator';
+import { RejestratorLogowaniaService } from '../rejestratorLogowania/rejestrator-logowania.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +21,7 @@ export class AuthGuard implements CanActivate {
     private accountService: AccountService,
     private categoriesService: CategoriesService,
     private accountHandlerService: AccountHandlerService,
+    private rejestratorLogowaniaService: RejestratorLogowaniaService,
     private router: Router
   ) { }
 
@@ -47,17 +52,10 @@ export class AuthGuard implements CanActivate {
           result = true;
 
 
-          /*
-         if (this.tokenTimeExpired()) { 
-           this.wyloguj(); 
-         } else {
-           result = true;
-         }
-*/
-
           if (checkDate) {
             //localStorage.removeItem('sessionModel');
             //this.accountServiceHandler.wyloguj();
+            //this.createRejestratorLogowania('');
             this.wyloguj();
           } else {
             result = true;
@@ -86,12 +84,15 @@ export class AuthGuard implements CanActivate {
     if (this.once) {
       this.once = false;
       localStorage.removeItem('sessionModel');
+
+
+      //this.createRejestratorLogowania('');
+
+      alert('wyloguj 0 guard');
+
       this.accountService.logout().subscribe({
         next: () => {
-          //alert ('wyloguj 1')
-          //localStorage.removeItem('sessionModel');
-          //this.isLoggedIn = false;
-          //this.router.navigate(['/']);
+          //alert('wyloguj 1 guard');
           //this.router.navigate(['/admin']);
           //this.router.navigate(['/subcategories']);
           this.router.navigate(['admin']).then(() => location.reload());
@@ -103,7 +104,6 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-
-
+   
 
 }

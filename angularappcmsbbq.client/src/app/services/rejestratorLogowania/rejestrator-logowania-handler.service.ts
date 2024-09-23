@@ -150,35 +150,48 @@ export class RejestratorLogowaniaHandlerService {
 
   public create(userId: string): void {
 
+    alert('create rejestratorLog');
+    // pobranie danych z sesji na temat zalogowanego użytkownika, w tym przypadku datę zalogowania
+    let sessionModel = localStorage.getItem('sessionModel');
+    if (sessionModel) {
+      let sm = JSON.parse(sessionModel);
+      if (sm) {
+        let dataZalogowania = sm.dataZalogowania;
+        let userId = sm.userId;
 
-    // zamiana daty na format "2024-12-12 12:12:00"
-    let d = new Date();
-    let date = d.toLocaleDateString() + " " + d.toLocaleTimeString();
+        let d = new Date();
+        let dataWylogowaniaString = d.toLocaleDateString() + "T" + d.toLocaleTimeString();
+        let dataWylogowania = new Date(dataWylogowaniaString);
+        let compare = dataWylogowania.getTime() - dataZalogowania.getTime();
+        let czasZalogowania = new Date(compare);
+         
 
+        let rejestratorLogowania: RejestratorLogowania = {
+          rejestratorLogowaniaId: GuidGenerator.newGuid().toString(),
+          dataZalogowania: dataZalogowania,
+          dataWylogowania: dataWylogowania.toString(),
+          czasZalogowania: czasZalogowania.toString(),
+          userId: '19f972cf-ff54-4152-a709-d9d2c9c51843'
+        };
 
-    let rejestratorLogowania: RejestratorLogowania = {
-      rejestratorLogowaniaId: GuidGenerator.newGuid().toString(),
-      dataZalogowania: date,
-      dataWylogowania: '',
-      czasZalogowania: '',
-      userId: userId
-    };
+        this.rejestratorLogowaniaService.create(rejestratorLogowania).subscribe({
+          next: ((result: TaskResult<RejestratorLogowania>) => {
+            if (result.success) {
+              alert('utworzona rejestratorLogowania');
+            } else {
+              this.snackBarService.setSnackBar(`RejestratorLogowania błąd. ${result.message}`);
+            }
+            return result;
+          }),
+          error: (error: Error) => {
+            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
+          }
+        });
 
-    this.rejestratorLogowaniaService.create(rejestratorLogowania).subscribe({
-      next: ((result: TaskResult<RejestratorLogowania>) => {
-        if (result.success) {
-
-        } else {
-          this.snackBarService.setSnackBar(`RejestratorLogowania błąd. ${result.message}`);
-        }
-        return result;
-      }),
-      error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
       }
-    });
-
+    }
   }
+
 
 
   // Przekształca datę np. taką "12.12.2024 10:10:10" na "new Date()"

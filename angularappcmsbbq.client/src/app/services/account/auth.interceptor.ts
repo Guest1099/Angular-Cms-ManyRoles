@@ -13,6 +13,9 @@ import { Marka } from '../../models/marka';
 import { GuidGenerator } from '../guid-generator';
 import { LoginViewModel } from '../../models/loginViewModel';
 import { Router } from '@angular/router';
+import { RejestratorLogowaniaHandlerService } from '../rejestratorLogowania/rejestrator-logowania-handler.service';
+import { RejestratorLogowaniaService } from '../rejestratorLogowania/rejestrator-logowania.service';
+import { RejestratorLogowania } from '../../models/rejestratorLogowania';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -22,6 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private accountService: AccountService,
     private accountHandlerService: AccountHandlerService,
+    private rejestratorLogowaniaService: RejestratorLogowaniaService,
     private router: Router
   ) {
     //alert('interceptor 1');
@@ -51,7 +55,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         if (checkDate) {
           //localStorage.removeItem('sessionModel');
-          alert('token time expired')
+          alert('token time expired interceptor')
           //this.accountHandlerService.wyloguj();
           this.wyloguj();
         //........................................ tutaj można odświeżyć lub przekierować na stronę
@@ -95,14 +99,14 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.once) {
       this.once = false;
       localStorage.removeItem('sessionModel');
+
+
+      //this.createRejestratorLogowania('');
+
+
       this.accountService.logout().subscribe({
         next: () => {
-          //alert ('wyloguj 1')
-          // Wyczyszczenie danych z pamięci podręcznej
-          //localStorage.removeItem('sessionModel');
-          //this.isLoggedIn = false;
-          //this.router.navigate(['/']);
-          //this.router.navigate(['admin']);
+          //alert('wyloguj 1 interceptor');
           //this.router.navigate(['/subcategories']);
           this.router.navigate(['admin']).then(() => location.reload());
         },
@@ -118,8 +122,12 @@ export class AuthInterceptor implements HttpInterceptor {
   // Metoda odpowiedzialna za wylogowanie
   private wyloguj2(): void {
     if (this.once) {
+      //alert('wyloguj 2');
       this.once = false;
       localStorage.removeItem('sessionModel');
+
+      //this.createRejestratorLogowania('');
+
       this.accountService.logout().subscribe({
         next: () => {
           this.router.navigate(['admin']).then(() => location.reload());
@@ -132,6 +140,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
 
+
+  
 
   tryLogout() {
 
