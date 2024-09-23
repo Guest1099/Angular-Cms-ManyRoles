@@ -33,18 +33,6 @@ export class AuthGuard implements CanActivate {
         let role = sm.role;
         let token = sm.token;
 
-        /*
-                //let newToken = loginViewModel.newToken;
-                let expirationTimeToken = sm.expirationTimeToken == null ? '' : sm.expirationTimeToken; //pierwszy token
-                //let expirationTimeNewToken = sm.expirationTimeNewToken == null ? '' : sm.expirationTimeNewToken; // drugi token
-        
-                let dateToMiliseconds !: number;
-                dateToMiliseconds = this.accountHandlerService.changeDateToMiliseconds(expirationTimeToken); // zamienienie daty na milisekundy
-                 
-                 
-                */
-
-
 
         // zamiana daty na format 2024-12-12T12:12:00
         let d = new Date();
