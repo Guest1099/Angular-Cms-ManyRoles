@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { CategoriesHandlerService } from '../../../../../../services/categories/categories-handler.service';
 import { Category } from '../../../../../../models/category';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CategoriesService } from '../../../../../../services/categories/categories.service';
 
 @Component({
   selector: 'app-category-delete',
@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class CategoryDeleteComponent implements OnInit {
 
   constructor(
-    public categoriesService: CategoriesHandlerService,
+    public categoriesService: CategoriesService,
     @Inject(MAT_DIALOG_DATA) public category: Category
   ) { }
 

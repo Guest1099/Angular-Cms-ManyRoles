@@ -14,7 +14,33 @@ export class AppComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() { 
-  } 
-   
+  ngOnInit() {
+
+    this.clearSessionModel();
+
+  }
+
+  // Czyszczenie sesji jeśli użytkownik zamknie program lub przeglądarkę a token wygaśnie
+  private clearSessionModel() {
+    let sessionModel = localStorage.getItem('sessionModel');
+    if (sessionModel) {
+      let sm = JSON.parse(sessionModel);
+      if (sm) {
+
+        // zamiana daty na format 2024-12-12T12:12:00
+        let d = new Date();
+        let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+
+        let checkDate = date > sm.expirationTimeToken;
+
+
+        if (checkDate) {
+          localStorage.removeItem('sessionModel');
+        }
+      }
+    }
+  }
+
+
+
 }

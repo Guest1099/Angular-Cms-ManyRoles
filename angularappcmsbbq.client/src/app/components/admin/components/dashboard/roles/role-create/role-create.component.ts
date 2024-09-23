@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RolesHandlerService } from '../../../../../../services/roles/roles-handler.service';
+import { RolesService } from '../../../../../../services/roles/roles.service';
 
 @Component({
   selector: 'app-role-create',
@@ -11,7 +11,7 @@ export class RoleCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public rolesHandlerService: RolesHandlerService
+    public rolesService: RolesService
   ) { }
 
 

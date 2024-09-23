@@ -128,7 +128,7 @@
                                        </button>
     -->
 
-                                    <button mat-menu-item (click)="wyloguj ()">
+                                    <button mat-menu-item (click)="accountService.wyloguj ()">
                                         <mat-icon>logout</mat-icon>
                                         wyloguj
                                     </button>
@@ -202,7 +202,7 @@
                     <button mat-raised-button
                             color="primary"
                             (click)="login(formGroupLogin)"
-                            [disabled]="accountHandlerService.asTouchedDirtyLogin (formGroupLogin)">
+                            [disabled]="accountService.asTouchedDirtyLogin (formGroupLogin)">
                         Login
                         <mat-icon>login</mat-icon>
                     </button>

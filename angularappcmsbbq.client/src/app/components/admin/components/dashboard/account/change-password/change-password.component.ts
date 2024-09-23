@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccountHandlerService } from '../../../../../../services/account/account-handler.service';
+import { AccountService } from '../../../../../../services/account/account.service';
 
 @Component({
   selector: 'app-change-password',
@@ -13,7 +13,7 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public accountHandlerService: AccountHandlerService
+    public accountService: AccountService
   ) { }
 
   ngOnInit(): void {

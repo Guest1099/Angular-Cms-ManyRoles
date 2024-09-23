@@ -1,14 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AccountHandlerService } from '../../../../../services/account/account-handler.service';
-import { ProductsHandlerService } from '../../../../../services/products/products-handler.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RejestratorLogowania } from '../../../../../models/rejestratorLogowania';
-import { RejestratorLogowaniaHandlerService } from '../../../../../services/rejestratorLogowania/rejestrator-logowania-handler.service';
 import { RejestratorLogowaniaDeleteComponent } from './rejestrator-logowania-delete/rejestrator-logowania-delete.component';
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
-import { UsersHandlerService } from '../../../../../services/users/users-handler.service';
+import { AccountService } from '../../../../../services/account/account.service';
+import { UsersService } from '../../../../../services/users/users.service';
+import { RejestratorLogowaniaService } from '../../../../../services/rejestratorLogowania/rejestrator-logowania.service';
 
 @Component({
   selector: 'app-rejestrator-logowania',
@@ -21,9 +20,9 @@ export class RejestratorLogowaniaComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    public accountService: AccountHandlerService,
-    public rejestratorLogowaniaService: RejestratorLogowaniaHandlerService,
-    public usersService: UsersHandlerService,
+    public accountService: AccountService,
+    public rejestratorLogowaniaService: RejestratorLogowaniaService,
+    public usersService: UsersService,
     public tablePageCounterService: TablePageCounterService,
     private dialog: MatDialog
   ) { }

@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AccountService } from './account.service';
-import { AccountHandlerService } from './account-handler.service';
 import { CategoriesService } from '../categories/categories.service';
 import { Category } from '../../models/category';
 import { TaskResult } from '../../models/taskResult';
-import { CategoriesHandlerService } from '../categories/categories-handler.service';
 import { LoginViewModel } from '../../models/loginViewModel';
-import { RejestratorLogowaniaHandlerService } from '../rejestratorLogowania/rejestrator-logowania-handler.service';
 import { RejestratorLogowania } from '../../models/rejestratorLogowania';
 import { GuidGenerator } from '../guid-generator';
 import { RejestratorLogowaniaService } from '../rejestratorLogowania/rejestrator-logowania.service';
@@ -20,7 +17,6 @@ export class AuthGuard implements CanActivate {
   constructor(
     private accountService: AccountService,
     private categoriesService: CategoriesService,
-    private accountHandlerService: AccountHandlerService,
     private rejestratorLogowaniaService: RejestratorLogowaniaService,
     private router: Router
   ) { }
@@ -47,16 +43,16 @@ export class AuthGuard implements CanActivate {
 
 
         // Sprawdź, czy użytkownik jest zalogowany i ma odpowiednią rolę 
-        if (this.accountHandlerService.isLoggedInGuard() && expectedRoles.includes(role)) {
+        if (this.accountService.isLoggedInGuard() && expectedRoles.includes(role)) {
 
           result = true;
 
 
           if (checkDate) {
             //localStorage.removeItem('sessionModel');
-            //this.accountServiceHandler.wyloguj();
             //this.createRejestratorLogowania('');
-            this.wyloguj();
+            this.accountService.wyloguj();
+            //this.wyloguj();
           } else {
             result = true;
           }
@@ -67,30 +63,23 @@ export class AuthGuard implements CanActivate {
 
       }
     }
-    //alert('guard 4');
 
     // Przekieruj użytkownika do strony głównej, jeśli nie ma uprawnień
-    // this.accountHandlerService.wyloguj();
-    this.wyloguj();
+    this.accountService.wyloguj();
+    //this.wyloguj();
     return result;
   }
 
 
 
-
+/*
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
   private wyloguj(): void {
     if (this.once) {
       this.once = false;
       localStorage.removeItem('sessionModel');
-
-
-      //this.createRejestratorLogowania('');
-
-      alert('wyloguj 0 guard');
-
-      this.accountService.logout().subscribe({
+      this.accountService.lo().subscribe({
         next: () => {
           //alert('wyloguj 1 guard');
           //this.router.navigate(['/admin']);
@@ -103,7 +92,7 @@ export class AuthGuard implements CanActivate {
       });
     }
   }
-
+*/
    
 
 }

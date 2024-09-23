@@ -34,15 +34,15 @@
             <div class="db centerxy">
                 <button mat-raised-button
                         color="primary"
-                        (click)="rolesServiceHandler.edit(role,formGroup)"
-                        [disabled]="rolesServiceHandler.isValidEdit(formGroup)"
+                        (click)="rolesService.edit(role.id,formGroup)"
+                        [disabled]="rolesService.isValidEdit(formGroup)"
                         mat-dialog-close>
                     <mat-icon>
                         timer
                     </mat-icon>
                     Save
                 </button>
-                <mat-spinner diameter="32" *ngIf="rolesServiceHandler.loadingElements" class="spinner"></mat-spinner>
+                <mat-spinner diameter="32" *ngIf="rolesService.loadingElements" class="spinner"></mat-spinner>
             </div>
 
 

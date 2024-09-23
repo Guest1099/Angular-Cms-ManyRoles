@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AccountHandlerService } from '../../../../../services/account/account-handler.service';
-import { MarkiHandlerService } from '../../../../../services/marki/marki-handler.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Marka } from '../../../../../models/marka';
 import { MarkaDeleteComponent } from './marka-delete/marka-delete.component';
 import { FormControl } from '@angular/forms';
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
+import { MarkiService } from '../../../../../services/marki/marki.service';
+import { AccountService } from '../../../../../services/account/account.service';
 
 @Component({
   selector: 'app-marki',
@@ -21,8 +21,8 @@ export class MarkiComponent implements OnInit, AfterViewInit {
   
 
   constructor(
-    public accountService: AccountHandlerService,
-    public markiService: MarkiHandlerService,
+    public accountService: AccountService,
+    public markiService: MarkiService,
     public tablePageCounterService: TablePageCounterService,
     private dialog: MatDialog
   ) { }

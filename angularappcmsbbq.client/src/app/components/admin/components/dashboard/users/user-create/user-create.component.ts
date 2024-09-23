@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccountHandlerService } from '../../../../../../services/account/account-handler.service';
 import { RolesService } from '../../../../../../services/roles/roles.service';
 import { TaskResult } from '../../../../../../models/taskResult';
 import { ApplicationRole } from '../../../../../../models/applicationRole';
-import { UsersHandlerService } from '../../../../../../services/users/users-handler.service';
 import { SnackBarService } from '../../../../../../services/snack-bar.service';
+import { UsersService } from '../../../../../../services/users/users.service';
 
 @Component({
   selector: 'app-user-create',
@@ -14,10 +13,12 @@ import { SnackBarService } from '../../../../../../services/snack-bar.service';
 })
 export class UserCreateComponent implements OnInit {
 
+  formGroup !: FormGroup;
+
   constructor(
     private fb: FormBuilder,
-    public usersService: UsersHandlerService, 
-    private roleService: RolesService,
+    public usersService: UsersService, 
+    public rolesService: RolesService,
     private snackBarService: SnackBarService
   ) { }
 
@@ -42,22 +43,6 @@ export class UserCreateComponent implements OnInit {
 
 
     // pobranie ról i wyświetlenie ich w comboBoxie
-    this.roleService.getAll().subscribe({
-      next: ((result: TaskResult<ApplicationRole[]>) => {
-        if (result.success) {
-          // pobranie danych
-          this.roles = result.model as ApplicationRole [];
-        } else {
-          this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-        }
-        return result;
-      }),
-      error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`);
-      }
-    });
+    this.rolesService.getAll();
   }
-
-  formGroup !: FormGroup;
-  roles: ApplicationRole[] = [];
 }

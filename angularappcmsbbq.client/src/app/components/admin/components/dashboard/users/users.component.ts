@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AccountHandlerService } from '../../../../../services/account/account-handler.service';
-import { RolesHandlerService } from '../../../../../services/roles/roles-handler.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ApplicationUser } from '../../../../../models/applicationUser';
 import { UserDeleteComponent } from './user-delete/user-delete.component';
-import { UsersHandlerService } from '../../../../../services/users/users-handler.service';
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
+import { AccountService } from '../../../../../services/account/account.service';
+import { UsersService } from '../../../../../services/users/users.service';
+import { RolesService } from '../../../../../services/roles/roles.service';
 
 @Component({
   selector: 'app-users',
@@ -21,9 +21,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
 
   constructor(
-    public accountService: AccountHandlerService,
-    public usersService: UsersHandlerService,
-    public roleService: RolesHandlerService,
+    public accountService: AccountService,
+    public usersService: UsersService,
+    public rolesService: RolesService,
     public tablePageCounterService: TablePageCounterService,
     private dialog: MatDialog
   ) { }

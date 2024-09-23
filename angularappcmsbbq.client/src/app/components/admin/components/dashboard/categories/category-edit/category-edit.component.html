@@ -41,15 +41,15 @@
             <div class="db centerxy">
                 <button mat-raised-button
                         color="primary"
-                        (click)="categoriesHandlerService.edit(category,formGroup)"
-                        [disabled]="categoriesHandlerService.isValidEdit(formGroup)"
+                        (click)="categoriesService.edit(category.categoryId, formGroup)"
+                        [disabled]="categoriesService.isValidEdit(formGroup)"
                         mat-dialog-close>
                     <mat-icon>
                         timer
                     </mat-icon>
                     Save
                 </button>
-                <mat-spinner diameter="32" *ngIf="categoriesHandlerService.loadingElements" class="spinner"></mat-spinner>
+                <mat-spinner diameter="32" *ngIf="categoriesService.loadingElements" class="spinner"></mat-spinner>
             </div>
 
 

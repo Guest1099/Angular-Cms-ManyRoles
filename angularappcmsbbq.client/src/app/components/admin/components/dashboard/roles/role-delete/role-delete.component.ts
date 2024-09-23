@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { RolesHandlerService } from '../../../../../../services/roles/roles-handler.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApplicationRole } from '../../../../../../models/applicationRole';
+import { RolesService } from '../../../../../../services/roles/roles.service';
 
 @Component({
   selector: 'app-role-delete',
@@ -11,7 +11,7 @@ import { ApplicationRole } from '../../../../../../models/applicationRole';
 export class RoleDeleteComponent implements OnInit {
 
   constructor(
-    public rolesService: RolesHandlerService,
+    public rolesService: RolesService,
     @Inject(MAT_DIALOG_DATA) public role: ApplicationRole
   ) { }
 

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MarkiHandlerService } from '../../../../../../services/marki/marki-handler.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Marka } from '../../../../../../models/marka';
+import { MarkiService } from '../../../../../../services/marki/marki.service';
 
 @Component({
   selector: 'app-marka-delete',
@@ -11,7 +11,7 @@ import { Marka } from '../../../../../../models/marka';
 export class MarkaDeleteComponent implements OnInit {
 
   constructor(
-    public markiService: MarkiHandlerService,
+    public markiService: MarkiService,
     @Inject(MAT_DIALOG_DATA) public marka: Marka
   ) { }
 

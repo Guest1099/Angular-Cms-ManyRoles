@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CategoriesHandlerService } from '../../../../../../services/categories/categories-handler.service';
+import { CategoriesService } from '../../../../../../services/categories/categories.service';
 
 @Component({
   selector: 'app-category-create',
@@ -11,7 +11,7 @@ export class CategoryCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public categoriesService: CategoriesHandlerService
+    public categoriesService: CategoriesService
   ) { }
 
   formGroup !: FormGroup;

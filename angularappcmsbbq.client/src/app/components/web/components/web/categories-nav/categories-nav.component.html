@@ -1,7 +1,7 @@
 
 
 <div class="df">
-    <div class="df" *ngFor="let category of categories">
+    <div class="df" *ngFor="let category of categoriesService.categories">
         <button mat-raised-button color="primary" [routerLink]="[category.name]">
             {{ category.name }}
         </button>

@@ -34,15 +34,15 @@
 
             <button mat-raised-button
                     color="primary"
-                    (click)="rolesHandlerService.create(formGroup)"
-                    [disabled]="rolesHandlerService.isValidCreate(formGroup)"
+                    (click)="rolesService.create(formGroup)"
+                    [disabled]="rolesService.isValidCreate(formGroup)"
                     mat-dialog-close>
                 <mat-icon>
                     timer
                 </mat-icon>
                 Zapisz
             </button>
-            <mat-spinner diameter="32" *ngIf="rolesHandlerService.loadingElements" class="spinner"></mat-spinner>
+            <mat-spinner diameter="32" *ngIf="rolesService.loadingElements" class="spinner"></mat-spinner>
         </div>
          
     </div>

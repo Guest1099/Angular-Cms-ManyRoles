@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService } from '../../../../../../services/categories/categories.service';
-import { CategoriesHandlerService } from '../../../../../../services/categories/categories-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskResult } from '../../../../../../models/taskResult';
 import { Category } from '../../../../../../models/category';
@@ -20,8 +19,7 @@ export class CategoryEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public categoryService: CategoriesService,
-    public categoriesHandlerService: CategoriesHandlerService,
+    public categoriesService: CategoriesService,
     private route: ActivatedRoute,
     private snackBarService: SnackBarService
   ) { }
@@ -33,29 +31,14 @@ export class CategoryEditComponent implements OnInit {
       let id = params.get('id');
       if (id) {
 
+        this.category = this.categoriesService.get(id);
 
-        this.categoryService.get(id).subscribe({
-          next: ((result: TaskResult<Category>) => {
-            if (result.success) {
-
-              this.category = result.model as Category;
-              if (this.category) {
-                this.formGroup = this.fb.group({
-                  name: [this.category.name, [Validators.required, Validators.minLength(3)]],
-                  fullName: [this.category.fullName, [Validators.required, Validators.minLength(3)]],
-                });
-              }
-
-            } else {
-              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-            }
-            return result;
-          }),
-          error: (error: Error) => {
-            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoryEditComponent', '')}. Name: ${error.name}. Message: ${error.message}`);
-          }
-        });
-
+        if (this.category) {
+          this.formGroup = this.fb.group({
+            name: [this.category.name, [Validators.required, Validators.minLength(3)]],
+            fullName: [this.category.fullName, [Validators.required, Validators.minLength(3)]],
+          });
+        }
 
       }
     });

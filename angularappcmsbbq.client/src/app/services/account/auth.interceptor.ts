@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HTTP_INTERCEPTORS, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { AccountHandlerService } from './account-handler.service';
 import { CategoriesService } from '../categories/categories.service';
-import { CategoriesHandlerService } from '../categories/categories-handler.service';
 import { Category } from '../../models/category';
 import { TaskResult } from '../../models/taskResult';
 import { AccountService } from './account.service';
@@ -13,7 +11,6 @@ import { Marka } from '../../models/marka';
 import { GuidGenerator } from '../guid-generator';
 import { LoginViewModel } from '../../models/loginViewModel';
 import { Router } from '@angular/router';
-import { RejestratorLogowaniaHandlerService } from '../rejestratorLogowania/rejestrator-logowania-handler.service';
 import { RejestratorLogowaniaService } from '../rejestratorLogowania/rejestrator-logowania.service';
 import { RejestratorLogowania } from '../../models/rejestratorLogowania';
 
@@ -24,7 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private accountService: AccountService,
-    private accountHandlerService: AccountHandlerService,
     private rejestratorLogowaniaService: RejestratorLogowaniaService,
     private router: Router
   ) {
@@ -33,7 +29,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //alert('interceptor 2');
     // Dodaj token JWT do nagłówka żądania, jeśli użytkownik jest
 
     let sessionModel = localStorage.getItem('sessionModel');
@@ -54,12 +49,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
         if (checkDate) {
-          //localStorage.removeItem('sessionModel');
-          alert('token time expired interceptor')
-          //this.accountHandlerService.wyloguj();
-          this.wyloguj();
-        //........................................ tutaj można odświeżyć lub przekierować na stronę
-
+          this.accountService.wyloguj();
+          //this.wyloguj();
         } else {
 
           if (token) {
@@ -78,12 +69,12 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error.ok) {
         }
         else if (error.error) {
-          this.wyloguj2();
+          this.accountService.wyloguj();
+          //this.wyloguj2();
         }
         else if (error.status === 401) {
-          //localStorage.removeItem('sessionModel');
-          //this.accountHandlerService.wyloguj();
-          this.wyloguj();
+          this.accountService.wyloguj();
+          //this.wyloguj2();
         }
 
         return throwError(error);
@@ -92,18 +83,13 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
 
-
+/*
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
   private wyloguj(): void {
     if (this.once) {
       this.once = false;
       localStorage.removeItem('sessionModel');
-
-
-      //this.createRejestratorLogowania('');
-
-
       this.accountService.logout().subscribe({
         next: () => {
           //alert('wyloguj 1 interceptor');
@@ -125,9 +111,6 @@ export class AuthInterceptor implements HttpInterceptor {
       //alert('wyloguj 2');
       this.once = false;
       localStorage.removeItem('sessionModel');
-
-      //this.createRejestratorLogowania('');
-
       this.accountService.logout().subscribe({
         next: () => {
           this.router.navigate(['admin']).then(() => location.reload());
@@ -138,7 +121,7 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
   }
-
+*/
 
 
   

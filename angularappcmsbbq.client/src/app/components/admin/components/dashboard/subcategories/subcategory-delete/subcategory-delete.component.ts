@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { SubcategoriesHandlerService } from '../../../../../../services/subcategories/subcategories-handler.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subcategory } from '../../../../../../models/subcategory';
+import { SubcategoriesService } from '../../../../../../services/subcategories/subcategories.service';
 
 @Component({
   selector: 'app-subcategory-delete',
@@ -11,7 +11,7 @@ import { Subcategory } from '../../../../../../models/subcategory';
 export class SubcategoryDeleteComponent implements OnInit {
 
   constructor(
-    public subcategoriesService: SubcategoriesHandlerService,
+    public subcategoriesService: SubcategoriesService,
     @Inject(MAT_DIALOG_DATA) public subcategory: Subcategory
   ) { }
 

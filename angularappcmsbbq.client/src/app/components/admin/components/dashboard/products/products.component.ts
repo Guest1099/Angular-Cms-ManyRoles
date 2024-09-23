@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AccountHandlerService } from '../../../../../services/account/account-handler.service';
-import { ProductsHandlerService } from '../../../../../services/products/products-handler.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../../../../../models/product';
 import { ProductDeleteComponent } from './product-delete/product-delete.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
+import { AccountService } from '../../../../../services/account/account.service';
+import { ProductsService } from '../../../../../services/products/products.service';
 
 @Component({
   selector: 'app-products',
@@ -20,8 +20,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    public accountService: AccountHandlerService,
-    public productsService: ProductsHandlerService,
+    public accountService: AccountService,
+    public productsService: ProductsService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     public tablePageCounterService: TablePageCounterService,

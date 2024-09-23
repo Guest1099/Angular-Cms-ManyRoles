@@ -28,7 +28,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Category</mat-label>
                 <mat-select formControlName="categoryId">
-                    <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+                    <mat-option *ngFor="let category of categoriesService.categories" [value]="category.categoryId">
                         {{ category.name }}
                     </mat-option>
                 </mat-select>
@@ -46,15 +46,15 @@
             <div class="db centerxy">
                 <button mat-raised-button
                         color="primary"
-                        (click)="subcategoriesHandlerService.edit(subcategory.subcategoryId,formGroup)"
-                        [disabled]="subcategoriesHandlerService.isValidEdit(formGroup)"
+                        (click)="subcategoriesService.edit(subcategory.subcategoryId,formGroup)"
+                        [disabled]="subcategoriesService.isValidEdit(formGroup)"
                         mat-dialog-close>
                     <mat-icon>
                         timer
                     </mat-icon>
                     Save
                 </button>
-                <mat-spinner diameter="32" *ngIf="subcategoriesHandlerService.loadingElements" class="spinner"></mat-spinner>
+                <mat-spinner diameter="32" *ngIf="subcategoriesService.loadingElements" class="spinner"></mat-spinner>
             </div>
 
 

@@ -27,7 +27,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Role</mat-label>
                     <mat-select formControlName="roleId">
-                        <mat-option *ngFor="let role of roles" [value]="role.id">
+                        <mat-option *ngFor="let role of roleService.roles" [value]="role.id">
                             {{ role.name }}
                         </mat-option>
                     </mat-select>
@@ -118,15 +118,15 @@
                 </button>
                 <button mat-raised-button
                         color="primary"
-                        (click)="accountHandlerService.updateAccount(user, formGroup)"
-                        [disabled]="accountHandlerService.isValidUpdate(formGroup)"
+                        (click)="accountService.updateAccount(user, formGroup)"
+                        [disabled]="accountService.isValidUpdate(formGroup)"
                         mat-dialog-close>
                     <mat-icon>
                         timer
                     </mat-icon>
                     Zapisz
                 </button>
-                <mat-spinner diameter="32" *ngIf="accountHandlerService.zapisywanie" class="p"></mat-spinner>
+                <mat-spinner diameter="32" *ngIf="accountService.zapisywanie" class="p"></mat-spinner>
 
             </div>
         </div>

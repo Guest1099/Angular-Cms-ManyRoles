@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ProductsHandlerService } from '../../../../../../services/products/products-handler.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Product } from '../../../../../../models/product';
+import { ProductsService } from '../../../../../../services/products/products.service';
 
 @Component({
   selector: 'app-product-delete',
@@ -11,7 +11,7 @@ import { Product } from '../../../../../../models/product';
 export class ProductDeleteComponent implements OnInit {
 
   constructor(
-    public productsService: ProductsHandlerService,
+    public productsService: ProductsService,
     @Inject(MAT_DIALOG_DATA) public product: Product
   ) { }
 

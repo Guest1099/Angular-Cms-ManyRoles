@@ -1,8 +1,8 @@
 subcategories
 
-{{ subcategories.length }}
+{{ subcategoriesService.subcategories.length }}
 
-<div class="db" *ngFor="let subcategory of subcategories">
+<div class="db" *ngFor="let subcategory of subcategoriesService.subcategories">
     <button mat-flat-button color="accent" [routerLink]="[categoryName, subcategory.name]">
         {{ subcategory.name }}
     </button>

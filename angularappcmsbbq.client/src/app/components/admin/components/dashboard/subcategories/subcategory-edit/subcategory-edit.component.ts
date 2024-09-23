@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService } from '../../../../../../services/categories/categories.service';
 import { SubcategoriesService } from '../../../../../../services/subcategories/subcategories.service';
-import { SubcategoriesHandlerService } from '../../../../../../services/subcategories/subcategories-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskResult } from '../../../../../../models/taskResult';
 import { Subcategory } from '../../../../../../models/subcategory';
@@ -24,9 +23,8 @@ export class SubcategoryEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private categoriesService: CategoriesService,
-    private subcategoriesService: SubcategoriesService,
-    public subcategoriesHandlerService: SubcategoriesHandlerService,
+    public categoriesService: CategoriesService,
+    public subcategoriesService: SubcategoriesService,
     private route: ActivatedRoute,
     private snackBarService: SnackBarService
   ) { }
@@ -39,49 +37,19 @@ export class SubcategoryEditComponent implements OnInit {
 
       if (id) {
 
-        this.subcategoriesService.get(id).subscribe({
-          next: ((result: TaskResult<Subcategory>) => {
-            if (result.success) { 
+        this.subcategory = this.subcategoriesService.get(id);
 
-              this.subcategory = result.model as Subcategory;
-              if (this.subcategory) {
+        if (this.subcategory) {
 
+          this.formGroup = this.fb.group({
+            name: [this.subcategory.name, [Validators.required, Validators.minLength(2)]],
+            fullName: [this.subcategory.fullName, [Validators.required, Validators.minLength(2)]],
+            categoryId: [this.subcategory.categoryId, [Validators.required]]
+          });
 
-                this.formGroup = this.fb.group({
-                  name: [this.subcategory.name, [Validators.required, Validators.minLength(2)]],
-                  fullName: [this.subcategory.fullName, [Validators.required, Validators.minLength(2)]],
-                  categoryId: [this.subcategory.categoryId, [Validators.required]]
-                });
-              }
+        }
 
-            } else {
-              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-            }
-            return result;
-          }),
-          error: (error: Error) => {
-            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoryEditComponent', 'get')}. Name: ${error.name}. Message: ${error.message}`);
-          }
-        });
-
-
-
-
-        this.categoriesService.getAll().subscribe({
-          next: ((result: TaskResult<Category[]>) => {
-            if (result.success) {
-              // pobranie danych
-              let data = result.model as Category[];
-              this.categories = data.sort((a, b) => a.name.localeCompare(b.name));
-            } else {
-              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-            }
-            return result;
-          }),
-          error: (error: Error) => {
-            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoryEditComponent', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
-          }
-        });
+        this.categoriesService.getAll();
 
       }
     });  

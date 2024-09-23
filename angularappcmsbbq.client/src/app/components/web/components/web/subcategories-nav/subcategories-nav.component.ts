@@ -19,12 +19,12 @@ export class SubcategoriesNavComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.subcategoriesService.getAllByCategoryId(this.categoryId).subscribe((result: TaskResult<Subcategory[]>) => {
-      this.subcategories = result.model as Subcategory[];
-    });
+    // wywołanie metody pobierającej subkategorie na podstawie identyfikatora id kategorii
+    // do zmiennej "subcategories" gdzie zamieszczona jest w serwisie SubcategoriesService
+    // zmienna ta wyświtlana jest w komponencie w pętli ngFor
 
-     
+    this.subcategoriesService.getAllByCategoryId(this.categoryId);
+
   }
 
-  subcategories: Subcategory[] = [];
 }

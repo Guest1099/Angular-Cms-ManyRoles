@@ -4,7 +4,6 @@ import { MarkiService } from '../../../../../../services/marki/marki.service';
 import { CategoriesService } from '../../../../../../services/categories/categories.service';
 import { SubcategoriesService } from '../../../../../../services/subcategories/subcategories.service';
 import { SubsubcategoriesService } from '../../../../../../services/subsubcategories/subsubcategories.service';
-import { ProductsHandlerService } from '../../../../../../services/products/products-handler.service';
 import { TaskResult } from '../../../../../../models/taskResult';
 import { Marka } from '../../../../../../models/marka';
 import { Category } from '../../../../../../models/category';
@@ -13,12 +12,17 @@ import { Subsubcategory } from '../../../../../../models/subsubcategory';
 import { SnackBarService } from '../../../../../../services/snack-bar.service';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductsService } from '../../../../../../services/products/products.service';
 
 @Component({
   selector: 'app-product-create',
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css'
 })
+export class ProductCreateComponent { }
+
+
+/*
 export class ProductCreateComponent implements OnInit {
 
   formGroup!: FormGroup;
@@ -35,7 +39,7 @@ export class ProductCreateComponent implements OnInit {
     private categoriesService: CategoriesService,
     private subcategoriesService: SubcategoriesService,
     private subsubcategoriesService: SubsubcategoriesService,
-    public productsService: ProductsHandlerService,
+    public productsService: ProductsService,
     private snackBarService: SnackBarService,
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -44,7 +48,7 @@ export class ProductCreateComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.getAllMarki();
+    //this.getAllMarki();
     this.getAllCategories(); 
 
 
@@ -77,7 +81,7 @@ export class ProductCreateComponent implements OnInit {
 
   }
 
-
+*//*
   getAllMarki(): void {
     this.markiService.getAll().subscribe({
       next: ((result: TaskResult<Marka[]>) => {
@@ -94,7 +98,7 @@ export class ProductCreateComponent implements OnInit {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`);
       }
     });
-  }
+  }*//*
    
 
 
@@ -221,3 +225,4 @@ export class ProductCreateComponent implements OnInit {
 
 
 }
+*/

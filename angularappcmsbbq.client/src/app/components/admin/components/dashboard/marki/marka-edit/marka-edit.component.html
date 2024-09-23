@@ -33,15 +33,15 @@
             <div class="db centerxy">
                 <button mat-raised-button
                         color="primary"
-                        (click)="markiHandlerService.edit(marka.markaId,formGroup)"
-                        [disabled]="markiHandlerService.isValidEdit(formGroup)"
+                        (click)="markiService.edit(marka.markaId,formGroup)"
+                        [disabled]="markiService.isValidEdit(formGroup)"
                         mat-dialog-close>
                     <mat-icon>
                         timer
                     </mat-icon>
                     Save
                 </button>
-                <mat-spinner diameter="32" *ngIf="markiHandlerService.loadingElements" class="spinner"></mat-spinner>
+                <mat-spinner diameter="32" *ngIf="markiService.loadingElements" class="spinner"></mat-spinner>
             </div>
 
         </div>

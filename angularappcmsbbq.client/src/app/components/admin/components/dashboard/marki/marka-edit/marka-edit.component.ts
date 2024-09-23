@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MarkiService } from '../../../../../../services/marki/marki.service';
-import { MarkiHandlerService } from '../../../../../../services/marki/marki-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskResult } from '../../../../../../models/taskResult';
 import { Marka } from '../../../../../../models/marka';
@@ -20,10 +19,9 @@ export class MarkaEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private markiService: MarkiService,
-    public markiHandlerService: MarkiHandlerService,
     private route: ActivatedRoute,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    public markiService: MarkiService,
   ) { }
 
 
@@ -33,27 +31,14 @@ export class MarkaEditComponent implements OnInit {
       let id = params.get('id');
       if (id) {
         
-        this.markiService.get(id).subscribe({
-          next: ((result: TaskResult<Marka>) => {
-            if (result.success) {
-
-              this.marka = result.model as Marka;
-              if (this.marka) {
-                this.formGroup = this.fb.group({
-                  name: [this.marka.name, [Validators.required, Validators.minLength(2)]]
-                });
-              }
-
-            } else {
-              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-            }
-            return result;
-          }),
-          error: (error: Error) => {
-            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('MarkaEditComponent', '')}. Name: ${error.name}. Message: ${error.message}`);
-          }
-        });
-
+        this.marka = this.markiService.get(id);
+        
+        if (this.marka) {
+          this.formGroup = this.fb.group({
+            name: [this.marka.name, [Validators.required, Validators.minLength(2)]]
+          });
+        }
+        
       }
     });
   }

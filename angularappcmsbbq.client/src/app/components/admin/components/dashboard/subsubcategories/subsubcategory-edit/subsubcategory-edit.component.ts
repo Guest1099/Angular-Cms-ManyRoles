@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService } from '../../../../../../services/categories/categories.service';
 import { SubcategoriesService } from '../../../../../../services/subcategories/subcategories.service';
 import { SubsubcategoriesService } from '../../../../../../services/subsubcategories/subsubcategories.service';
-import { SubsubcategoriesHandlerService } from '../../../../../../services/subsubcategories/subsubcategories-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskResult } from '../../../../../../models/taskResult';
 import { Subsubcategory } from '../../../../../../models/subsubcategory';
@@ -13,14 +12,12 @@ import { SnackBarService } from '../../../../../../services/snack-bar.service';
 import { map, Observable, startWith } from 'rxjs';
 import { InfoService } from '../../../../../../services/InfoService';
 import { MatSelectChange } from '@angular/material/select';
-import { CategoriesHandlerService } from '../../../../../../services/categories/categories-handler.service';
-import { SubcategoriesHandlerService } from '../../../../../../services/subcategories/subcategories-handler.service';
 
 @Component({
   selector: 'app-subsubcategory-edit',
   templateUrl: './subsubcategory-edit.component.html',
   styleUrl: './subsubcategory-edit.component.css'
-})
+})/*
 export class SubsubcategoryEditComponent implements OnInit {
 
   formGroup!: FormGroup;
@@ -36,11 +33,8 @@ export class SubsubcategoryEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private categoriesService: CategoriesService,
-    private categoriesHandlerService: CategoriesHandlerService,
     private subcategoriesService: SubcategoriesService,
-    private subcategoriesHandlerService: SubcategoriesHandlerService,
-    private subsubcategoriesService: SubsubcategoriesService,
-    public subsubcategoriesHandlerService: SubsubcategoriesHandlerService,
+    public subsubcategoriesService: SubsubcategoriesService,
     private route: ActivatedRoute,
     private snackBarService: SnackBarService
   ) { }
@@ -53,45 +47,33 @@ export class SubsubcategoryEditComponent implements OnInit {
 
       if (id) {
         
+        this.subsubcategory = this.subsubcategoriesService.get(id);
+        if (this.subsubcategory) {
 
-        this.subsubcategoriesService.get(id).subscribe({
-          next: ((result: TaskResult<Subsubcategory>) => {
-            if (result.success) {
-              this.subsubcategory = result.model as Subsubcategory;
-              if (this.subsubcategory) {
+          // załadowanie danych do comboBoxów
+          let categoryId = this.subsubcategory.categoryId == null ? '' : this.subsubcategory.categoryId;
+          let subcategoryId = this.subsubcategory.subcategoryId == null ? '' : this.subsubcategory.subcategoryId;
 
+*//*
+          this.categoriesService.getAll(); // pobranie wszystkich kategorii aby móc je wyświetlić w comboBoxie przy pomocy zmiennej "categories"
+          this.subcategoriesService.getAllByCategoryId(categoryId);
+*//*
 
-                // załadowanie danych do comboBoxów
-                let categoryId = this.subsubcategory.categoryId == null ? '' : this.subsubcategory.categoryId;
-                let subcategoryId = this.subsubcategory.subcategoryId == null ? '' : this.subsubcategory.subcategoryId;
-
-                this.getAllCategories();
-                this.getAllSubcategories(categoryId);
-
-
-                this.formGroup = this.fb.group({
-                  name: [this.subsubcategory.name, [Validators.required, Validators.minLength(2)]],
-                  fullName: [this.subsubcategory.fullName, [Validators.required, Validators.minLength(2)]],
-                  categoryId: [categoryId, [Validators.required]],
-                  subcategoryId: [subcategoryId, [Validators.required]]
-                });
+          this.getAllCategories();
+          this.getAllSubcategories(categoryId);
 
 
-
-              }
-            }
-            else {
-              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-            }
-
-            return result;
-          }),
-          error: (error: Error) => {
-            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubsubcategoryEditComponent', '')}. Name: ${error.name}. Message: ${error.message}`);
-          }
-        });
+          this.formGroup = this.fb.group({
+            name: [this.subsubcategory.name, [Validators.required, Validators.minLength(2)]],
+            fullName: [this.subsubcategory.fullName, [Validators.required, Validators.minLength(2)]],
+            categoryId: [categoryId, [Validators.required]],
+            subcategoryId: [subcategoryId, [Validators.required]]
+          });
 
 
+
+        }
+          
 
       }
     });
@@ -173,3 +155,8 @@ export class SubsubcategoryEditComponent implements OnInit {
 
 
 }
+*/
+
+
+
+export class SubsubcategoryEditComponent { }

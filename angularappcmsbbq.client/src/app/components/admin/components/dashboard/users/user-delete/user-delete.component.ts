@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AccountHandlerService } from '../../../../../../services/account/account-handler.service';
 import { ApplicationUser } from '../../../../../../models/applicationUser';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UsersHandlerService } from '../../../../../../services/users/users-handler.service';
+import { UsersService } from '../../../../../../services/users/users.service';
 
 @Component({
   selector: 'app-user-delete',
@@ -12,7 +11,7 @@ import { UsersHandlerService } from '../../../../../../services/users/users-hand
 export class UserDeleteComponent implements OnInit {
 
   constructor(
-    public usersService: UsersHandlerService,
+    public usersService: UsersService,
     @Inject(MAT_DIALOG_DATA) public user: ApplicationUser
   ) { }
 

@@ -5,7 +5,6 @@ import { RejestratorLogowaniaService } from '../../../../../../services/rejestra
 import { ActivatedRoute } from '@angular/router';
 import { SnackBarService } from '../../../../../../services/snack-bar.service';
 import { TaskResult } from '../../../../../../models/taskResult';
-import { RejestratorLogowaniaHandlerService } from '../../../../../../services/rejestratorLogowania/rejestrator-logowania-handler.service';
 import { InfoService } from '../../../../../../services/InfoService';
 
 @Component({
@@ -21,7 +20,6 @@ export class RejestratorLogowaniaEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public rejestratorLogowaniaService: RejestratorLogowaniaService,
-    public rejestratorLogowaniaHandlerService: RejestratorLogowaniaHandlerService,
     private route: ActivatedRoute,
     private snackBarService: SnackBarService
   ) { }
@@ -33,7 +31,7 @@ export class RejestratorLogowaniaEditComponent implements OnInit {
       let id = params.get('id');
       if (id) {
          
-
+/*
         this.rejestratorLogowaniaService.get(id).subscribe({
           next: ((result: TaskResult<RejestratorLogowania>) => {
             if (result.success) {
@@ -61,7 +59,7 @@ export class RejestratorLogowaniaEditComponent implements OnInit {
             this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaEditComponent', 'get')}. Name: ${error.name}. Message: ${error.message}`);
           }
         });
-
+*/
       }
     });
   }

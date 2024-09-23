@@ -24,7 +24,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Role</mat-label>
                 <mat-select formControlName="roleId">
-                    <mat-option *ngFor="let role of roles" [value]="role.id">
+                    <mat-option *ngFor="let role of rolesService.roles" [value]="role.id">
                         {{ role.name }}
                     </mat-option>
                 </mat-select>
@@ -116,14 +116,14 @@
                 <div class="db centerxy">
                     <button mat-raised-button
                             color="primary"
-                            (click)="usersHandlerService.edit (user.id, formGroup)"
+                            (click)="usersService.edit (user.id, formGroup)"
                             mat-dialog-close>
                         <mat-icon>
                             timer
                         </mat-icon>
                         Zapisz
                     </button>
-                    <mat-spinner diameter="32" *ngIf="usersHandlerService.loadingElements" class="spinner"></mat-spinner>
+                    <mat-spinner diameter="32" *ngIf="usersService.loadingElements" class="spinner"></mat-spinner>
                 </div>
 
             </div>
