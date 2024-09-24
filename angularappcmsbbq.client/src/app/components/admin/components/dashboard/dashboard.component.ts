@@ -236,6 +236,10 @@ export class DashboardComponent implements OnInit {
             let dataZalogowania = d.toLocaleDateString() + " " + d.toLocaleTimeString();
 
 
+            // zamiana daty na format 2024-12-12T12:12:00
+            let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+
+
             // zapisanie w sesji zalogowanego użytkownika
             let sessionModel = {
               isLoggedIn: true,
@@ -244,7 +248,7 @@ export class DashboardComponent implements OnInit {
               role: loginViewModel.role,
               token: loginViewModel.token,
               expirationTimeToken: loginViewModel.expirationTimeToken,
-              dataZalogowania: dataZalogowania
+              dataZalogowania: dataZalogowania,
             };
             localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
 
@@ -278,7 +282,7 @@ export class DashboardComponent implements OnInit {
       }),
       error: (error: Error) => {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('Dashboard', 'login')}. Name: ${error.name}. Message: ${error.message}`);
-        localStorage.removeItem('sessionModel');
+        //localStorage.removeItem('sessionModel');
         this.logowanie = false;
       }
     });

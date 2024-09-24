@@ -33,24 +33,40 @@ export class AuthGuard implements CanActivate {
       if (sm) {
         let role = sm.role;
         let token = sm.token;
-
-
+/*
         // zamiana daty na format 2024-12-12T12:12:00
         let d = new Date();
         let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+      
+        let checkDate = dateNow > sm.expirationTimeToken;
+          */
 
-        let checkDate = date > sm.expirationTimeToken;
+
+
+/*
+        let d = new Date();
+        let dateNow = new Date(d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds());
+        let expirationTimeToken = this.accountService.changeStringDateToDate(sm.expirationTimeToken);
+
+        let checkDate = dateNow.getTime() >= expirationTimeToken.getTime();
+        alert(checkDate);
+*/
+ 
+
+        let dateNow = Date.now();
+        let expirationTimeTokenInMiliseconds = this.accountService.changeDateToMiliseconds(sm.expirationTimeToken);
+        let checkDate = dateNow > expirationTimeTokenInMiliseconds;
 
 
         // Sprawdź, czy użytkownik jest zalogowany i ma odpowiednią rolę 
         if (this.accountService.isLoggedInGuard() && expectedRoles.includes(role)) {
-
           result = true;
 
 
           if (checkDate) {
             //localStorage.removeItem('sessionModel');
             //this.createRejestratorLogowania('');
+            //this.accountService.wyloguj('wyloguj from guard 1');
             this.accountService.wyloguj();
             //this.wyloguj();
           } else {
@@ -65,21 +81,22 @@ export class AuthGuard implements CanActivate {
     }
 
     // Przekieruj użytkownika do strony głównej, jeśli nie ma uprawnień
+    //this.accountService.wyloguj('wyloguj from guard 2');
     this.accountService.wyloguj();
     //this.wyloguj();
     return result;
   }
 
 
-
 /*
+
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
   private wyloguj(): void {
     if (this.once) {
       this.once = false;
       localStorage.removeItem('sessionModel');
-      this.accountService.lo().subscribe({
+      this.accountService.wyl().subscribe({
         next: () => {
           //alert('wyloguj 1 guard');
           //this.router.navigate(['/admin']);

@@ -19,26 +19,22 @@ import { ProductsService } from '../../../../../../services/products/products.se
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css'
 })
-export class ProductCreateComponent { }
-
-
-/*
 export class ProductCreateComponent implements OnInit {
 
   formGroup!: FormGroup;
-  marki: Marka[] = [];
-  categories: Category[] = [];
-  subcategories: Subcategory[] = [];
-  subsubcategories: Subsubcategory[] = [];
+  // marki: Marka[] = [];
+  // categories: Category[] = [];
+  // subcategories: Subcategory[] = [];
+  // subsubcategories: Subsubcategory[] = [];
   categoryId: string = '';
   subcategoryId: string = '';    
 
   constructor(
     private fb: FormBuilder,
-    private markiService: MarkiService,
-    private categoriesService: CategoriesService,
-    private subcategoriesService: SubcategoriesService,
-    private subsubcategoriesService: SubsubcategoriesService,
+    public markiService: MarkiService,
+    public categoriesService: CategoriesService,
+    public subcategoriesService: SubcategoriesService,
+    public subsubcategoriesService: SubsubcategoriesService,
     public productsService: ProductsService,
     private snackBarService: SnackBarService,
     private activatedRoute: ActivatedRoute,
@@ -47,8 +43,8 @@ export class ProductCreateComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
-    //this.getAllMarki();
+
+    this.markiService.getAll();
     this.getAllCategories(); 
 
 
@@ -70,18 +66,12 @@ export class ProductCreateComponent implements OnInit {
     this.formGroup.controls['subcategoryId'].disable();
     this.formGroup.controls['subsubcategoryId'].disable();
 
-
+    alert('ok');
   }
 
-  public tesetButton(): void {
 
-    this.activatedRoute.url.subscribe(a => {
-      alert(this.router.url);
-    });
 
-  }
-
-*//*
+/*
   getAllMarki(): void {
     this.markiService.getAll().subscribe({
       next: ((result: TaskResult<Marka[]>) => {
@@ -98,10 +88,11 @@ export class ProductCreateComponent implements OnInit {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`);
       }
     });
-  }*//*
-   
+  }
+   */
 
 
+/*
   getAllCategories(): void {
     this.categoriesService.getAll().subscribe({
       next: ((result: TaskResult<Category[]>) => {
@@ -126,81 +117,60 @@ export class ProductCreateComponent implements OnInit {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`);
       }
     });
+  }*/
+
+
+  getAllCategories(): void {
+    this.categoriesService.getAll();
+
+    if (this.categoriesService.categories.length > 0) {
+      this.formGroup.controls['categoryId'].enable();
+    } else {
+      this.formGroup.controls['categoryId'].disable();
+    }
   }
 
 
 
   getAllSubcategories(categoryId: string): void {
     if (categoryId.length > 0) {
-      this.subcategoriesService.getAllByCategoryId(categoryId).subscribe({
-        next: ((result: TaskResult<Subcategory[]>) => {
-          if (result.success) {
-            // pobranie danych
-            let data = result.model as Subcategory[];
-            this.subcategories = data.sort((a, b) => a.name.localeCompare(b.name));
+      this.subcategoriesService.getAllByCategoryId(categoryId);
 
 
-            // włącza lub wyłącza kontrolkę subcategoryId
-            if (this.subcategories.length > 0) {
-              this.formGroup.controls['subcategoryId'].enable();
-            } else {
-              this.formGroup.controls['subcategoryId'].disable();
-            }
+      // włącza lub wyłącza kontrolkę subcategoryId
+      if (this.subcategoriesService.subcategories.length > 0) {
+        this.formGroup.controls['subcategoryId'].enable();
+      } else {
+        this.formGroup.controls['subcategoryId'].disable();
+      }
 
-            // włącza lub wyłącza kontrolkę subsubcategoryId
-            if (this.subsubcategories.length > 0) {
-              this.formGroup.controls['subsubcategoryId'].enable();
-            } else {
-              this.formGroup.controls['subsubcategoryId'].disable();
-            }
-
-
-          } else {
-            this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-          }
-          return result;
-        }),
-        error: (error: Error) => {
-          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`);
-        }
-      });
+      // włącza lub wyłącza kontrolkę subsubcategoryId
+      if (this.subsubcategoriesService.subsubcategories.length > 0) {
+        this.formGroup.controls['subsubcategoryId'].enable();
+      } else {
+        this.formGroup.controls['subsubcategoryId'].disable();
+      }
     }
   }
 
 
   getAllSubsubcategories(categoryId: string, subcategoryId: string): void {
     if (categoryId.length > 0 && subcategoryId.length > 0) {
-      this.subsubcategoriesService.getAllByCategoryIdAndSubcategoryId(categoryId, subcategoryId).subscribe({
-        next: ((result: TaskResult<Subsubcategory[]>) => {
-          if (result.success) {
+      this.subsubcategoriesService.getAllByCategoryIdAndSubcategoryId(categoryId, subcategoryId);
 
-            let data = result.model as Subsubcategory[];
-            this.subsubcategories = data.sort((a, b) => a.name.localeCompare(b.name));
-
-            // włącza lub wyłącza kontrolkę subsubcategoryId
-            if (this.subsubcategories.length > 0) {
-              this.formGroup.controls['subsubcategoryId'].enable();
-            } else {
-              this.formGroup.controls['subsubcategoryId'].disable();
-            }
-
-
-          } else {
-            this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-          }
-          return result;
-        }),
-        error: (error: Error) => {
-          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`);
-        }
-      });
+      // włącza lub wyłącza kontrolkę subsubcategoryId
+      if (this.subsubcategoriesService.subsubcategories.length > 0) {
+        this.formGroup.controls['subsubcategoryId'].enable();
+      } else {
+        this.formGroup.controls['subsubcategoryId'].disable();
+      }
     }
   }
 
   
 
   onSelectionChangeCategory(event: MatSelectChange): void {
-    let category = this.categories.find(f => f.categoryId === event.value);
+    let category = this.categoriesService.categories.find(f => f.categoryId === event.value);
     if (category != null) {
       this.getAllSubcategories(category.categoryId);
 
@@ -208,14 +178,14 @@ export class ProductCreateComponent implements OnInit {
       this.formGroup.controls['subcategoryId'].setValue('');
 
       // przypisanie wartości począktowych do trzeciego comboBoxa
-      this.subsubcategories = [];
+      this.subsubcategoriesService.subsubcategories = [];
       this.formGroup.controls['subsubcategoryId'].setValue('');
     }
   }
 
 
   onSelectionChangeSubcategory(event: MatSelectChange): void {
-    let subcategory = this.subcategories.find(f => f.subcategoryId === event.value);
+    let subcategory = this.subcategoriesService.subcategories.find(f => f.subcategoryId === event.value);
     if (subcategory != null) { 
       this.categoryId = subcategory.categoryId == null ? "" : subcategory.categoryId;
       this.subcategoryId = subcategory.subcategoryId;
@@ -225,4 +195,4 @@ export class ProductCreateComponent implements OnInit {
 
 
 }
-*/
+

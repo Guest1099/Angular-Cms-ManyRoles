@@ -448,6 +448,8 @@ export class AccountService {
 
 
 
+
+
   // Zmienna once oznacza, że metodę można jeden raz wywołać
   private once: boolean = true;
   // Metoda odpowiedzialna za wylogowanie
@@ -475,6 +477,35 @@ export class AccountService {
   }
 
 
+/*
+  // Zmienna once oznacza, że metodę można jeden raz wywołać
+  private once: boolean = true;
+  // Metoda odpowiedzialna za wylogowanie
+  public wyloguj(messageAlert: string): void {
+    if (this.once) {
+      this.once = false;
+      // usunięcie sesji
+      localStorage.removeItem('sessionModel');
+
+      this.http.post<any>(`${this.api}/logout`, null).subscribe({
+        next: () => {
+          // Wyczyszczenie danych z pamięci podręcznej
+          //localStorage.removeItem('sessionModel');
+          //this.isLoggedIn = false;
+          //this.router.navigate(['/']);
+          //this.router.navigate(['admin']);
+          //this.router.navigate(['/subcategories']);
+          this.router.navigate(['admin']).then(() => location.reload());
+        },
+        error: (error: Error) => {
+          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandler', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
+        }
+      });
+
+      alert(messageAlert);
+    }
+  }
+*/
 
 
   public isLoggedInGuard(): boolean {
@@ -594,32 +625,32 @@ export class AccountService {
 
 
 
-  // Przekształca datę np. taką "12.12.2024 10:10:10" na milisekundy
+  // Przekształca datę np. taką "12-12-2024,10:10:10" na milisekundy
   public changeDateToMiliseconds(dateString: string): number {
     let result: number = 0;
-    let dateStringSplit = dateString.split(' ');
+    let dateStringSplit = dateString.split(',');
     if (dateStringSplit.length > 0) {
-      let date = dateStringSplit[0].split('.');
+      let date = dateStringSplit[0].split('-');
       let time = dateStringSplit[1].split(':');
 
-      let day = '';
-      let month = '';
       let year = '';
+      let month = '';
+      let day = '';
 
-      let second = '';
-      let minute = '';
       let hour = '';
+      let minute = '';
+      let second = '';
 
       if (date.length > 2) {
-        day = date[0];
+        year = date[0];
         month = date[1];
-        year = date[2];
+        day = date[2];
       }
 
       if (time.length > 2) {
-        second = time[0];
+        hour = time[0];
         minute = time[1];
-        hour = time[2];
+        second = time[2];
       }
 
       let newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hour), parseInt(minute), parseInt(second));
@@ -631,7 +662,7 @@ export class AccountService {
 
 
 
-  public convertMilisecondToDate(miliseconds: number): string {
+  public changeMilisecondToDate(miliseconds: number): string {
     let result = '';
     let date = new Date(miliseconds);
     let formattedDate = date.toLocaleString();
@@ -643,6 +674,39 @@ export class AccountService {
   }
 
 
+  // Zamienia stringowy format czasowy na new Date(), data pobierana jest z serwera api i przekształcana tutaj
+  public changeStringDateToDate(stringDate: string): Date {
+    let newDate !: Date;
+
+    let stringDateSplit = stringDate.split(',');
+    if (stringDateSplit.length > 0) {
+      let date = stringDateSplit[0].split('-');
+      let time = stringDateSplit[1].split(':');
+
+      let day = '';
+      let month = '';
+      let year = '';
+
+      let second = '';
+      let minute = '';
+      let hour = '';
+
+      if (date.length > 2) {
+        day = date[2];
+        month = date[1];
+        year = date[0];
+      }
+
+      if (time.length > 2) {
+        second = time[2];
+        minute = time[1];
+        hour = time[0];
+      }
+
+      newDate = new Date(parseInt(year), parseInt(month) + 1, parseInt(day), parseInt(hour), parseInt(minute), parseInt(second));
+    }
+    return newDate;
+  }
 
 
 
