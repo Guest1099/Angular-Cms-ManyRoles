@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
 
 
 
-/*
+    // dane porzebne do aktualizacji, kiedy strona jest odświeżana poprzez przyciskk F5
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
         this.isLoggedIn = sm.isLoggedIn;
         this.role = sm.role;
       }
-    }*/
+    }
 
   }
 

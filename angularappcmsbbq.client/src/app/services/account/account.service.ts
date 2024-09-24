@@ -476,36 +476,7 @@ export class AccountService {
     }
   }
 
-
-/*
-  // Zmienna once oznacza, że metodę można jeden raz wywołać
-  private once: boolean = true;
-  // Metoda odpowiedzialna za wylogowanie
-  public wyloguj(messageAlert: string): void {
-    if (this.once) {
-      this.once = false;
-      // usunięcie sesji
-      localStorage.removeItem('sessionModel');
-
-      this.http.post<any>(`${this.api}/logout`, null).subscribe({
-        next: () => {
-          // Wyczyszczenie danych z pamięci podręcznej
-          //localStorage.removeItem('sessionModel');
-          //this.isLoggedIn = false;
-          //this.router.navigate(['/']);
-          //this.router.navigate(['admin']);
-          //this.router.navigate(['/subcategories']);
-          this.router.navigate(['admin']).then(() => location.reload());
-        },
-        error: (error: Error) => {
-          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandler', 'wyloguj')}. Name: ${error.name}. Message: ${error.message}`);
-        }
-      });
-
-      alert(messageAlert);
-    }
-  }
-*/
+   
 
 
   public isLoggedInGuard(): boolean {
@@ -708,6 +679,26 @@ export class AccountService {
     return newDate;
   }
 
+
+
+
+  // Czyszczenie sesji jeśli użytkownik zamknie program lub przeglądarkę a token wygaśnie
+  public clearSessionModel() {
+    let sessionModel = localStorage.getItem('sessionModel');
+    if (sessionModel) {
+      let sm = JSON.parse(sessionModel);
+      if (sm) {
+
+        let dateNow = Date.now();
+        let expirationTimeToken = this.changeDateToMiliseconds(sm.expirationTimeToken);
+        let checkDate = dateNow > expirationTimeToken;
+
+        if (checkDate) {
+          localStorage.removeItem('sessionModel');
+        }
+      }
+    }
+  }
 
 
   public asTouchedDirtyLogin(form: FormGroup): boolean {

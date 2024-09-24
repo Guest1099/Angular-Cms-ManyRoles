@@ -25,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {
     //alert('interceptor 1');
-    //this.clearSessionModel();
+    this.accountService.clearSessionModel();
   }
 
 
@@ -34,43 +34,20 @@ export class AuthInterceptor implements HttpInterceptor {
 
     //alert('interceptor 2');
     let sessionModel = localStorage.getItem('sessionModel');
-    alert(sessionModel == null)
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
       if (sm) {
         let isLoggedIn = sm.isLoggedIn;
         let role = sm.role;
         let token = sm.token;
-        //let expirationTimeToken = sm.expirationTimeToken;
-        //let expirationTimeToken = new Date(sm.expirationTimeToken);
-        //let dataWylogowania = new Date(sm.dataWylogowania);
-
-
-
-/*
-        // zamiana daty na format 2024-12-12T12:12:00
-        let d = new Date();
-        let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`; 
-
-        let checkDate = date > expirationTimeToken;
-         */
-
-
-/*
-        let d = new Date();
-        let dateNow = new Date(d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds());
-        let expirationTimeToken = this.accountService.changeStringDateToDate(sm.expirationTimeToken);  
-
-        let checkDate = dateNow.getTime() >= expirationTimeToken.getTime();
-*/
-
 
         let dateNow = Date.now();
-        let expirationTimeTokenInMiliseconds = this.accountService.changeDateToMiliseconds(sm.expirationTimeToken);
-        let checkDate = dateNow > expirationTimeTokenInMiliseconds;
+        let expirationTimeToken = this.accountService.changeDateToMiliseconds(sm.expirationTimeToken);
+        let checkDate = dateNow > expirationTimeToken;
+
 
         if (checkDate) {
-          //alert('date timeout expiration');
+          alert('date timeout expiration');
           //this.accountService.wyloguj('wyloguj from interceptor 1');
           this.accountService.wyloguj();
           //this.wyloguj();
@@ -109,27 +86,6 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
 
-
-  // Czyszczenie sesji jeśli użytkownik zamknie program lub przeglądarkę a token wygaśnie
-  private clearSessionModel() {
-    let sessionModel = localStorage.getItem('sessionModel');
-    if (sessionModel) {
-      let sm = JSON.parse(sessionModel);
-      if (sm) {
-
-        // zamiana daty na format 2024-12-12T12:12:00
-        let d = new Date();
-        let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
-
-        let checkDate = date > sm.expirationTimeToken;
-
-
-        if (checkDate) {
-          localStorage.removeItem('sessionModel');
-        }
-      }
-    }
-  }
 
 
   
