@@ -100,6 +100,7 @@ export class RejestratorLogowaniaService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -122,6 +123,7 @@ export class RejestratorLogowaniaService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -187,6 +189,7 @@ export class RejestratorLogowaniaService {
             return result;
           }),
           error: (error: Error) => {
+            //alert(error);
             this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
           }
         });
@@ -339,6 +342,7 @@ export class RejestratorLogowaniaService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

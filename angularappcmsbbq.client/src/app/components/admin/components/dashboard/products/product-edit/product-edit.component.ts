@@ -26,19 +26,10 @@ export class ProductEditComponent implements OnInit {
 
   formGroup!: FormGroup;
   product !: Product;
-  marki: Marka[] = [];
   categories: Category[] = [];
   subcategories: Subcategory[] = [];
   subsubcategories: Subsubcategory[] = [];
-  filteredMarki!: Observable<Marka[]>;
-  filteredCategories!: Observable<Category[]>;
-  filteredSubcategories!: Observable<Subcategory[]>;
-  filteredSubsubcategories!: Observable<Subsubcategory[]>;
-
-  categoryId!: string | undefined;
-  subcategoryId: string = '';
-
-  categoryName: string = '';
+   
 
   constructor(
     private fb: FormBuilder,
@@ -60,43 +51,65 @@ export class ProductEditComponent implements OnInit {
 
       if (id) {
 
-        this.product = this.productsService.get(id);
-        if (this.product) {
-
-          // załadowanie danych do comboBoxów
-          let markaId = this.product.markaId == null ? '' : this.product.markaId;
-          let categoryId = this.product.categoryId == null ? '' : this.product.categoryId;
-
-          if (categoryId.length > 0) {
-
-            let subcategoryId = this.product.subcategoryId == null ? '' : this.product.subcategoryId;;
-            let subsubcategoryId = this.product.subsubcategoryId == null ? '' : this.product.subsubcategoryId;
+        // pobranie marek i wyświetlenie ich w comboBoxie
+        this.markiService.getAll();
 
 
-            //this.getAllMarki();
-            this.getAllCategories();
-            this.getAllSubcategories(categoryId);
+        this.productsService.get(id).subscribe({
+          next: ((result: TaskResult<Product>) => {
+            if (result.success) {
+              // pobranie danych
+              this.product = result.model as Product;
 
-            if (subsubcategoryId.length > 0) {
-              this.getAllSubsubcategories(categoryId, subcategoryId);
+              if (this.product) {
+
+                // załadowanie danych do comboBoxów
+                let markaId = this.product.markaId == null ? '' : this.product.markaId;
+                let categoryId = this.product.categoryId == null ? '' : this.product.categoryId;
+
+                if (categoryId.length > 0) {
+
+                  let subcategoryId = this.product.subcategoryId == null ? '' : this.product.subcategoryId;;
+                  let subsubcategoryId = this.product.subsubcategoryId == null ? '' : this.product.subsubcategoryId;
+
+
+                  //this.getAllMarki();
+                  this.getAllCategories();
+                  this.getAllSubcategoriesByCategoryId(categoryId);
+
+                  if (subsubcategoryId.length > 0) {
+                    this.getAllSubsubcategoriesByCategoryIdAndSubcategoryId(categoryId, subcategoryId);
+                  }
+
+
+                  this.formGroup = this.fb.group({
+                    name: [this.product.name, [Validators.required, Validators.minLength(2)]],
+                    description: [this.product.description, [Validators.required]],
+                    price: [this.product.price, [Validators.required, Validators.pattern(/^\d+(,\d+)?$/)]],
+                    quantity: [this.product.quantity, [Validators.required, Validators.pattern(/^\d+$/)]],
+                    rozmiar: [this.product.rozmiar, [Validators.required]],
+                    kolor: [this.product.kolor, [Validators.required]],
+                    markaId: [markaId, [Validators.required]],
+                    categoryId: [categoryId, [Validators.required]],
+                    subcategoryId: [subcategoryId, [Validators.required]],
+                    subsubcategoryId: [subsubcategoryId, [Validators.required]],
+                  });
+
+
+                }
+              }
+
+            } else {
+              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
             }
-
-
-            this.formGroup = this.fb.group({
-              name: [this.product.name, [Validators.required, Validators.minLength(2)]],
-              description: [this.product.description, [Validators.required]],
-              price: [this.product.price, [Validators.required, Validators.pattern(/^\d+(,\d+)?$/)]],
-              quantity: [this.product.quantity, [Validators.required, Validators.pattern(/^\d+$/)]],
-              rozmiar: [this.product.rozmiar, [Validators.required]],
-              kolor: [this.product.kolor, [Validators.required]],
-              markaId: [markaId, [Validators.required]],
-              categoryId: [categoryId, [Validators.required]],
-              subcategoryId: [subcategoryId, [Validators.required]],
-              subsubcategoryId: [subsubcategoryId, [Validators.required]],
-            });
+            return result;
+          }),
+          error: (error: Error) => {
+            //alert(error);
+            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
           }
-        }
-
+        });
+        
 
       }
     });
@@ -124,51 +137,100 @@ export class ProductEditComponent implements OnInit {
   */
 
 
+
   getAllCategories(): void {
-    this.categoriesService.getAll()
+    this.categoriesService.getAllCategories().subscribe({
+      next: ((result: TaskResult<Category[]>) => {
+        if (result.success) {
+          // pobranie danych
+          let data = result.model as Category[];
+          this.categories = data.sort((a, b) => a.name.localeCompare(b.name));
 
-    if (this.categories.length > 0) {
-      this.formGroup.controls['categoryId'].enable();
-    } else {
-      this.formGroup.controls['categoryId'].disable();
-    }
+          if (this.categories.length > 0) {
+            this.formGroup.controls['categoryId'].enable();
+          } else {
+            this.formGroup.controls['categoryId'].disable();
+          }
+
+
+        } else {
+          this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+        }
+        return result;
+      }),
+      error: (error: Error) => {
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`);
+      }
+    });
   }
 
 
-  getAllSubcategories(categoryId: string): void {
+  getAllSubcategoriesByCategoryId(categoryId: string): void {
     if (categoryId.length > 0) {
-      this.subcategoriesService.getAllByCategoryId(categoryId);
+      this.subcategoriesService.getAllByCategoryId(categoryId).subscribe({
+        next: ((result: TaskResult<Subcategory[]>) => {
+          if (result.success) {
+            // pobranie danych
+            this.subcategories = result.model as Subcategory[];
 
+            // włącza lub wyłącza kontrolkę subcategoryId
+            if (this.subcategories.length > 0) {
+              this.formGroup.controls['subcategoryId'].enable();
+            } else {
+              this.formGroup.controls['subcategoryId'].disable();
+            }
 
-      // włącza lub wyłącza kontrolkę subcategoryId
-      if (this.subcategories.length > 0) {
-        this.formGroup.controls['subcategoryId'].enable();
-      } else {
-        this.formGroup.controls['subcategoryId'].disable();
-      }
-
-      // włącza lub wyłącza kontrolkę subsubcategoryId
-      if (this.subsubcategories.length > 0) {
-        this.formGroup.controls['subsubcategoryId'].enable();
-      } else {
-        this.formGroup.controls['subsubcategoryId'].disable();
-      }
+            // włącza lub wyłącza kontrolkę subsubcategoryId
+            if (this.subsubcategories.length > 0) {
+              this.formGroup.controls['subsubcategoryId'].enable();
+            } else {
+              this.formGroup.controls['subsubcategoryId'].disable();
+            }
+          } else {
+            this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+          }
+          return result;
+        }),
+        error: (error: Error) => {
+          //alert(error);
+          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
+        }
+      });
 
     }
   }
 
 
-  getAllSubsubcategories(categoryId: string, subcategoryId: string): void {
-    if (categoryId.length > 0 && subcategoryId.length > 0) {
-      this.subsubcategoriesService.getAllByCategoryIdAndSubcategoryId(categoryId, subcategoryId);
 
-      // włącza lub wyłącza kontrolkę subsubcategoryId
-      if (this.subsubcategories.length > 0) {
-        this.formGroup.controls['subsubcategoryId'].enable();
-      } else {
-        this.formGroup.controls['subsubcategoryId'].disable();
-      }
-       
+
+  getAllSubsubcategoriesByCategoryIdAndSubcategoryId(categoryId: string, subcategoryId: string): void {
+    if (categoryId.length > 0 && subcategoryId.length > 0) {
+      this.subsubcategoriesService.getAllByCategoryIdAndSubcategoryId(categoryId, subcategoryId).subscribe({
+        next: ((result: TaskResult<Subsubcategory[]>) => {
+          if (result.success) {
+            // pobranie danych
+            this.subsubcategories = result.model as Subsubcategory[];
+
+
+            // włącza lub wyłącza kontrolkę subsubcategoryId
+            if (this.subsubcategories.length > 0) {
+              this.formGroup.controls['subsubcategoryId'].enable();
+            } else {
+              this.formGroup.controls['subsubcategoryId'].disable();
+            }
+
+
+          } else {
+            this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+          }
+          return result;
+        }),
+        error: (error: Error) => {
+          //alert(error);
+          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
+        }
+      });
+
     }
   }
 
@@ -177,7 +239,7 @@ export class ProductEditComponent implements OnInit {
   onSelectionChangeCategory(event: MatSelectChange): void {
     let category = this.categories.find(f => f.categoryId === event.value);
     if (category != null) {
-      this.getAllSubcategories(category.categoryId);
+      this.getAllSubcategoriesByCategoryId(category.categoryId);
 
       // przypisanie wartości począktowych do drugiego comboBoxa 
       this.formGroup.controls['subcategoryId'].setValue('');
@@ -188,15 +250,15 @@ export class ProductEditComponent implements OnInit {
       this.subsubcategories = [];
       this.formGroup.controls['subsubcategoryId'].setValue('');
     }
-  }
+  } 
 
 
   onSelectionChangeSubcategory(event: MatSelectChange): void {
     let subcategory = this.subcategories.find(f => f.subcategoryId === event.value);
     if (subcategory != null) {
-      this.categoryId = subcategory.categoryId == null ? "" : subcategory.categoryId;
-      this.subcategoryId = subcategory.subcategoryId;
-      this.getAllSubsubcategories(this.categoryId, this.subcategoryId);
+      let categoryId = subcategory.categoryId == null ? "" : subcategory.categoryId;
+      let subcategoryId = subcategory.subcategoryId;
+      this.getAllSubsubcategoriesByCategoryIdAndSubcategoryId(categoryId, subcategoryId);
       this.formGroup.controls['subsubcategoryId'].markAsTouched();
     }
   }

@@ -146,6 +146,11 @@ export class AccountService {
 
 
   // Pobiera użytkownika poprzez email
+  public getUserByEmail(email: string): Observable <any> {
+    return this.http.get<any>(`${this.api}/getUserByEmail/${email}`);
+  }
+
+/*
   public getUserByEmail(email: string): ApplicationUser {
 
     this.http.get<any>(`${this.api}/getUserByEmail/${email}`).subscribe({
@@ -164,10 +169,9 @@ export class AccountService {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
-
     return this.user;
   }
-
+*/
 
 
 
@@ -458,6 +462,7 @@ export class AccountService {
       this.once = false;
       // usunięcie sesji
       localStorage.removeItem('sessionModel');
+      this.router.navigate(['/admin']);
 
       this.http.post<any>(`${this.api}/logout`, null).subscribe({
         next: () => {
@@ -476,7 +481,8 @@ export class AccountService {
     }
   }
 
-   
+
+
 
 
   public isLoggedInGuard(): boolean {

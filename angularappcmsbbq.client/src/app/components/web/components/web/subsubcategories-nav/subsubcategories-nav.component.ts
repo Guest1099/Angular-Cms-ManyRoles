@@ -21,7 +21,7 @@ export class SubsubcategoriesNavComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+/*
     this.subsubcategoriesService.getAll();     
 
     for (var i = 0; i < this.subsubcategoriesService.subsubcategories.length; i++) {
@@ -29,5 +29,6 @@ export class SubsubcategoriesNavComponent implements OnInit {
         this.subsubcategories.push(this.subsubcategoriesService.subsubcategories[i]);
       }
     }
+*/
   }
 }

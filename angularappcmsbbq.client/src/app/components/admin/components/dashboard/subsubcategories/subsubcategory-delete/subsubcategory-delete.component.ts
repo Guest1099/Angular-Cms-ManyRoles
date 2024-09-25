@@ -7,7 +7,7 @@ import { SubsubcategoriesService } from '../../../../../../services/subsubcatego
   selector: 'app-subsubcategory-delete',
   templateUrl: './subsubcategory-delete.component.html',
   styleUrl: './subsubcategory-delete.component.css'
-})/*
+})
 export class SubsubcategoryDeleteComponent implements OnInit {
 
   constructor(
@@ -18,10 +18,5 @@ export class SubsubcategoryDeleteComponent implements OnInit {
   ngOnInit(): void { 
   }
 
-
-}
-*/
-
-export class SubsubcategoryDeleteComponent {
 
 }

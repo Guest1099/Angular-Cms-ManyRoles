@@ -99,6 +99,7 @@ export class RolesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RolesHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -113,6 +114,11 @@ export class RolesService {
   
 
 
+  public get(id: any): Observable <any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
+
+/*
   public get(id: any): ApplicationRole  {
     this.http.get<any>(`${this.api}/${id}`).subscribe({
       next: ((result: TaskResult<ApplicationRole>) => {
@@ -125,12 +131,13 @@ export class RolesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
     return this.role;
   }
-
+*/
 
 
 
@@ -157,6 +164,7 @@ export class RolesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RolesHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -188,6 +196,7 @@ export class RolesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RolesHandlerService', 'edit')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -214,6 +223,7 @@ export class RolesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RolesHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

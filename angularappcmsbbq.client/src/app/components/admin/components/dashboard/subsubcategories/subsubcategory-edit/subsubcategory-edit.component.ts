@@ -17,22 +17,20 @@ import { MatSelectChange } from '@angular/material/select';
   selector: 'app-subsubcategory-edit',
   templateUrl: './subsubcategory-edit.component.html',
   styleUrl: './subsubcategory-edit.component.css'
-})/*
+})
 export class SubsubcategoryEditComponent implements OnInit {
 
   formGroup!: FormGroup;
+  subsubcategory !: Subsubcategory;
   categories: Category[] = [];
   subcategories: Subcategory[] = [];
-  subsubcategory !: Subsubcategory;
   subsubcategories: Subsubcategory[] = [];
-  categoryId: string = '';
-  subCategoryDisabled = false;
-  isLoading: boolean = false;
+  //isLoading: boolean = false;
 
 
   constructor(
     private fb: FormBuilder,
-    private categoriesService: CategoriesService,
+    public categoriesService: CategoriesService,
     private subcategoriesService: SubcategoriesService,
     public subsubcategoriesService: SubsubcategoriesService,
     private route: ActivatedRoute,
@@ -46,34 +44,44 @@ export class SubsubcategoryEditComponent implements OnInit {
       let id = params.get('id');
 
       if (id) {
-        
-        this.subsubcategory = this.subsubcategoriesService.get(id);
-        if (this.subsubcategory) {
 
-          // załadowanie danych do comboBoxów
-          let categoryId = this.subsubcategory.categoryId == null ? '' : this.subsubcategory.categoryId;
-          let subcategoryId = this.subsubcategory.subcategoryId == null ? '' : this.subsubcategory.subcategoryId;
+        this.subsubcategoriesService.get(id).subscribe({
+          next: ((result: TaskResult<Subsubcategory>) => {
+            if (result.success) {
+              
+              // pobranie danych
 
-*//*
-          this.categoriesService.getAll(); // pobranie wszystkich kategorii aby móc je wyświetlić w comboBoxie przy pomocy zmiennej "categories"
-          this.subcategoriesService.getAllByCategoryId(categoryId);
-*//*
+              this.subsubcategory = result.model as Subsubcategory;
+              if (this.subsubcategory) {
 
-          this.getAllCategories();
-          this.getAllSubcategories(categoryId);
+                // załadowanie danych do comboBoxów
+                let categoryId = this.subsubcategory.categoryId == null ? '' : this.subsubcategory.categoryId;
+                let subcategoryId = this.subsubcategory.subcategoryId == null ? '' : this.subsubcategory.subcategoryId;
+                 
+
+                this.getAllCategories();
+                this.getAllSubcategoriesByCategoryId(categoryId);
+                 
+                this.formGroup = this.fb.group({
+                  name: [this.subsubcategory.name, [Validators.required, Validators.minLength(2)]],
+                  fullName: [this.subsubcategory.fullName, [Validators.required, Validators.minLength(2)]],
+                  categoryId: [categoryId, [Validators.required]],
+                  subcategoryId: [subcategoryId, [Validators.required]]
+                });
+              }
 
 
-          this.formGroup = this.fb.group({
-            name: [this.subsubcategory.name, [Validators.required, Validators.minLength(2)]],
-            fullName: [this.subsubcategory.fullName, [Validators.required, Validators.minLength(2)]],
-            categoryId: [categoryId, [Validators.required]],
-            subcategoryId: [subcategoryId, [Validators.required]]
-          });
 
-
-
-        }
-          
+            } else {
+              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+            }
+            return result;
+          }),
+          error: (error: Error) => {
+            //alert(error);
+            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubsubcategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
+          }
+        });
 
       }
     });
@@ -85,7 +93,7 @@ export class SubsubcategoryEditComponent implements OnInit {
 
 
   getAllCategories(): void {
-    this.categoriesService.getAll().subscribe({
+    this.categoriesService.getAllCategories().subscribe({
       next: ((result: TaskResult<Category[]>) => {
         if (result.success) {
           // pobranie danych
@@ -109,8 +117,19 @@ export class SubsubcategoryEditComponent implements OnInit {
     });
   }
 
+/*
+  getAllCategories(): void {
+    this.categoriesService.getAll();
 
-  getAllSubcategories(categoryId: string): void {
+    if (this.categoriesService.categories.length > 0) {
+      this.formGroup.controls['categoryId'].enable();
+    } else {
+      this.formGroup.controls['categoryId'].disable();
+    }
+  }*/
+
+
+  getAllSubcategoriesByCategoryId(categoryId: string): void {
     this.subcategoriesService.getAllByCategoryId(categoryId).subscribe({
       next: ((result: TaskResult<Subcategory[]>) => {
         if (result.success) {
@@ -145,18 +164,13 @@ export class SubsubcategoryEditComponent implements OnInit {
     });
   }
 
-
+  
   onSelectionChangeCategory(event: MatSelectChange): void {
     let category = this.categories.find(f => f.categoryId === event.value);
     if (category != null) {
-      this.getAllSubcategories(category.categoryId);
+      this.getAllSubcategoriesByCategoryId(category.categoryId);
     }
   }
 
 
 }
-*/
-
-
-
-export class SubsubcategoryEditComponent { }

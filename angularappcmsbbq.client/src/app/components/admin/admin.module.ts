@@ -47,10 +47,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CategoryEditComponent } from './components/dashboard/categories/category-edit/category-edit.component';
 import { SubcategoriesComponent } from './components/dashboard/subcategories/subcategories.component';
-import { SubsubcategoriesComponent } from './components/dashboard/subsubcategories/subsubcategories.component';
-import { SubsubcategoryCreateComponent } from './components/dashboard/subsubcategories/subsubcategory-create/subsubcategory-create.component';
-import { SubsubcategoryDeleteComponent } from './components/dashboard/subsubcategories/subsubcategory-delete/subsubcategory-delete.component';
-import { SubsubcategoryEditComponent } from './components/dashboard/subsubcategories/subsubcategory-edit/subsubcategory-edit.component';
 import { SubcategoryCreateComponent } from './components/dashboard/subcategories/subcategory-create/subcategory-create.component';
 import { SubcategoryDeleteComponent } from './components/dashboard/subcategories/subcategory-delete/subcategory-delete.component';
 import { SubcategoryEditComponent } from './components/dashboard/subcategories/subcategory-edit/subcategory-edit.component';
@@ -78,6 +74,10 @@ import { UserEditComponent } from './components/dashboard/users/user-edit/user-e
 import { AccountService } from '../../services/account/account.service';
 import { AuthInterceptor } from '../../services/account/auth.interceptor';
 import { ChangeEmailComponent } from './components/dashboard/account/change-email/change-email.component';
+import { SubsubcategoriesComponent } from './components/dashboard/subsubcategories/subsubcategories.component';
+import { SubsubcategoryCreateComponent } from './components/dashboard/subsubcategories/subsubcategory-create/subsubcategory-create.component';
+import { SubsubcategoryDeleteComponent } from './components/dashboard/subsubcategories/subsubcategory-delete/subsubcategory-delete.component';
+import { SubsubcategoryEditComponent } from './components/dashboard/subsubcategories/subsubcategory-edit/subsubcategory-edit.component';
 
 
 @NgModule({
@@ -88,10 +88,6 @@ import { ChangeEmailComponent } from './components/dashboard/account/change-emai
     CategoryDeleteComponent,
     CategoryEditComponent,
     SubcategoriesComponent,
-    SubsubcategoriesComponent,
-    SubsubcategoryCreateComponent,
-    SubsubcategoryDeleteComponent,
-    SubsubcategoryEditComponent,
     SubcategoryCreateComponent,
     SubcategoryDeleteComponent,
     SubcategoryEditComponent,
@@ -116,7 +112,11 @@ import { ChangeEmailComponent } from './components/dashboard/account/change-emai
     RejestratorLogowaniaComponent,
     RejestratorLogowaniaDeleteComponent,
     RejestratorLogowaniaEditComponent,
-    ChangeEmailComponent, 
+    ChangeEmailComponent,
+    SubsubcategoriesComponent,
+    SubsubcategoryCreateComponent,
+    SubsubcategoryDeleteComponent,
+    SubsubcategoryEditComponent, 
   ],
   imports: [
     CommonModule,

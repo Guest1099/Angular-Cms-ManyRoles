@@ -14,20 +14,18 @@ import { SubsubcategoriesService } from '../../../../../../services/subsubcatego
   selector: 'app-subsubcategory-create',
   templateUrl: './subsubcategory-create.component.html',
   styleUrl: './subsubcategory-create.component.css'
-})/*
+})
 export class SubsubcategoryCreateComponent implements OnInit {
 
 
   formGroup!: FormGroup;
-  categories: Category[] = [];
+  //categories: Category[] = [];
   subcategories: Subcategory[] = [];
-  filteredCategories!: Observable<Category[]>;
-  subCategoryDisabled = false;
 
 
   constructor(
     private fb: FormBuilder,
-    private categoriesService: CategoriesService,
+    public categoriesService: CategoriesService,
     private subcategoriesService: SubcategoriesService,
     public subsubcategoriesService: SubsubcategoriesService,
     private snackBarService: SnackBarService
@@ -51,29 +49,13 @@ export class SubsubcategoryCreateComponent implements OnInit {
          
   }
 
-
-
+   
   getAllCategories(): void {
-    this.categoriesService.getAll().subscribe({
-      next: ((result: TaskResult<Category[]>) => {
-        if (result.success) {
-          // pobranie danych
-          let data = (result.model as Category[]);
-          this.categories = data.sort((a, b) => a.name.localeCompare(b.name)); 
-
-        } else {
-          this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
-        }
-        return result;
-      }),
-      error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${error.message}`); 
-      }
-    });
+    this.categoriesService.getAll();
   }
 
 
-  getAllSubcategories(categoryId: string): void {
+  getAllSubcategoriesByCategoryId (categoryId: string): void {
     this.subcategoriesService.getAllByCategoryId(categoryId).subscribe({
       next: ((result: TaskResult<Subcategory[]>) => {
         if (result.success) {
@@ -86,6 +68,7 @@ export class SubsubcategoryCreateComponent implements OnInit {
           } else {
             this.formGroup.controls['subcategoryId'].disable();
           }
+
         } else {
           this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
         }
@@ -99,17 +82,11 @@ export class SubsubcategoryCreateComponent implements OnInit {
    
 
   onOptionSelectedCategory(event: MatSelectChange): void {
-    let category = this.categories.find(f => f.categoryId === event.value);
+    let category = this.categoriesService.categories.find(f => f.categoryId === event.value);
     if (category != null) {
-      this.getAllSubcategories(category.categoryId);
+      this.getAllSubcategoriesByCategoryId(category.categoryId);
     }
   }
    
    
-}*/
-
-
-export class SubsubcategoryCreateComponent {
-
-
 }

@@ -49,24 +49,43 @@ export class UpdateComponent implements OnInit {
 
   getUserByEmail(email: string): void {
 
-    this.user = this.accountService.getUserByEmail(email);
-    if (this.user != null) {
-      this.formGroup = this.fb.group({
-        email: [this.user.email, [Validators.required]],
-        imie: [this.user.imie, [Validators.required]],
-        nazwisko: [this.user.nazwisko, [Validators.required]],
-        ulica: [this.user.ulica, [Validators.required]],
-        numerUlicy: [this.user.numerUlicy, [Validators.required, Validators.pattern(/^\d+$/)]],
-        miejscowosc: [this.user.miejscowosc, [Validators.required]],
-        kraj: [this.user.kraj, [Validators.required]],
-        kodPocztowy: [this.user.kodPocztowy, [Validators.required, Validators.pattern(/^\d{2}-\d{3}$/)]],
-        dataUrodzenia: [this.user.dataUrodzenia, [Validators.required]],
-        telefon: [this.user.telefon, [Validators.required, Validators.pattern(/^\d+$/)]],
-        roleId: [this.user.roleId, [Validators.required]],
-      });
+    this.accountService.getUserByEmail(email).subscribe({
+      next: ((result: TaskResult<ApplicationUser>) => {
+        if (result.success) {
 
-      this.formGroup.controls['email'].disable();
-    }
+          this.user = result.model as ApplicationUser;
+
+          if (this.user != null) {
+            this.formGroup = this.fb.group({
+              email: [this.user.email, [Validators.required]],
+              imie: [this.user.imie, [Validators.required]],
+              nazwisko: [this.user.nazwisko, [Validators.required]],
+              ulica: [this.user.ulica, [Validators.required]],
+              numerUlicy: [this.user.numerUlicy, [Validators.required, Validators.pattern(/^\d+$/)]],
+              miejscowosc: [this.user.miejscowosc, [Validators.required]],
+              kraj: [this.user.kraj, [Validators.required]],
+              kodPocztowy: [this.user.kodPocztowy, [Validators.required, Validators.pattern(/^\d{2}-\d{3}$/)]],
+              dataUrodzenia: [this.user.dataUrodzenia, [Validators.required]],
+              telefon: [this.user.telefon, [Validators.required, Validators.pattern(/^\d+$/)]],
+              roleId: [this.user.roleId, [Validators.required]],
+            });
+
+            this.formGroup.controls['email'].disable();
+          }
+
+
+        } else {
+          this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+        }
+
+        return result;
+      }),
+      error: (error: Error) => {
+        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
+      }
+    });
+
+
   }
 
    

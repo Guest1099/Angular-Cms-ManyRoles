@@ -18,10 +18,9 @@ export class SubsubcategoriesService {
 
   constructor(
     private http: HttpClient,
-    private snackBarService: SnackBarService,
-    public subsubcategoriesService: SubsubcategoriesService,
+    private snackBarService: SnackBarService
   ) {
-    this.getAll();
+    //this.getAll();
   }
 
   api: string = 'https://localhost:44328/api/subsubcategories';   
@@ -98,6 +97,7 @@ export class SubsubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubsubcategoriesHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -107,6 +107,11 @@ export class SubsubcategoriesService {
 
 
 
+  public get (id: any): Observable <any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
+
+/*
   public get(id: any): Subsubcategory  {
     this.http.get<any>(`${this.api}/${id}`).subscribe({
       next: ((result: TaskResult<Subsubcategory>) => {
@@ -119,12 +124,13 @@ export class SubsubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubsubcategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
     return this.subsubcategory;
   }
-
+*/
 
 
 
@@ -160,6 +166,7 @@ export class SubsubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubsubcategoriesHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -196,6 +203,7 @@ export class SubsubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubsubcategoriesHandlerService', 'edit')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -221,6 +229,7 @@ export class SubsubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubsubcategoriesHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

@@ -1,4 +1,4 @@
-<!-- 
+
 
 <div class="pr w-500px">
 
@@ -30,7 +30,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Category</mat-label>
                 <mat-select formControlName="categoryId" (selectionChange)="onSelectionChangeCategory($event)">
-                    <mat-option *ngFor="let category of categoriesService.categories" [value]="category.categoryId">
+                    <mat-option *ngFor="let category of categories" [value]="category.categoryId">
                         {{ category.name }}
                     </mat-option>
                 </mat-select>
@@ -77,4 +77,4 @@
     </div>
 </div>
 
- -->
+

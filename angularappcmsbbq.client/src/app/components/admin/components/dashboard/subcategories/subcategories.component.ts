@@ -22,9 +22,7 @@ export class SubcategoriesComponent implements OnInit, AfterViewInit {
 
   constructor(
     public accountService: AccountService,
-    //public categoriesService: CategoriesService,
     public subcategoriesService: SubcategoriesService,
-    //public subsubcategoriesService: SubsubcategoriesService,
     public tablePageCounterService: TablePageCounterService,
     private dialog: MatDialog,
   ) { }

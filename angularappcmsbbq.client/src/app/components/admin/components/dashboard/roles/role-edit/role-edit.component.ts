@@ -31,15 +31,32 @@ export class RoleEditComponent implements OnInit {
       let id = params.get('id');
       if (id) {
 
-        this.role = this.rolesService.get(id);
 
-        if (this.role) {
+        this.rolesService.get(id).subscribe({
+          next: ((result: TaskResult<ApplicationRole>) => {
+            if (result.success) {
+              // pobranie danych
+              this.role = result.model as ApplicationRole;
 
-          this.formGroup = this.fb.group({
-            name: [this.role.name, [Validators.required, Validators.minLength(3)]]
-          });
+              if (this.role) {
 
-        }
+                this.formGroup = this.fb.group({
+                  name: [this.role.name, [Validators.required, Validators.minLength(2)]]
+                });
+
+              }
+
+            } else {
+              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+            }
+            return result;
+          }),
+          error: (error: Error) => {
+            //alert(error);
+            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
+          }
+        });
+
       }
     });
   }

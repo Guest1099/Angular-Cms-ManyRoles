@@ -37,20 +37,38 @@ export class SubcategoryEditComponent implements OnInit {
 
       if (id) {
 
-        this.subcategory = this.subcategoriesService.get(id);
-
-        if (this.subcategory) {
-
-          this.formGroup = this.fb.group({
-            name: [this.subcategory.name, [Validators.required, Validators.minLength(2)]],
-            fullName: [this.subcategory.fullName, [Validators.required, Validators.minLength(2)]],
-            categoryId: [this.subcategory.categoryId, [Validators.required]]
-          });
-
-        }
-
+        // pobranie wszystkich kategorii i wyświetlenie ich w comboBoxie
         this.categoriesService.getAll();
+         
 
+        // pobranie pojedyńczej sztuki subkategorii
+        this.subcategoriesService.get(id).subscribe({
+          next: ((result: TaskResult<Subcategory>) => {
+            if (result.success) {
+              // pobranie danych do zmiennej
+              this.subcategory = result.model as Subcategory;
+
+              // sprawdzenie czy zmienna działa
+              if (this.subcategory) {
+
+                // wyświetlenie danych w formularzu
+                this.formGroup = this.fb.group({
+                  name: [this.subcategory.name, [Validators.required, Validators.minLength(2)]],
+                  fullName: [this.subcategory.fullName, [Validators.required, Validators.minLength(2)]],
+                  categoryId: [this.subcategory.categoryId, [Validators.required]]
+                });
+
+              }
+            } else {
+              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+            }
+            return result;
+          }),
+          error: (error: Error) => {
+            //alert(error);
+            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
+          }
+        });
       }
     });  
   }
