@@ -105,132 +105,37 @@ export class DashboardComponent implements OnInit {
   }
 
 
+
+  public login(form: FormGroup): void {
+
+
+    // Pobranie wartości z kontrolek
+    let email = form.controls['emailLogin'].value;
+    let password = form.controls['passwordLogin'].value;
+
+
+    // Przekazanie obiektu logowania do metody 
+    let loginViewModel: LoginViewModel = {
+      userId: '',
+      email: email,
+      password: password,
+      token: '',
+      expirationTimeToken: '',
+      role: '',
+    };
+
+
+    this.logowanie = true;
+    this.accountService.login(loginViewModel).subscribe({
+      next: ((result: TaskResult<LoginViewModel>) => {
+
+        if (result.success) {
+
+          let loginViewModel = result.model as LoginViewModel;
+          if (loginViewModel) {
+
+
 /*
-  public login(form: FormGroup): void {
-
-
-    this.logowanieStyle.backgroundColor = "rgb(200,200,200)";
-    this.logowanieStyle.cursor = "pointer";
-    this.logowanieStyle.pointerEvents = "none";
-
-
-
-    // Pobranie wartości z kontrolek
-    let email = form.controls['emailLogin'].value;
-    let password = form.controls['passwordLogin'].value;
-
-
-    // Przekazanie obiektu logowania do metody 
-    let loginViewModel: LoginViewModel = {
-      userId: '',
-      email: email,
-      password: password,
-      token: '',
-      expirationTimeToken: '',
-      role: '',
-    };
-
-
-    this.logowanie = true;
-    this.accountService.login(loginViewModel).subscribe({
-      next: ((result: TaskResult<LoginViewModel>) => {
-
-        if (result.success) {
-
-          let loginViewModel = result.model as LoginViewModel;
-          if (loginViewModel) {
-
-
-
-            // zamiana daty na format "2024-12-12 12:12:00"
-            let d = new Date();
-            let dataZalogowania = d.toLocaleDateString() + " " + d.toLocaleTimeString();
-
-
-            // zapisanie w sesji zalogowanego użytkownika
-            let sessionModel = {
-              isLoggedIn: true,
-              userId: loginViewModel.userId,
-              email: loginViewModel.email,
-              role: loginViewModel.role,
-              token: loginViewModel.token,
-              expirationTimeToken: loginViewModel.expirationTimeToken,
-              dataZalogowania: dataZalogowania
-            };
-            localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
-
-            this.zalogowanyUserEmail = loginViewModel.email;
-            this.role = loginViewModel.role == null ? '' : loginViewModel.role;
-            this.isLoggedIn = true;
-
-
-            form.reset();
-            this.router.navigate(['admin/users']);
-            //this.router.navigate(['admin/users']).then(() => location.reload());
-
-
-            // rejestrator logowania, tworzy wpis w bazie danych kiedy użytkownik był zalogowany
-            //let userId = loginViewModel.userId == null ? '' : loginViewModel.userId;
-            //this.rejestratorLogowaniaService.create(userId);
-
-            
-            this.logowanie = false;
-            this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${loginViewModel.email}`);
-          }
-          
-        } else {
-          this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
-          localStorage.removeItem('sessionModel');
-          this.isLoggedIn = false;
-          this.logowanie = false;
-          form.reset();
-        }
-        return result;
-      }),
-      error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('Dashboard', 'login')}. Name: ${error.name}. Message: ${error.message}`);
-        localStorage.removeItem('sessionModel');
-        this.logowanie = false;
-      }
-    });
-
-
-
-  }
-*/
-
-
-
-  public login(form: FormGroup): void {
-
-
-    // Pobranie wartości z kontrolek
-    let email = form.controls['emailLogin'].value;
-    let password = form.controls['passwordLogin'].value;
-
-
-    // Przekazanie obiektu logowania do metody 
-    let loginViewModel: LoginViewModel = {
-      userId: '',
-      email: email,
-      password: password,
-      token: '',
-      expirationTimeToken: '',
-      role: '',
-    };
-
-
-    this.logowanie = true;
-    this.accountService.login(loginViewModel).subscribe({
-      next: ((result: TaskResult<LoginViewModel>) => {
-
-        if (result.success) {
-
-          let loginViewModel = result.model as LoginViewModel;
-          if (loginViewModel) {
-
-
-
             // zamiana daty na format "2024-12-12 12:12:00"
             let d = new Date();
             let dataZalogowania = d.toLocaleDateString() + " " + d.toLocaleTimeString();
@@ -238,7 +143,7 @@ export class DashboardComponent implements OnInit {
 
             // zamiana daty na format 2024-12-12T12:12:00
             let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
-
+*/
 
             // zapisanie w sesji zalogowanego użytkownika
             let sessionModel = {
@@ -248,7 +153,7 @@ export class DashboardComponent implements OnInit {
               role: loginViewModel.role,
               token: loginViewModel.token,
               expirationTimeToken: loginViewModel.expirationTimeToken,
-              dataZalogowania: dataZalogowania,
+              //dataZalogowania: dataZalogowania,
             };
             localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
 
@@ -272,7 +177,7 @@ export class DashboardComponent implements OnInit {
           }
 
         } else {
-          this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
+          this.snackBarService.setSnackBar(`${result.message}`);
           localStorage.removeItem('sessionModel');
           this.isLoggedIn = false;
           this.logowanie = false;

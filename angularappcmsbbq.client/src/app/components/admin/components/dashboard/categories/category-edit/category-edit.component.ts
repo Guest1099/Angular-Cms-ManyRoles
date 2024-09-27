@@ -31,14 +31,30 @@ export class CategoryEditComponent implements OnInit {
       let id = params.get('id');
       if (id) {
 
-        this.category = this.categoriesService.get(id);
+        this.categoriesService.get(id).subscribe({
+          next: ((result: TaskResult<Category>) => {
+            if (result.success) {
+              // pobranie danych
+              this.category = result.model as Category;
 
-        if (this.category) {
-          this.formGroup = this.fb.group({
-            name: [this.category.name, [Validators.required, Validators.minLength(3)]],
-            fullName: [this.category.fullName, [Validators.required, Validators.minLength(3)]],
-          });
-        }
+              if (this.category) {
+                this.formGroup = this.fb.group({
+                  name: [this.category.name, [Validators.required, Validators.minLength(3)]],
+                  fullName: [this.category.fullName, [Validators.required, Validators.minLength(3)]],
+                });
+              }
+
+            } else {
+              this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
+            }
+            return result;
+          }),
+          error: (error: Error) => {
+            //alert(error);
+            this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
+          }
+        });
+
 
       }
     });

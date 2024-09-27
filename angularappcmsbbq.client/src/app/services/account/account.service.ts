@@ -53,99 +53,17 @@ export class AccountService {
 */
 
 
-  public login(loginViewModel: LoginViewModel): Observable <any> {
-    return this.http.post<any>(`${this.api}/login`, loginViewModel)
-  }
 
 
-
-/*
-  public login(form: FormGroup): void {
-
-    // Pobranie wartości z kontrolek
-    let email = form.controls['emailLogin'].value;
-    let password = form.controls['passwordLogin'].value;
-
-
-    // Przekazanie obiektu logowania do metody 
-    let loginViewModel: LoginViewModel = {
-      userId: '',
-      email: email,
-      password: password,
-      token: '',
-      expirationTimeToken: '',
-      role: '',
-    };
-
-
-    this.logowanie = true;
-    this.http.post<any>(`${this.api}/login`, loginViewModel).subscribe({
-      next: ((result: TaskResult<LoginViewModel>) => {
-
-        if (result.success) {
-
-          let loginViewModel = result.model as LoginViewModel;
-          if (loginViewModel) {
-
-
-
-            // zamiana daty na format "2024-12-12 12:12:00"
-            let d = new Date();
-            let dataZalogowania = d.toLocaleDateString() + " " + d.toLocaleTimeString();
-
-
-            // zapisanie w sesji zalogowanego użytkownika
-            let sessionModel = {
-              isLoggedIn: true,
-              userId: loginViewModel.userId,
-              email: loginViewModel.email,
-              role: loginViewModel.role,
-              token: loginViewModel.token,
-              expirationTimeToken: loginViewModel.expirationTimeToken,
-              dataZalogowania: dataZalogowania
-            };
-            localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
-
-            this.zalogowanyUserEmail = loginViewModel.email;
-            this.role = loginViewModel.role == null ? '' : loginViewModel.role;
-            this.isLoggedIn = true;
-
-
-            form.reset();
-            this.router.navigate(['admin/users']);
-            //this.router.navigate(['admin/users']).then(() => location.reload());
-
-
-            // rejestrator logowania, tworzy wpis w bazie danych kiedy użytkownik był zalogowany
-            //let userId = loginViewModel.userId == null ? '' : loginViewModel.userId;
-            //this.rejestratorLogowaniaService.create(userId);
-
-
-            this.logowanie = false;
-            this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${loginViewModel.email}`);
-          }
-
-        } else {
-          this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
-          localStorage.removeItem('sessionModel');
-          this.isLoggedIn = false;
-          this.logowanie = false;
-          form.reset();
-        }
-        return result;
-      }),
-      error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('Dashboard', 'login')}. Name: ${error.name}. Message: ${error.message}`);
-        localStorage.removeItem('sessionModel');
-        this.logowanie = false;
-      }
-    });
-  }
-*/
 
 
 
   // Pobiera użytkownika poprzez email
+  public getUserByEmail(email: string): Observable <any> {
+    return this.http.get<any>(`${this.api}/getUserByEmail/${email}`);
+  }
+
+/*
   public getUserByEmail(email: string): ApplicationUser {
 
     this.http.get<any>(`${this.api}/getUserByEmail/${email}`).subscribe({
@@ -164,10 +82,9 @@ export class AccountService {
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('AccountHandlerService', 'register')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
-
     return this.user;
   }
-
+*/
 
 
 
@@ -246,6 +163,7 @@ export class AccountService {
     let telefon = form.controls['telefon'].value;
     let roleId = form.controls['roleId'].value;
 
+    
     let user: ApplicationUser = {
       id: ob.id,
       email: email,
@@ -362,91 +280,12 @@ export class AccountService {
   }
 
 
-/*
-  public login(form: FormGroup): void {
-
-    // Pobranie wartości z kontrolek
-    let email = form.controls['emailLogin'].value;
-    let password = form.controls['passwordLogin'].value;
-
-
-    // Przekazanie obiektu logowania do metody 
-    let loginViewModel: LoginViewModel = {
-      userId: '',
-      email: email,
-      password: password,
-      token: '',
-      expirationTimeToken: '',
-      role: '',
-    };
-
-
-    this.logowanie = true;
-    this.http.post<any>(`${this.api}/login`, loginViewModel).subscribe({
-      next: ((result: TaskResult<LoginViewModel>) => {
-
-        if (result.success) {
-
-          let loginViewModel = result.model as LoginViewModel;
-          if (loginViewModel) {
 
 
 
-            // zamiana daty na format "2024-12-12 12:12:00"
-            let d = new Date();
-            let dataZalogowania = d.toLocaleDateString() + " " + d.toLocaleTimeString();
-
-
-            // zapisanie w sesji zalogowanego użytkownika
-            let sessionModel = {
-              isLoggedIn: true,
-              userId: loginViewModel.userId,
-              email: loginViewModel.email,
-              role: loginViewModel.role,
-              token: loginViewModel.token,
-              expirationTimeToken: loginViewModel.expirationTimeToken,
-              dataZalogowania: dataZalogowania
-            };
-            localStorage.setItem('sessionModel', JSON.stringify(sessionModel));
-
-            this.zalogowanyUserEmail = loginViewModel.email;
-            this.role = loginViewModel.role == null ? '' : loginViewModel.role;
-            this.isLoggedIn = true;
-
-
-            form.reset();
-            this.router.navigate(['admin/users']);
-            //this.router.navigate(['admin/users']).then(() => location.reload());
-
-
-            // rejestrator logowania, tworzy wpis w bazie danych kiedy użytkownik był zalogowany
-            //let userId = loginViewModel.userId == null ? '' : loginViewModel.userId;
-            //this.rejestratorLogowaniaService.create(userId);
-
-
-            this.logowanie = false;
-            this.snackBarService.setSnackBar(`Zalogowany użytkownik: ${loginViewModel.email}`);
-          }
-
-        } else {
-          this.snackBarService.setSnackBar(`${InfoService.info('Dashboard', 'login')}. ${result.message}.`);
-          localStorage.removeItem('sessionModel');
-          this.isLoggedIn = false;
-          this.logowanie = false;
-          form.reset();
-        }
-        return result;
-      }),
-      error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych. ${InfoService.info('Dashboard', 'login')}. Name: ${error.name}. Message: ${error.message}`);
-        localStorage.removeItem('sessionModel');
-        this.logowanie = false;
-      }
-    });
+  public login(loginViewModel: LoginViewModel): Observable<any> {
+    return this.http.post<any>(`${this.api}/login`, loginViewModel)
   }
-*/
-
-
 
 
 
@@ -458,6 +297,7 @@ export class AccountService {
       this.once = false;
       // usunięcie sesji
       localStorage.removeItem('sessionModel');
+      this.router.navigate(['/admin']);
 
       this.http.post<any>(`${this.api}/logout`, null).subscribe({
         next: () => {
@@ -476,7 +316,8 @@ export class AccountService {
     }
   }
 
-   
+
+
 
 
   public isLoggedInGuard(): boolean {

@@ -48,15 +48,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
         if (checkDate) {
           alert('date timeout expiration');
-          //this.accountService.wyloguj('wyloguj from interceptor 1');
           this.accountService.wyloguj();
-          //this.wyloguj();
-        }
-        /*if (checkDate) {
-          alert('date timeout expiration');
-          this.accountService.wyloguj('wyloguj from interceptor 1');
-          //this.wyloguj();
-        }*/ else {
+        } else {
 
           if (token) {
             request = request.clone({

@@ -25,6 +25,7 @@ export class SubcategoryCreateComponent implements OnInit {
 
   ngOnInit(): void { 
 
+    // pobranie wszystkich kategorii z "categoriesService" i wyświetlenie ich w comboBoxie
     this.categoriesService.getAll();
 
     this.formGroup = this.fb.group({

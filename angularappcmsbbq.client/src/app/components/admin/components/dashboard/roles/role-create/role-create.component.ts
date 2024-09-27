@@ -9,6 +9,9 @@ import { RolesService } from '../../../../../../services/roles/roles.service';
 })
 export class RoleCreateComponent implements OnInit {
 
+
+  formGroup !: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     public rolesService: RolesService
@@ -22,7 +25,4 @@ export class RoleCreateComponent implements OnInit {
 
     this.formGroup.markAllAsTouched();
   }
-
-  formGroup !: FormGroup;
-
 }

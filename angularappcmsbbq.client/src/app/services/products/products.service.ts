@@ -98,6 +98,7 @@ export class ProductsService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -105,7 +106,11 @@ export class ProductsService {
 
 
 
+  public get(id: any): Observable <any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
 
+/*
   public get(id: any): Product {
     this.http.get<any>(`${this.api}/${id}`).subscribe({
       next: ((result: TaskResult<Product>) => {
@@ -118,12 +123,13 @@ export class ProductsService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
     return this.product;
   }
-
+*/
 
 
 
@@ -165,6 +171,7 @@ export class ProductsService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -209,6 +216,7 @@ export class ProductsService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'edit')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -233,6 +241,7 @@ export class ProductsService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('ProductsHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -267,7 +276,13 @@ export class ProductsService {
 
   public isValidCreate(form: FormGroup): boolean {
     if (
-      form.controls['name'].touched && form.controls['name'].dirty && form.controls['name'].valid
+      form.controls['name'].touched && form.controls['name'].dirty && form.controls['name'].valid &&
+      form.controls['description'].touched && form.controls['description'].dirty && form.controls['description'].valid &&
+      form.controls['price'].touched && form.controls['price'].dirty && form.controls['price'].valid &&
+      form.controls['quantity'].touched && form.controls['quantity'].dirty && form.controls['quantity'].valid &&
+      form.controls['rozmiar'].touched && form.controls['rozmiar'].dirty && form.controls['rozmiar'].valid &&
+      form.controls['kolor'].touched && form.controls['kolor'].dirty && form.controls['kolor'].valid &&
+      form.controls['markaId'].touched && form.controls['markaId'].dirty && form.controls['markaId'].valid
     ) {
       return false;
     }
@@ -279,7 +294,13 @@ export class ProductsService {
 
   public isValidEdit(form: FormGroup): boolean {
     if (
-      form.controls['name'].valid
+      form.controls['name'].valid &&
+      form.controls['description'].valid &&
+      form.controls['price'].valid &&
+      form.controls['quantity'].valid &&
+      form.controls['rozmiar'].valid &&
+      form.controls['kolor'].valid &&
+      form.controls['markaId'].valid
     ) {
       return false;
     }

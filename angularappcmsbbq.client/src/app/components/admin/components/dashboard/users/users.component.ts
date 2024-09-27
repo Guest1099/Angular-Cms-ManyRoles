@@ -29,6 +29,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.rolesService.getAll();
   }
 
   ngAfterViewInit(): void {

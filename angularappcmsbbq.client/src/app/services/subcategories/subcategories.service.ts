@@ -102,6 +102,7 @@ export class SubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -110,6 +111,12 @@ export class SubcategoriesService {
 
 
 
+
+  public get (id: any): Observable<any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
+
+/*
   public get(id: any): Subcategory  {
     this.http.get<any>(`${this.api}/${id}`).subscribe({
       next: ((result: TaskResult<Subcategory>) => {
@@ -122,20 +129,27 @@ export class SubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
     return this.subcategory;
   }
+*/
+   
 
+  public getAllByCategoryId(categoryId: any): Observable <any> {
+    return this.http.get<any>(`${this.api}/getAllByCategoryId/${categoryId}`);
+  }
 
-
-
+/*
   public getAllByCategoryId(categoryId: any): void {
+    this.subcategories = [];
     this.http.get<any>(`${this.api}/getAllByCategoryId/${categoryId}`).subscribe({
       next: ((result: TaskResult<Subcategory []>) => {
         if (result.success) {
           // pobranie danych
+          this.subcategories = [];
           this.subcategories = result.model as Subcategory [];
         } else {
           this.snackBarService.setSnackBar(`Dane nie zostały załadowane. ${result.message}`);
@@ -143,11 +157,12 @@ export class SubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
   }
-
+*/
 
 
 
@@ -177,6 +192,7 @@ export class SubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -211,6 +227,7 @@ export class SubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'edit')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -235,6 +252,7 @@ export class SubcategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('SubcategoriesHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

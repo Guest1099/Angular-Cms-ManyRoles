@@ -78,6 +78,12 @@ export class CategoriesService {
 
 
 
+
+  public getAllCategories(): Observable<any> {
+    return this.http.get<any>(`${this.api}`);
+  }
+
+
   public getAll(): void {
 
     this.http.get<any>(`${this.api}`).subscribe({
@@ -106,6 +112,7 @@ export class CategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoriesHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -114,7 +121,11 @@ export class CategoriesService {
 
 
 
+  public get(id: string): Observable <any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
 
+/*
   public get(id: string): Category {
     this.http.get<any>(`${this.api}/${id}`).subscribe({
       next: ((result: TaskResult<Category>) => {
@@ -127,12 +138,13 @@ export class CategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoriesHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
     return this.category;
   }
-
+*/
 
 
 
@@ -163,7 +175,8 @@ export class CategoriesService {
         return result;
       }),
       error: (error: Error) => {
-        this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoriesHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
+        alert(error);
+        //this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoriesHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
     });
@@ -197,6 +210,7 @@ export class CategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoriesHandlerService', 'edit')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -223,6 +237,7 @@ export class CategoriesService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('CategoriesHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

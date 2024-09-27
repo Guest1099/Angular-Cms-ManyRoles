@@ -26,7 +26,6 @@ export class AuthGuard implements CanActivate {
     let result = false;
     let expectedRoles = route.data['expectedRoles'] as Array<string>;
 
-
     let sessionModel = localStorage.getItem('sessionModel');
     if (sessionModel) {
       let sm = JSON.parse(sessionModel);
@@ -39,13 +38,12 @@ export class AuthGuard implements CanActivate {
         let expirationTimeToken = this.accountService.changeDateToMiliseconds(sm.expirationTimeToken);
         let checkDate = dateNow > expirationTimeToken;
 
-
         // Sprawdź, czy użytkownik jest zalogowany i ma odpowiednią rolę 
         if (this.accountService.isLoggedInGuard() && expectedRoles.includes(role)) {
           result = true;
 
 
-          if (checkDate) {
+          if (checkDate) { 
             this.accountService.wyloguj();
           } else {
             result = true;
