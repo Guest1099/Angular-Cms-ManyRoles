@@ -5,16 +5,6 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "angularappcmsbbq.client", "angularappcmsbbq.client\angularappcmsbbq.client.esproj", "{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\WebApplication1\WebApplication1.csproj", "{19CE3B10-1D91-4DB7-B812-F2A90DC6615A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Frameworks\Frameworks.csproj", "{A6F779B6-8FB3-4F9E-A2FB-07BE89100233}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Domain\Domain.csproj", "{0C391FAF-168A-4A8D-8509-76E038A1B823}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Data\Data.csproj", "{8EBD3D45-AA8D-4792-84C7-BB7FF7E4B556}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\..\..\..\CSharp\2022\ASP .NET Core\Api\Cms-ManyRoles\Application\Application.csproj", "{EB93B3D8-97CF-4DFB-AFE7-622C8C30C1D0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,26 +17,6 @@ Global
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B724715E-3ADF-42D1-9043-E6ADF05ECBEC}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{19CE3B10-1D91-4DB7-B812-F2A90DC6615A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19CE3B10-1D91-4DB7-B812-F2A90DC6615A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19CE3B10-1D91-4DB7-B812-F2A90DC6615A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19CE3B10-1D91-4DB7-B812-F2A90DC6615A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6F779B6-8FB3-4F9E-A2FB-07BE89100233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6F779B6-8FB3-4F9E-A2FB-07BE89100233}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6F779B6-8FB3-4F9E-A2FB-07BE89100233}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6F779B6-8FB3-4F9E-A2FB-07BE89100233}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C391FAF-168A-4A8D-8509-76E038A1B823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C391FAF-168A-4A8D-8509-76E038A1B823}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C391FAF-168A-4A8D-8509-76E038A1B823}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C391FAF-168A-4A8D-8509-76E038A1B823}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8EBD3D45-AA8D-4792-84C7-BB7FF7E4B556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EBD3D45-AA8D-4792-84C7-BB7FF7E4B556}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EBD3D45-AA8D-4792-84C7-BB7FF7E4B556}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EBD3D45-AA8D-4792-84C7-BB7FF7E4B556}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB93B3D8-97CF-4DFB-AFE7-622C8C30C1D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB93B3D8-97CF-4DFB-AFE7-622C8C30C1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB93B3D8-97CF-4DFB-AFE7-622C8C30C1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB93B3D8-97CF-4DFB-AFE7-622C8C30C1D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
