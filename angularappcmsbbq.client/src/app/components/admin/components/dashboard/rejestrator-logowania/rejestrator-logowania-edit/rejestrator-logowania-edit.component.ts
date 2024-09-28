@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SnackBarService } from '../../../../../../services/snack-bar.service';
 import { TaskResult } from '../../../../../../models/taskResult';
 import { InfoService } from '../../../../../../services/InfoService';
+import { NavigationLinkNameService } from '../../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-rejestrator-logowania-edit',
@@ -20,6 +21,7 @@ export class RejestratorLogowaniaEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public rejestratorLogowaniaService: RejestratorLogowaniaService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private route: ActivatedRoute,
     private snackBarService: SnackBarService
   ) { }

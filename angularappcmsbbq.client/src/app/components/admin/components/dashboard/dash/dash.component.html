@@ -1,0 +1,104 @@
+
+
+<div class="df wrap">
+
+    <div *ngIf="accountService.role == 'Administrator'">
+        <div class="dashCard">
+            <span class="cardTitle">
+                Ilość ról
+            </span>
+            <span class="cardCount">
+                {{ rolesService.roles.length }}
+            </span>
+            <button mat-button [routerLink]="['/admin/roles']">zobacz</button>
+        </div>
+    </div>
+
+
+
+    <div *ngIf="accountService.role == 'Administrator'">
+        <div class="dashCard">
+            <span class="cardTitle">
+                Ilość użytkowników
+            </span>
+            <span class="cardCount">
+                {{ usersService.users.length }}
+            </span>
+            <button mat-button [routerLink]="['/admin/users']">zobacz</button>
+        </div>
+    </div>
+
+
+
+    <div *ngIf="accountService.role == 'Administrator' || 'User'">
+        <div class="dashCard">
+            <span class="cardTitle">
+                Ilość marek
+            </span>
+            <span class="cardCount">
+                {{ markiService.marki.length }}
+            </span>
+            <button mat-button [routerLink]="['/admin/marki']">zobacz</button>
+        </div>
+    </div>
+
+
+
+
+    <div *ngIf="accountService.role == 'Administrator' || 'User'">
+        <div class="dashCard">
+            <span class="cardTitle">
+                Ilość produktów
+            </span>
+            <span class="cardCount">
+                {{ productsService.products.length }}
+            </span>
+            <button mat-button [routerLink]="['/admin/products']">zobacz</button>
+        </div>
+    </div>
+
+
+
+
+    <div *ngIf="accountService.role == 'Administrator' || 'User'">
+        <div class="dashCard">
+            <span class="cardTitle">
+                Ilość kategorii
+            </span>
+            <span class="cardCount">
+                {{ categoriesService.categories.length }}
+            </span>
+            <button mat-button [routerLink]="['/admin/categories']">zobacz</button>
+        </div>
+    </div>
+
+
+
+    <div *ngIf="accountService.role == 'Administrator' || 'User'">
+        <div class="dashCard">
+            <span class="cardTitle">
+                Ilość subKategorii
+            </span>
+            <span class="cardCount">
+                {{ subcategoriesService.subcategories.length }}
+            </span>
+            <button mat-button [routerLink]="['/admin/subcategories']">zobacz</button>
+        </div>
+    </div>
+
+
+
+    <div *ngIf="accountService.role == 'Administrator' || 'User'">
+        <div class="dashCard">
+            <span class="cardTitle">
+                Ilość subSubKategorii
+            </span>
+            <span class="cardCount">
+                {{ subsubcategoriesService.subsubcategories.length }}
+            </span>
+            <button mat-button [routerLink]="['/admin/subsubcategories']">zobacz</button>
+        </div>
+    </div>
+
+
+</div>

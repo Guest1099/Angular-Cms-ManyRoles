@@ -81,8 +81,10 @@ export class UsersService {
       next: ((result: TaskResult<ApplicationUser[]>) => {
         if (result.success) {
           // pobranie danych
-          this.dataSource.data = result.model as ApplicationUser[];
-          this.users = result.model as ApplicationUser[];
+
+          let data = result.model as ApplicationUser[];
+          this.users = data.sort((a, b) => a.email.localeCompare(b.email));
+          this.dataSource.data = this.users;
 
           this.users.forEach((f: ApplicationUser) => {
             this.usersMap.set(f.id, f.email);
@@ -102,16 +104,22 @@ export class UsersService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error.message);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('UsersHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
   }
 
 
+
+
+
+  public getUserById(id: string): Observable <any> {
+    return this.http.get<any>(`${this.api}/getUserById/${id}`);
+  }
   
-
+/*
   public getUserById(id: string): ApplicationUser {
-
     this.http.get<any>(`${this.api}/getUserById/${id}`).subscribe({
       next: ((result: TaskResult<ApplicationUser>) => {
         if (result.success) {
@@ -122,12 +130,13 @@ export class UsersService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error.message);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('UsersHandlerService', 'getUserByEmail')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
     return this.user;
   }
-
+*/
 
 
   public getUserByEmail(email: string): ApplicationUser {
@@ -141,6 +150,7 @@ export class UsersService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error.message);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('UsersHandlerService', 'getUserByEmail')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -218,6 +228,7 @@ export class UsersService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error.message);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('UsersHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -269,6 +280,7 @@ export class UsersService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error.message);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('UsersHandlerService', 'edit')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -295,6 +307,7 @@ export class UsersService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error.message);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('UsersHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

@@ -52,7 +52,9 @@ export class MarkiService {
   constructor(
     private http: HttpClient,
     private snackBarService: SnackBarService
-  ) { }
+  ) {
+
+  }
 
 
 
@@ -78,8 +80,10 @@ export class MarkiService {
       next: ((result: TaskResult<Marka[]>) => {
         if (result.success) {
           // pobranie danych
-          this.marki = result.model as Marka[];
-          this.dataSource.data = result.model as Marka[];
+
+          let data = result.model as Marka[];
+          this.marki = data.sort((a, b) => a.name.localeCompare(b.name));
+          this.dataSource.data = this.marki;
 
 
           if (this.marki.length > 0) {
@@ -96,13 +100,26 @@ export class MarkiService {
         return result;
       }),
       error: (error: Error) => {
+/*
+        let sessionModel = localStorage.getItem('sessionModel');
+        if (sessionModel) {
+          alert(error.message);
+          this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('MarkiHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
+        }
+*/
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('MarkiHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
+
       }
     });
   }
 
 
 
+  public get(id: string): Observable <any> {
+    return this.http.get<any>(`${this.api}/${id}`);
+  }
+
+/*
   public get(id: any): Marka {
     this.http.get<any>(`${this.api}/${id}`).subscribe({
       next: ((result: TaskResult<Marka>) => {
@@ -115,12 +132,13 @@ export class MarkiService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('MarkiHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
     return this.marka;
   }
-
+*/
 
 
 
@@ -147,6 +165,7 @@ export class MarkiService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('MarkiHandlerService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -177,6 +196,7 @@ export class MarkiService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('MarkiHandlerService', 'edit')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }
@@ -201,6 +221,7 @@ export class MarkiService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('MarkiHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

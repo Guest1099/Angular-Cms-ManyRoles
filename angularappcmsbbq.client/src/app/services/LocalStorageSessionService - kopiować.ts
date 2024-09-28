@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AccountHandlerService } from './account/account-handler.service';
 import { LoginViewModel } from '../models/loginViewModel';
 
 @Injectable({

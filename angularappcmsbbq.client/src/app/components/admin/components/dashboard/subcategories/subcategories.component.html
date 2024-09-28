@@ -6,7 +6,7 @@
 
         <div>
             <!-- button dodawania -->
-            <button *ngIf="accountService.role == 'Administrator'" mat-raised-button color="primary" [routerLink]="['subcategoryCreate']">
+            <button *ngIf="accountService.role == 'Administrator'" mat-raised-button color="primary" [routerLink]="['subcategoryCreate']" (click)="navigationLinkNameService.changeSubLinkName('create subcategory')">
                 <mat-icon>add</mat-icon>
                 Create new
             </button>
@@ -58,7 +58,7 @@
                 <td mat-cell *matCellDef="let element" class="administratorColumn">
 
                     <div *ngIf="accountService.role == 'Administrator'">
-                        <button mat-button [routerLink]="['subcategoryEdit', element.subcategoryId]">
+                        <button mat-button [routerLink]="['subcategoryEdit', element.subcategoryId]" (click)="navigationLinkNameService.changeSubLinkName('edit subcategory')">
                             <mat-icon>edit</mat-icon>
                         </button>
 

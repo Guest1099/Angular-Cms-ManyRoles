@@ -9,6 +9,7 @@ import { SubsubcategoriesService } from '../../../../../services/subsubcategorie
 import { AccountService } from '../../../../../services/account/account.service';
 import { CategoriesService } from '../../../../../services/categories/categories.service';
 import { SubcategoriesService } from '../../../../../services/subcategories/subcategories.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-subcategories',
@@ -22,10 +23,9 @@ export class SubcategoriesComponent implements OnInit, AfterViewInit {
 
   constructor(
     public accountService: AccountService,
-    //public categoriesService: CategoriesService,
     public subcategoriesService: SubcategoriesService,
-    //public subsubcategoriesService: SubsubcategoriesService,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private dialog: MatDialog,
   ) { }
 

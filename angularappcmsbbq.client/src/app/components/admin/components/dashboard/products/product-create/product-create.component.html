@@ -78,7 +78,7 @@
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Category</mat-label>
                 <mat-select formControlName="categoryId" (selectionChange)="onSelectionChangeCategory($event)">
-                    <mat-option *ngFor="let category of categoriesService.categories" [value]="category.categoryId">
+                    <mat-option *ngFor="let category of categories" [value]="category.categoryId">
                         {{ category.name }}
                     </mat-option>
                 </mat-select>
@@ -92,7 +92,7 @@
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Subcategory</mat-label>
                 <mat-select formControlName="subcategoryId" (selectionChange)="onSelectionChangeSubcategory($event)">
-                    <mat-option *ngFor="let subcategory of subcategoriesService.subcategories" [value]="subcategory.subcategoryId">
+                    <mat-option *ngFor="let subcategory of subcategories" [value]="subcategory.subcategoryId">
                         {{ subcategory.name }}
                     </mat-option>
                 </mat-select>
@@ -108,7 +108,7 @@
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Subsubategory</mat-label>
                 <mat-select formControlName="subsubcategoryId">
-                    <mat-option *ngFor="let subsubcategory of subsubcategoriesService.subsubcategories" [value]="subsubcategory.subsubcategoryId">
+                    <mat-option *ngFor="let subsubcategory of subsubcategories" [value]="subsubcategory.subsubcategoryId">
                         {{ subsubcategory.name }}
                     </mat-option>
                 </mat-select>
@@ -123,27 +123,23 @@
 
 
     <div class="df-sb bottom-buttons">
-        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../products']">
+        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../products']" (click)="navigationLinkNameService.changeSubLinkName('')">
             Wstecz
         </button>
 
 
         <div class="df centerxy">
-            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../products']">
+            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../products']" (click)="navigationLinkNameService.changeSubLinkName('')">
                 <mat-icon>cancel</mat-icon>
                 Anuluj
             </button>
-            <!--
-            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['/admin/products']">
-                <mat-icon>cancel</mat-icon>
-                Anuluj
-            </button> -->
+
 
             <button mat-raised-button
                     color="primary"
                     (click)="productsService.create(formGroup)"
                     [disabled]="productsService.isValidCreate(formGroup)"
-                    mat-dialog-close>
+                    mat-dialog-close> 
                 <mat-icon>
                     timer
                 </mat-icon>

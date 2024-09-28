@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
 import { MarkiService } from '../../../../../services/marki/marki.service';
 import { AccountService } from '../../../../../services/account/account.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-marki',
@@ -24,6 +25,7 @@ export class MarkiComponent implements OnInit, AfterViewInit {
     public accountService: AccountService,
     public markiService: MarkiService,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private dialog: MatDialog
   ) { }
 

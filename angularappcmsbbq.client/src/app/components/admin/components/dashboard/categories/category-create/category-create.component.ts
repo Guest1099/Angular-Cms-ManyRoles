@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService } from '../../../../../../services/categories/categories.service';
+import { NavigationLinkNameService } from '../../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-category-create',
@@ -11,7 +12,8 @@ export class CategoryCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public categoriesService: CategoriesService
+    public categoriesService: CategoriesService,
+    public navigationLinkNameService: NavigationLinkNameService
   ) { }
 
   formGroup !: FormGroup;

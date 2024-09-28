@@ -7,6 +7,7 @@ import { RoleDeleteComponent } from './role-delete/role-delete.component';
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
 import { AccountService } from '../../../../../services/account/account.service';
 import { RolesService } from '../../../../../services/roles/roles.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-roles',
@@ -22,6 +23,7 @@ export class RolesComponent implements OnInit, AfterViewInit {
     public accountService: AccountService,
     public rolesService: RolesService,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private dialog: MatDialog
   ) { }
 

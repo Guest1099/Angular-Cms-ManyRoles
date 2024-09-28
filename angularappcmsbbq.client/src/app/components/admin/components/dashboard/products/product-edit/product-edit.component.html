@@ -51,7 +51,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Marka</mat-label>
                     <mat-select formControlName="markaId">
-                        <mat-option *ngFor="let marka of marki" [value]="marka.markaId">
+                        <mat-option *ngFor="let marka of markiService.marki" [value]="marka.markaId">
                             {{ marka.name }}
                         </mat-option>
                     </mat-select>
@@ -65,7 +65,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Category</mat-label>
                     <mat-select formControlName="categoryId" (selectionChange)="onSelectionChangeCategory($event)">
-                        <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+                        <mat-option *ngFor="let category of categoriesService.categories" [value]="category.categoryId">
                             {{ category.name }}
                         </mat-option>
                     </mat-select>
@@ -110,7 +110,7 @@
 
         <div class="df-sb bottom-buttons">
             <div>
-                <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../products']" class="mr-10">
+                <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../products']" (click)="navigationLinkNameService.changeSubLinkName('')" class="mr-10">
                     <mat-icon>cancel</mat-icon>
                     Wstecz
                 </button>

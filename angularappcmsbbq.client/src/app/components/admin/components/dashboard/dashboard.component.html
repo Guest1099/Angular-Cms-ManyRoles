@@ -9,6 +9,13 @@
 
                 <mat-action-list class="menuList">
 
+                    <button *ngIf="role == 'Administrator' || role == 'User'" mat-list-item [routerLink]="['dash']" (click)="sidenav.toggle(); getLinkName('dash')" style="margin-bottom: 2px;">
+                        <div class="df">
+                            <mat-icon class="menu-icon">table</mat-icon>
+                            <span class="menu-item">dash</span>
+                        </div>
+                    </button>
+
                     <button *ngIf="role == 'Administrator'" mat-list-item [routerLink]="['roles']" (click)="sidenav.toggle(); getLinkName('roles')" style="margin-bottom: 2px;">
                         <div class="df">
                             <mat-icon class="menu-icon">table</mat-icon>
@@ -145,9 +152,17 @@
 
 
                 <div style="margin: auto 120px;">
-                    jesteś tutaj
+
+                    <div class="df">
+                        <span class="mr-5">jesteś tutaj: </span>
+                        <span>{{ linkName }}</span>
+                        <span *ngIf="subLinkName.length > 0" class="ml-4 mr-4">-></span>
+                        <span>{{ subLinkName }}</span>
+                    </div>
+
                     <router-outlet></router-outlet>
                 </div>
+
             </div>
         </mat-sidenav-content>
 

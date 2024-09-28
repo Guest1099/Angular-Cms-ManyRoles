@@ -103,12 +103,12 @@
 
 
         <div class="df-sb bottom-buttons" style="margin-bottom: 100px;">
-            <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../users']">
+            <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../users']" (click)="navigationLinkNameService.changeSubLinkName('')">
                 Wstecz
             </button>
 
             <div class="df">
-                <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../../users']">
+                <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../../users']" (click)="navigationLinkNameService.changeSubLinkName('')">
                     <mat-icon>cancel</mat-icon>
                     Anuluj
                 </button>

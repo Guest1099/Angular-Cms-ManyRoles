@@ -8,6 +8,7 @@ import { TablePageCounterService } from '../../../../../services/table-page-coun
 import { AccountService } from '../../../../../services/account/account.service';
 import { UsersService } from '../../../../../services/users/users.service';
 import { RolesService } from '../../../../../services/roles/roles.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-users',
@@ -25,10 +26,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
     public usersService: UsersService,
     public rolesService: RolesService,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.rolesService.getAll();
   }
 
   ngAfterViewInit(): void {

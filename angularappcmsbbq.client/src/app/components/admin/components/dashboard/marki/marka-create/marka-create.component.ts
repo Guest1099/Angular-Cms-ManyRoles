@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MarkiService } from '../../../../../../services/marki/marki.service';
+import { NavigationLinkNameService } from '../../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-marka-create',
@@ -11,7 +12,8 @@ export class MarkaCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public markiService: MarkiService
+    public markiService: MarkiService,
+    public navigationLinkNameService: NavigationLinkNameService
   ) { }
 
   ngOnInit(): void {

@@ -1,12 +1,11 @@
 <!-- dane wyświetlana tylko i wyłącznie dla administratora -->
-
 <ng-container *ngIf="accountService.role == 'Administrator' || 'User'">
 
 
     <div class="df-sb mt-20">
         <div>
             <!-- button dodawania -->
-            <button *ngIf="accountService.role == 'Administrator'" mat-raised-button color="primary" [routerLink]="['subsubcategoryCreate']">
+            <button *ngIf="accountService.role == 'Administrator'" mat-raised-button color="primary" [routerLink]="['subsubcategoryCreate']" (click)="navigationLinkNameService.changeSubLinkName('create subsubcategory')">
                 <mat-icon>add</mat-icon>
                 Create new
             </button>
@@ -58,7 +57,7 @@
                 <td mat-cell *matCellDef="let element" class="administratorColumn">
 
                     <div *ngIf="accountService.role == 'Administrator'">
-                        <button mat-button [routerLink]="['subsubcategoryEdit', element.subsubcategoryId]">
+                        <button mat-button [routerLink]="['subsubcategoryEdit', element.subsubcategoryId]" (click)="navigationLinkNameService.changeSubLinkName('edit subsubcategory')">
                             <mat-icon>edit</mat-icon>
                         </button>
 

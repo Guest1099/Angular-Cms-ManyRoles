@@ -7,6 +7,7 @@ import { CategoryDeleteComponent } from './category-delete/category-delete.compo
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
 import { CategoriesService } from '../../../../../services/categories/categories.service';
 import { AccountService } from '../../../../../services/account/account.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-categories',
@@ -22,6 +23,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
     public accountService: AccountService,
     public categoriesService: CategoriesService,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private dialog: MatDialog
   ) { }
 

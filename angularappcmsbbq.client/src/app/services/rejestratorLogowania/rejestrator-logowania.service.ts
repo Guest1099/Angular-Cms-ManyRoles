@@ -81,9 +81,16 @@ export class RejestratorLogowaniaService {
     this.http.get<any>(`${this.api}`).subscribe({
       next: ((result: TaskResult<RejestratorLogowania[]>) => {
         if (result.success) {
-          // pobranie danych 
-          this.dataSource.data = result.model as RejestratorLogowania[];
+          // pobranie danych
+
+/*
           this.rejestratorLogowan = result.model as RejestratorLogowania[];
+          this.dataSource.data = result.model as RejestratorLogowania[];
+*/
+
+          let data = result.model as RejestratorLogowania[];
+          this.rejestratorLogowan = data.sort((a, b) => a.dataZalogowania.localeCompare(b.dataZalogowania));
+          this.dataSource.data = this.rejestratorLogowan;
 
 
           if (this.rejestratorLogowan.length > 0) {
@@ -100,6 +107,7 @@ export class RejestratorLogowaniaService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaHandlerService', 'getAll')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -122,6 +130,7 @@ export class RejestratorLogowaniaService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaHandlerService', 'get')}. Name: ${error.name}. Message: ${error.message}`);
       }
     });
@@ -187,6 +196,7 @@ export class RejestratorLogowaniaService {
             return result;
           }),
           error: (error: Error) => {
+            //alert(error);
             this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaService', 'create')}. Name: ${error.name}. Message: ${error.message}`);
           }
         });
@@ -339,6 +349,7 @@ export class RejestratorLogowaniaService {
         return result;
       }),
       error: (error: Error) => {
+        //alert(error);
         this.snackBarService.setSnackBar(`Brak połączenia z bazą danych or token time expired. ${InfoService.info('RejestratorLogowaniaHandlerService', 'delete')}. Name: ${error.name}. Message: ${error.message}`);
         this.loadingElements = false;
       }

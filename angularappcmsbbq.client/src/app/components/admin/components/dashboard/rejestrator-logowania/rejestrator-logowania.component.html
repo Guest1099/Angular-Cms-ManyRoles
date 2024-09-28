@@ -39,15 +39,20 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Data zalogowania</th>
                 <td mat-cell *matCellDef="let element">{{ element.dataZalogowania }}</td>
             </ng-container>
-
+            <!-- 
             <ng-container matColumnDef="dataWylogowania">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Data wylogowania</th>
                 <td mat-cell *matCellDef="let element">{{ dataWylogowania (element.dataWylogowania) }}</td>
             </ng-container>
+ -->
+            <ng-container matColumnDef="dataWylogowania">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Data wylogowania</th>
+                <td mat-cell *matCellDef="let element">{{ element.dataWylogowania }}</td>
+            </ng-container>
 
             <ng-container matColumnDef="czasZalogowania">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Czas zalogowania</th>
-                <td mat-cell *matCellDef="let element">{{ czasZalogowania (element.czasZalogowania) }}</td>
+                <td mat-cell *matCellDef="let element">{{ element.czasZalogowania }}</td>
             </ng-container>
 
 
@@ -67,7 +72,7 @@
                 <th mat-header-cell *matHeaderCellDef class="tableColumnAction">Actions</th>
                 <td mat-cell *matCellDef="let element">
 
-                    <button mat-button [routerLink]="['rejestratorLogowaniaEdit', element.rejestratorLogowaniaId]">
+                    <button mat-button [routerLink]="['rejestratorLogowaniaEdit', element.rejestratorLogowaniaId]" (click)="navigationLinkNameService.changeSubLinkName('edit rejestrator logowania')">
                         <mat-icon>edit</mat-icon>
                     </button>
 

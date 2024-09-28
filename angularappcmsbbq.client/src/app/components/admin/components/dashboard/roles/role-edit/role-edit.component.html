@@ -24,7 +24,7 @@
 
         <div class="df-sb bottom-buttons">
             <div>
-                <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../roles']" class="mr-10">
+                <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../roles']" (click)="navigationLinkNameService.changeSubLinkName('')" class="mr-10">
                     <mat-icon>cancel</mat-icon>
                     Wstecz
                 </button>

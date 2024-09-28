@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TablePageCounterService } from '../../../../../services/table-page-counter.service';
 import { AccountService } from '../../../../../services/account/account.service';
 import { ProductsService } from '../../../../../services/products/products.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-products',
@@ -25,6 +26,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private router: Router
   ) { }
 

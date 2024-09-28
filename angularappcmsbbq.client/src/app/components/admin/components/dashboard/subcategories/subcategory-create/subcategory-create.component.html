@@ -4,7 +4,7 @@
 <div class="db w-500px">
 
     <p class="header">
-        Dodawanie nowej pozycji
+        Dodawanie nowej pozycji, która ma występować w kategoriach
     </p>
     <p class="subHeader">
         Wprowadź nazwę aby dodać nową pozycję
@@ -37,13 +37,13 @@
 
 
     <div class="df-sb bottom-buttons">
-        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../subcategories']">
+        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../subcategories']" (click)="navigationLinkNameService.changeSubLinkName('')">
             Wstecz
         </button>
 
 
         <div class="df">
-            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../subcategories']">
+            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../subcategories']" (click)="navigationLinkNameService.changeSubLinkName('')">
                 <mat-icon>cancel</mat-icon>
                 Anuluj
             </button>

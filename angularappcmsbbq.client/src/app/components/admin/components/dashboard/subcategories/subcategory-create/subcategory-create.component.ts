@@ -5,6 +5,7 @@ import { TaskResult } from '../../../../../../models/taskResult';
 import { Category } from '../../../../../../models/category';
 import { SnackBarService } from '../../../../../../services/snack-bar.service';
 import { SubcategoriesService } from '../../../../../../services/subcategories/subcategories.service';
+import { NavigationLinkNameService } from '../../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-subcategory-create',
@@ -20,11 +21,13 @@ export class SubcategoryCreateComponent implements OnInit {
     private fb: FormBuilder,
     public categoriesService: CategoriesService,
     public subcategoriesService: SubcategoriesService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private snackBarService: SnackBarService
   ) { }
 
   ngOnInit(): void { 
 
+    // pobranie wszystkich kategorii z "categoriesService" i wyświetlenie ich w comboBoxie
     this.categoriesService.getAll();
 
     this.formGroup = this.fb.group({

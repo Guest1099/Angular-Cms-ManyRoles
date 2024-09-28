@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RolesService } from '../../../../../../services/roles/roles.service';
+import { NavigationLinkNameService } from '../../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-role-create',
@@ -9,9 +10,13 @@ import { RolesService } from '../../../../../../services/roles/roles.service';
 })
 export class RoleCreateComponent implements OnInit {
 
+
+  formGroup !: FormGroup;
+
   constructor(
     private fb: FormBuilder,
-    public rolesService: RolesService
+    public rolesService: RolesService,
+    public navigationLinkNameService: NavigationLinkNameService,
   ) { }
 
 
@@ -22,7 +27,4 @@ export class RoleCreateComponent implements OnInit {
 
     this.formGroup.markAllAsTouched();
   }
-
-  formGroup !: FormGroup;
-
 }

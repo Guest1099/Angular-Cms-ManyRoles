@@ -21,13 +21,13 @@
 
 
     <div class="df-sb bottom-buttons">
-        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../roles']">
+        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../roles']" (click)="navigationLinkNameService.changeSubLinkName('')">
             Wstecz
         </button>
 
 
         <div class="df centerxy">
-            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../roles']">
+            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../roles']" (click)="navigationLinkNameService.changeSubLinkName('')">
                 <mat-icon>cancel</mat-icon>
                 Anuluj
             </button>

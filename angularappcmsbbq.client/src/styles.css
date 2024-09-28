@@ -3997,7 +3997,7 @@ ul {
 }
 
 .administratorColumn {
-    display: none;
+    /*display: none;*/
 }
 
 
@@ -4023,6 +4023,8 @@ ul {
     margin-right: 10px;
 }
 
+
+/* Różne ----------------------------------------------------------------------------------- */
 
 
 .borderCount {
@@ -4072,7 +4074,9 @@ ul {
   .matFormField:hover {
     cursor: pointer;
   }
-   
+
+
+
 .buttonArrow {
   background-color: transparent;
   border: none;
@@ -4110,4 +4114,24 @@ ul {
 
 .hidePreloader {
   display: none;
+}
+
+
+
+.dashCard {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 150px;
+    background-color: white;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+}
+
+.cardTitle {
+    font-size: 20px;
+}
+.cardCount {
+    font-size: 30px;
 }

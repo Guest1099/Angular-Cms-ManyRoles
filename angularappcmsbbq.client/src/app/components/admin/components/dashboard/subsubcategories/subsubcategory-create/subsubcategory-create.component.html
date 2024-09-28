@@ -1,10 +1,10 @@
-<!-- 
+
 
 
 <div class="db w-500px">
 
     <p class="header">
-        Dodawanie nowej pozycji
+        Dodawanie nowej pozycji, która ma występować w kategoriach oraz subKategoriach
     </p>
     <p class="subHeader">
         Wprowadź nazwę aby dodać nową pozycję
@@ -28,7 +28,7 @@
         <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
             <mat-select formControlName="categoryId" (selectionChange)="onOptionSelectedCategory($event)">
-                <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+                <mat-option *ngFor="let category of categoriesService.categories" [value]="category.categoryId">
                     {{ category.name }}
                 </mat-option>
             </mat-select>
@@ -51,12 +51,12 @@
 
 
     <div class="df-sb bottom-buttons">
-        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../subsubcategories']">
+        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../subsubcategories']" (click)="navigationLinkNameService.changeSubLinkName('')">
             Wstecz
         </button>
 
         <div class="df">
-            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../subsubcategories']">
+            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../subsubcategories']" (click)="navigationLinkNameService.changeSubLinkName('')">
                 <mat-icon>cancel</mat-icon>
                 Anuluj
             </button>
@@ -82,4 +82,4 @@
 
 
 
- -->
+

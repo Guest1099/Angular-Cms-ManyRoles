@@ -8,6 +8,7 @@ import { TablePageCounterService } from '../../../../../services/table-page-coun
 import { AccountService } from '../../../../../services/account/account.service';
 import { UsersService } from '../../../../../services/users/users.service';
 import { RejestratorLogowaniaService } from '../../../../../services/rejestratorLogowania/rejestrator-logowania.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-rejestrator-logowania',
@@ -24,10 +25,12 @@ export class RejestratorLogowaniaComponent implements OnInit, AfterViewInit {
     public rejestratorLogowaniaService: RejestratorLogowaniaService,
     public usersService: UsersService,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.usersService.getAll();
   }
 
   ngAfterViewInit(): void {

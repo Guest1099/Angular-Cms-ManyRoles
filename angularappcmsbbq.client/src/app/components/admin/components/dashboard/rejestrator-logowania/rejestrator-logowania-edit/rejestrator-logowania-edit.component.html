@@ -52,7 +52,7 @@
      -->
 
         <div class="df-sb bottom-buttons">
-            <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../rejestratorLogowania']">
+            <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../../rejestratorLogowania']" (click)="navigationLinkNameService.changeSubLinkName('')">
                 <mat-icon>cancel</mat-icon>
                 Wstecz
             </button>

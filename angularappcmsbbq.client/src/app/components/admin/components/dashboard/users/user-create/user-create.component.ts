@@ -5,6 +5,7 @@ import { TaskResult } from '../../../../../../models/taskResult';
 import { ApplicationRole } from '../../../../../../models/applicationRole';
 import { SnackBarService } from '../../../../../../services/snack-bar.service';
 import { UsersService } from '../../../../../../services/users/users.service';
+import { NavigationLinkNameService } from '../../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-user-create',
@@ -19,7 +20,8 @@ export class UserCreateComponent implements OnInit {
     private fb: FormBuilder,
     public usersService: UsersService, 
     public rolesService: RolesService,
-    private snackBarService: SnackBarService
+    public navigationLinkNameService: NavigationLinkNameService,
+    private snackBarService: SnackBarService,
   ) { }
 
   ngOnInit(): void {

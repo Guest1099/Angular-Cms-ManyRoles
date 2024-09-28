@@ -8,6 +8,7 @@ import { TablePageCounterService } from '../../../../../services/table-page-coun
 import { SubcategoriesService } from '../../../../../services/subcategories/subcategories.service';
 import { SubsubcategoriesService } from '../../../../../services/subsubcategories/subsubcategories.service';
 import { AccountService } from '../../../../../services/account/account.service';
+import { NavigationLinkNameService } from '../../../../../services/NavigationLinkNameService';
 
 @Component({
   selector: 'app-subsubcategories',
@@ -23,6 +24,7 @@ export class SubsubcategoriesComponent implements OnInit, AfterViewInit {
     public accountService: AccountService,
     public subsubcategoriesService: SubsubcategoriesService,
     public tablePageCounterService: TablePageCounterService,
+    public navigationLinkNameService: NavigationLinkNameService,
     private dialog: MatDialog
   ) { }
 

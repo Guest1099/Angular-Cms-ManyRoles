@@ -27,12 +27,12 @@
 
 
     <div class="df-sb bottom-buttons">
-        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../categories']">
+        <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['../../categories']" (click)="navigationLinkNameService.changeSubLinkName('')">
             Wstecz
         </button>
 
         <div class="df-sb">
-            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../categories']">
+            <button mat-raised-button color="warn" mat-dialog-close class="mr-10" [routerLink]="['../../categories']" (click)="navigationLinkNameService.changeSubLinkName('')">
                 <mat-icon>cancel</mat-icon>
                 Anuluj
             </button>
